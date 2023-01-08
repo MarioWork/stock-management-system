@@ -10,6 +10,8 @@
   "author": "Mario Vieira",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.31.0"
+    "eslint": "^8.31.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
