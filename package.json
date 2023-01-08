@@ -1,17 +1,22 @@
 {
-  "name": "products-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./server/server.js",
-  "scripts": {
-    "dev": "node ./server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Mario Vieira",
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^8.31.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.2.1"
-  }
+    "name": "products-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./server/server.js",
+    "scripts": {
+        "dev": "node ./server/server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Mario Vieira",
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "^8.31.0",
+        "eslint-config-node": "^4.1.0",
+        "eslint-config-prettier": "^8.6.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-json": "^3.1.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "prettier": "^2.8.2"
+    }
 }
