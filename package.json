@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "node app.js",
+    "dev": "node ./app/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mario Vieira",
