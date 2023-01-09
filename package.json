@@ -10,6 +10,7 @@
     "author": "Mario Vieira",
     "license": "MIT",
     "devDependencies": {
+        "dotenv": "^16.0.3",
         "eslint": "^8.31.0",
         "eslint-config-prettier": "^8.6.0",
         "eslint-plugin-json": "^3.1.0",
