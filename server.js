@@ -1,12 +1,19 @@
-const fastify = require('fastify')({ logger: true });
+const path = require('path');
+const autoload = require('@fastify/autoload');
+
+const server = require('fastify')({ logger: true });
 
 const PORT = '5000';
 
+server.register(autoload, {
+    dir: path.join(__dirname, 'plugins')
+});
+
 const start = async () => {
     try {
-        await fastify.listen(PORT);
+        await server.listen(PORT);
     } catch (error) {
-        fastify.log.error(error);
+        server.log.error(error);
         process.exit(1);
     }
 };
