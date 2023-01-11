@@ -3,7 +3,17 @@ require('dotenv').config();
 const path = require('path');
 const autoload = require('@fastify/autoload');
 
-const server = require('fastify')({ logger: true });
+const server = require('fastify')({
+    logger: {
+        transport: {
+            target: 'pino-pretty',
+            options: {
+                translateTime: true,
+                colorize: true
+            }
+        }
+    }
+});
 
 //Auto load all plugins
 server.register(autoload, {
