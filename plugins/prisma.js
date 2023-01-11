@@ -8,6 +8,7 @@ const plugin = async server => {
 
     const prisma = new PrismaClient();
 
+    //add try catch
     await prisma.$connect();
 
     server.decorate('prisma', prisma);
