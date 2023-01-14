@@ -1,5 +1,6 @@
 const options = {};
 
+//TODO: Error handling && schema
 module.exports = async server => {
     server.get('/', options, async (request, reply) => {
         const { prisma } = server;
