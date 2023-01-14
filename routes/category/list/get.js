@@ -1,12 +1,16 @@
 const options = {};
 
-//TODO: Error handling && schema
+//TODO  schema
 module.exports = async server => {
     server.get('/', options, async (request, reply) => {
         const { prisma } = server;
 
-        const categories = await prisma.category.findMany();
+        try {
+            const categories = await prisma.category.findMany();
 
-        await await reply.code(200).send({ categories: categories });
+            await reply.code(200).send({ categories: categories });
+        } catch (error) {
+            await reply.code(500).send({ error: 'Something went wrong...' });
+        }
     });
 };
