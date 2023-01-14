@@ -1,5 +1,6 @@
 const options = {};
 
+//TODO: Add schema for response
 module.exports = async server => {
     const { prisma } = server;
 
