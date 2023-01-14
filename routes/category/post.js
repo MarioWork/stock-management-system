@@ -24,6 +24,7 @@ module.exports = async server => {
 
             await reply.code(201).send({ id: newCategory.id });
         } catch (error) {
+            server.log.error(error);
             await reply.code(500).send({ error: 'Something went wrong...' });
         }
     });

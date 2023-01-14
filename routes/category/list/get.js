@@ -10,6 +10,7 @@ module.exports = async server => {
 
             await reply.code(200).send({ categories: categories });
         } catch (error) {
+            server.log.error(error);
             await reply.code(500).send({ error: 'Something went wrong...' });
         }
     });
