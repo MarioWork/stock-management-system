@@ -11,16 +11,20 @@ module.exports = async server => {
 
         const { name } = request.body;
 
-        const newCategory = await prisma.category.create({
-            data: {
-                name
+        try {
+            const newCategory = await prisma.category.create({
+                data: {
+                    name
+                }
+            });
+
+            if (!newCategory) {
+                await reply.code(500).send({ error: 'Something went wrong...' });
             }
-        });
 
-        if (!newCategory) {
-            await reply.code(500).send({ error: 'something went wrong...' });
+            await reply.code(201).send({ id: newCategory.id });
+        } catch (error) {
+            await reply.code(500).send({ error: 'Something went wrong...' });
         }
-
-        await reply.code(201).send({ id: newCategory.id });
     });
 };
