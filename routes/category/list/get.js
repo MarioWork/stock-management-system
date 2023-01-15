@@ -5,13 +5,14 @@ module.exports = async server => {
     server.get('/', options, async (request, reply) => {
         const { prisma } = server;
 
-        try {
-            const categories = await prisma.category.findMany();
+        const [error, categories] = await server.to(prisma.category.findMany());
 
-            await reply.code(200).send({ categories: categories });
-        } catch (error) {
+        if (error) {
             server.log.error(error);
-            await reply.code(500).send({ error: 'Something went wrong...' });
+            await reply.internalServerError();
+            return;
         }
+
+        await reply.code(200).send({ categories: categories });
     });
 };
