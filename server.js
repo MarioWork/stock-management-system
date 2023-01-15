@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const path = require('path');
+
+const sensible = require('@fastify/sensible');
 const autoload = require('@fastify/autoload');
 
 const server = require('fastify')({
@@ -14,6 +16,8 @@ const server = require('fastify')({
         }
     }
 });
+
+server.register(sensible);
 
 //Auto load all plugins
 server.register(autoload, {
