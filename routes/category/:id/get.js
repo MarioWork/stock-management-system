@@ -3,7 +3,8 @@ const S = require('fluent-json-schema');
 const { getCategoryById } = require('../../../controllers/category-controller');
 
 const schema = {
-    response: { 200: CategorySchema }
+    response: { 200: CategorySchema },
+    params: S.object().prop('id', S.number()).required(['id'])
 };
 
 const options = {
