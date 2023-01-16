@@ -1,8 +1,15 @@
+const S = require('fluent-json-schema');
+const CategorySchema = require('../../../schemas/category-schema');
 const { getAllCategories } = require('../../../controllers/category-controller');
 
-const options = {};
+const schema = {
+    response: { 200: S.array().items(S.oneOf([CategorySchema, S.null()])) }
+};
 
-//TODO  schema
+const options = {
+    schema
+};
+
 module.exports = async server => {
     const { prisma, to } = server;
     server.get('/', options, async (_, reply) => {
@@ -14,6 +21,6 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(200).send({ categories: categories });
+        await reply.code(200).send(categories);
     });
 };
