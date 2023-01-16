@@ -1,23 +1,17 @@
+const { createCategory } = require('../../controllers/category-controller');
+
 const options = {};
 
 //TODO: Add schema for response
 module.exports = async server => {
-    const { prisma } = server;
+    const { prisma, to } = server;
 
     server.post('/', options, async (request, reply) => {
         if (!request.body || !request?.body?.name) {
             await reply.code(400).send({ error: 'Missing body' });
         }
 
-        const { name } = request.body;
-
-        const [error, newCategory] = await server.to(
-            prisma.category.create({
-                data: {
-                    name
-                }
-            })
-        );
+        const [error, newCategory] = await to(createCategory(prisma, request.body));
 
         if (error) {
             server.log.error(error);
