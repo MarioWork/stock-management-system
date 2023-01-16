@@ -1,11 +1,12 @@
+const { getAllCategories } = require('../../../controllers/category-controller');
+
 const options = {};
 
 //TODO  schema
 module.exports = async server => {
-    server.get('/', options, async (request, reply) => {
-        const { prisma } = server;
-
-        const [error, categories] = await server.to(prisma.category.findMany());
+    const { prisma, to } = server;
+    server.get('/', options, async (_, reply) => {
+        const [error, categories] = await to(getAllCategories(prisma));
 
         if (error) {
             server.log.error(error);
