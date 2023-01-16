@@ -4,8 +4,8 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "node server",
-        "dev": "nodemon server"
+        "start": "node src/server",
+        "dev": "nodemon src/server"
     },
     "author": "Mario Vieira",
     "license": "MIT",

@@ -7,7 +7,7 @@
 -   [ ] /product/ - post - creates a product
 -   [ ] /product/id - delete - removes a product
 
--   [ ] /category/list - get - returns all categories
--   [ ] /category/id - get - returns a single category
--   [ ] /category/ - post - creates a category
+-   [x] /category/list - get - returns all categories
+-   [x] /category/id - get - returns a single category
+-   [x] /category/ - post - creates a category
 -   [ ] /category/id - delete - removes a category
