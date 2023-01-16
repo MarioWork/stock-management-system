@@ -1,8 +1,16 @@
+const S = require('fluent-json-schema');
+const CategorySchema = require('../../schemas/category-schema');
 const { createCategory } = require('../../controllers/category-controller');
 
-const options = {};
+const schema = {
+    body: S.object().additionalProperties(false).prop('name', S.string().required()),
+    response: {
+        201: CategorySchema
+    }
+};
 
-//TODO: Add schema for response
+const options = { schema };
+
 module.exports = async server => {
     const { prisma, to } = server;
 
@@ -19,6 +27,6 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(201).send({ id: newCategory.id });
+        await reply.code(201).send(newCategory);
     });
 };
