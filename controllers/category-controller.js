@@ -12,4 +12,14 @@ const getAllCategories = prisma => {
     return prisma.category.findMany();
 };
 
-module.exports = { createCategory, getAllCategories };
+const getCategoryById = async (prisma, id) => {
+    const x = await prisma.category.findUnique({
+        where: {
+            id: id
+        }
+    });
+
+    return x;
+};
+
+module.exports = { createCategory, getAllCategories, getCategoryById };
