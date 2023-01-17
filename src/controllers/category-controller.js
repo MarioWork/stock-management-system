@@ -13,13 +13,15 @@ const getAllCategories = prisma => {
 };
 
 const getCategoryById = async (prisma, id) => {
-    const x = await prisma.category.findUnique({
+    return prisma.category.findUnique({
         where: {
             id: id
         }
     });
-
-    return x;
 };
 
-module.exports = { createCategory, getAllCategories, getCategoryById };
+module.exports = {
+    createCategory,
+    getAllCategories,
+    getCategoryById
+};
