@@ -17,7 +17,16 @@ const addCategoriesToProduct = (prisma, { id, categories }) => {
     });
 };
 
+const deleteProducts = (prisma, ids) => {
+    return prisma.product.deleteMany({
+        where: {
+            id: { in: ids }
+        }
+    });
+};
+
 module.exports = {
     createProduct,
-    addCategoriesToProduct
+    addCategoriesToProduct,
+    deleteProducts
 };
