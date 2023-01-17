@@ -21,7 +21,7 @@ const getCategoryById = async (prisma, id) => {
 };
 
 const updateCategory = (prisma, { id, name }) => {
-    return prisma.user.update({
+    return prisma.category.update({
         where: {
             id
         },
