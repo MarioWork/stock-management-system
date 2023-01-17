@@ -11,4 +11,4 @@
 -   [x] /category/id - get - returns a single category
 -   [x] /category/ - post - creates a category
 -   [x] /category/id - patch - update a category
--   [] /category/id - delete - removes a category
+-   [ ] /category/id - delete - removes a category
