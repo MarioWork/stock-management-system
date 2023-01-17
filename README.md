@@ -10,4 +10,4 @@
 -   [x] /category/list - get - returns all categories
 -   [x] /category/id - get - returns a single category
 -   [x] /category/ - post - creates a category
--   [ ] /category/id - delete - removes a category
+-   [x] /category/id - delete - removes a category
