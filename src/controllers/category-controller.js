@@ -20,8 +20,20 @@ const getCategoryById = async (prisma, id) => {
     });
 };
 
+const updateCategory = (prisma, { id, name }) => {
+    return prisma.user.update({
+        where: {
+            id
+        },
+        data: {
+            name
+        }
+    });
+};
+
 module.exports = {
     createCategory,
     getAllCategories,
-    getCategoryById
+    getCategoryById,
+    updateCategory
 };
