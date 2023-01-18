@@ -9,13 +9,22 @@ const createCategory = (prisma, newCategory) => {
 };
 
 const getAllCategories = prisma => {
-    return prisma.category.findMany();
+    return prisma.category.findMany({
+        select: {
+            id: true,
+            name: true
+        }
+    });
 };
 
 const getCategoryById = async (prisma, id) => {
     return prisma.category.findUnique({
         where: {
             id: id
+        },
+        select: {
+            id: true,
+            name: true
         }
     });
 };
