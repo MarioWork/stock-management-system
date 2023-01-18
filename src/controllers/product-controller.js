@@ -12,6 +12,17 @@ const getProductById = (prisma, id) => {
     });
 };
 
+const getAllProducts = prisma => {
+    return prisma.product.findMany({
+        select: {
+            id: true,
+            name: true,
+            quantity: true,
+            categories: { select: { id: true, name: true } }
+        }
+    });
+};
+
 const createProduct = (prisma, { name, quantity, categories }) => {
     return prisma.product.create({
         data: {
@@ -43,5 +54,6 @@ module.exports = {
     createProduct,
     addCategoriesToProduct,
     deleteProducts,
-    getProductById
+    getProductById,
+    getAllProducts
 };
