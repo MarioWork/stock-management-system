@@ -1,3 +1,17 @@
+const getProductById = (prisma, id) => {
+    return prisma.product.findUnique({
+        where: {
+            id
+        },
+        select: {
+            id: true,
+            name: true,
+            quantity: true,
+            categories: { select: { id: true, name: true } }
+        }
+    });
+};
+
 const createProduct = (prisma, { name, quantity, categories }) => {
     return prisma.product.create({
         data: {
@@ -28,5 +42,6 @@ const deleteProducts = (prisma, ids) => {
 module.exports = {
     createProduct,
     addCategoriesToProduct,
-    deleteProducts
+    deleteProducts,
+    getProductById
 };
