@@ -4,7 +4,7 @@
 
 -   [ ] /product/list - get - returns all products
 -   [ ] /product/id - get - returns a single product
--   [ ] /product/ - post - creates a product
+-   [x] /product/ - post - creates a product
 -   [ ] /product/id - delete - removes a product
 
 -   [x] /category/list - get - returns all categories
