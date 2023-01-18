@@ -6,7 +6,7 @@ const { createProduct } = require('../../controllers/product-controller');
 const schema = {
     body: S.object()
         .additionalProperties(false)
-        .prop('name', S.string())
+        .prop('name', S.string().required())
         .prop('quantity', S.number())
         .prop('categories', S.array().items(S.number())),
     response: {
@@ -22,7 +22,7 @@ module.exports = async server => {
     server.post('/', options, async (request, reply) => {
         const { name, categories, quantity } = request.body;
 
-        const [error, product] = to(createProduct(prisma, { name, quantity, categories }));
+        const [error, product] = await to(createProduct(prisma, { name, quantity, categories }));
 
         if (error) {
             server.log.error(error);
