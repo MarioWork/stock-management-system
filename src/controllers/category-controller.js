@@ -4,6 +4,10 @@ const createCategory = (prisma, newCategory) => {
     return prisma.category.create({
         data: {
             name
+        },
+        select: {
+            id: true,
+            name: true
         }
     });
 };
