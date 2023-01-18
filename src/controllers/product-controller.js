@@ -29,6 +29,11 @@ const createProduct = (prisma, { name, quantity, categories }) => {
             name,
             quantity,
             categories: { connect: categories }
+        },
+        select: {
+            id: true,
+            name: true,
+            categories: { select: { id: true, name: true } }
         }
     });
 };
