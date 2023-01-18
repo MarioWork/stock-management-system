@@ -12,6 +12,7 @@ const getProductById = (prisma, id) => {
     });
 };
 
+//TODO: Add Filter
 const getAllProducts = prisma => {
     return prisma.product.findMany({
         select: {
