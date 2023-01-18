@@ -2,18 +2,18 @@
 
 
 ### Product
--   [x] /product/list - get - returns all products
--   [ ] /product/id - get - returns a single product
--   [ ] /product/id - delete - removes a product
--   [ ] /product/id - patch - updates a product
--   [x] /product/ - post - creates a product
+-   [x] /product/list - GET - returns all products
+-   [ ] /product/id - GET - returns a single product
+-   [ ] /product/id - DELETE - removes a product
+-   [ ] /product/id - PATCH - updates a product
+-   [x] /product/ - POST - creates a product
 
 #
 
 ### Category
--   [x] /category/list - get - returns all categories
--   [x] /category/id - get - returns a single category
--   [x] /category/id - patch - update a category
--   [ ] /category/id - delete - removes a category
--   [x] /category/ - post - creates a category
+-   [x] /category/list - GET - returns all categories
+-   [x] /category/id - GET - returns a single category
+-   [x] /category/id - PATCH - update a category
+-   [ ] /category/id - DELETE - removes a category
+-   [x] /category/ - POST - creates a category
 
