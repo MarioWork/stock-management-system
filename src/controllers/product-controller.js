@@ -57,10 +57,33 @@ const deleteProducts = (prisma, ids) => {
     });
 };
 
+const updateProduct = (prisma, { id, name, quantity, categories }) => {
+    return prisma.product.update({
+        where: { id },
+        data: {
+            name,
+            quantity,
+            categories: { connect: categories }
+        },
+        select: {
+            id: true,
+            name: true,
+            quantity: true,
+            categories: {
+                select: {
+                    id: true,
+                    name: true
+                }
+            }
+        }
+    });
+};
+
 module.exports = {
     createProduct,
     addCategoriesToProduct,
     deleteProducts,
     getProductById,
-    getAllProducts
+    getAllProducts,
+    updateProduct
 };
