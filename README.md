@@ -5,7 +5,7 @@
 -   -   [x] /product/list - GET - returns all products
 -   -   [x] /product/id - GET - returns a single product
 -   -   [x] /product/id - DELETE - removes a product
--   -   [ ] /product/id - PATCH - updates a product
+-   -   [x] /product/id - PATCH - updates a product
 -   -   [x] /product/ - POST - creates a product
 
 #
