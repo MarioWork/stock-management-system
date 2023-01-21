@@ -15,5 +15,5 @@
 -   -   [x] /category/list - GET - returns all categories
 -   -   [x] /category/id - GET - returns a single category
 -   -   [x] /category/id - PATCH - update a category
--   -   [ ] /category/id - DELETE - removes a category
+-   -   [x] /category/id - DELETE - removes a category
 -   -   [x] /category/ - POST - creates a category
