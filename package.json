@@ -27,5 +27,8 @@
         "fastify-plugin": "^4.5.0",
         "fluent-json-schema": "^4.0.0",
         "pino-pretty": "^9.1.1"
+    },
+    "prisma": {
+        "schema": "src/prisma/schema.prisma"
     }
 }
