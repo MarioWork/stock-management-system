@@ -1,8 +1,13 @@
 /**
+ * @typedef { import("@prisma/client").PrismaClient } PrismaClient
+ * @typedef {{id: number, name: string}} Category
+ */
+
+/**
  * Creates a category with the given params
- * @param {string} prisma - ORM Dependency
+ * @param {PrismaClient} prisma - RM Dependency
  * @param {{name: string} } newCategory - Object that represents the category to be added
- * @returns {Promise<object>} - Promise object that returns the created category or error
+ * @returns {Promise<Category>} - Promise object that returns the created category or error
  * @throws {error}
  */
 const createCategory = (prisma, newCategory) => {
@@ -20,8 +25,8 @@ const createCategory = (prisma, newCategory) => {
 };
 
 /** Retrieves all categories
- * @param {string} prisma - ORM Dependency
- * @returns {Promise<object[]>} - Promise object that returns array of categories or error
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @returns {Promise<Category[]>} - Promise object that returns array of categories or error
  * @throws {error}
  */
 const getAllCategories = prisma => {
@@ -35,9 +40,9 @@ const getAllCategories = prisma => {
 
 /**
  * Retrieves a category by the Id given
- * @param {string} prisma - ORM Dependency
+ * @param {PrismaClient} prisma - ORM Dependency
  * @param {number} id - Id of the category to retrieve
- * @returns {Promise<object>} - Promise object that returns category or error
+ * @returns {Promise<Category>} - Promise object that returns category or error
  * @throws {error}
  */
 const getCategoryById = async (prisma, id) => {
