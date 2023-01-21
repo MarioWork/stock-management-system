@@ -44,9 +44,18 @@ const updateCategory = (prisma, { id, name }) => {
     });
 };
 
+const deleteCategories = (prisma, ids) => {
+    return prisma.category.deleteMany({
+        where: {
+            id: { in: ids }
+        }
+    });
+};
+
 module.exports = {
     createCategory,
     getAllCategories,
     getCategoryById,
-    updateCategory
+    updateCategory,
+    deleteCategories
 };
