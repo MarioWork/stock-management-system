@@ -1,9 +1,9 @@
 /**
  * Creates a category with the given params
- * @param {import('@prisma/client').PrismaClient} prisma - ORM Dependency
+ * @param {string} prisma - ORM Dependency
  * @param {{name: string} } newCategory - Object that represents the category to be added
- * @returns {Promise<import('@prisma/client').Category>} - Promise object that returns the created category or error
- * @throws
+ * @returns {Promise<object>} - Promise object that returns the created category or error
+ * @throws {error}
  */
 const createCategory = (prisma, newCategory) => {
     const { name } = newCategory;
@@ -20,9 +20,9 @@ const createCategory = (prisma, newCategory) => {
 };
 
 /** Retrieves all categories
- * @param {import('@prisma/client').PrismaClient} prisma - ORM Dependency
- * @returns {Promise<import('@prisma/client').Category[]>} - Promise object that returns array of categories or error
- * @throws
+ * @param {string} prisma - ORM Dependency
+ * @returns {Promise<object[]>} - Promise object that returns array of categories or error
+ * @throws {error}
  */
 const getAllCategories = prisma => {
     return prisma.category.findMany({
@@ -35,9 +35,10 @@ const getAllCategories = prisma => {
 
 /**
  * Retrieves a category by the Id given
- * @param {import('@prisma/client').PrismaClient} prisma - ORM Dependency
+ * @param {string} prisma - ORM Dependency
  * @param {number} id - Id of the category to retrieve
- * @returns {Promise<import('@prisma/client').Category>} - Promise object that returns category or error
+ * @returns {Promise<object>} - Promise object that returns category or error
+ * @throws {error}
  */
 const getCategoryById = async (prisma, id) => {
     return prisma.category.findUnique({
