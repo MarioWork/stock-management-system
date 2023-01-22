@@ -6,7 +6,7 @@
 /**
  * Creates a category with the given params
  * @param {PrismaClient} prisma - RM Dependency
- * @param {{name: string} } newCategory - Object that represents the category to be added
+ * @param {{name: string} } Object - Object that represents the category to be added
  * @returns {Promise<Category>} - Promise object that returns the created category or error
  * @throws {error}
  */
@@ -60,8 +60,9 @@ const getCategoryById = async (prisma, id) => {
 /**
  * Update Category by id
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {Category} - Category Object
+ * @param {Category} Object - Category Object
  * @returns {Category} - Updated Category
+ * @throws {error}
  */
 const updateCategory = (prisma, { id, name }) => {
     return prisma.category.update({
