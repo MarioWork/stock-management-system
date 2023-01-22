@@ -57,6 +57,12 @@ const getCategoryById = async (prisma, id) => {
     });
 };
 
+/**
+ * Update Category by id
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id:number, name: string}} - Category Object
+ * @returns {{id: number, name: string}} - Updated Category
+ */
 const updateCategory = (prisma, { id, name }) => {
     return prisma.category.update({
         where: {
@@ -68,6 +74,12 @@ const updateCategory = (prisma, { id, name }) => {
     });
 };
 
+/**
+ * Delete categories by its ids
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {number[]} ids - Ids of the categories to be deleted
+ * @returns {{count: number}} - Number of categories deleted
+ */
 const deleteCategories = (prisma, ids) => {
     return prisma.category.deleteMany({
         where: {
