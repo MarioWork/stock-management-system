@@ -60,8 +60,8 @@ const getCategoryById = async (prisma, id) => {
 /**
  * Update Category by id
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id:number, name: string}} - Category Object
- * @returns {{id: number, name: string}} - Updated Category
+ * @param {Category} - Category Object
+ * @returns {Category} - Updated Category
  */
 const updateCategory = (prisma, { id, name }) => {
     return prisma.category.update({
