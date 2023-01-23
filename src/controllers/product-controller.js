@@ -3,6 +3,13 @@
  * @typedef { import('../types/category-docs-type') } Category
  * @typedef { import('../types/product-docs-type') } Product
  */
+const {
+    createProduct: createProductPrisma,
+    deleteProducts: deleteProductsPrisma,
+    getProductById: getProductByIdPrisma,
+    getAllProducts: getAllProductsPrisma,
+    updateProduct: updateProductPrisma
+} = require('../services/prisma/product-service');
 
 /**
  * Retrieves a product by Id
@@ -12,17 +19,7 @@
  * @throws {error}
  */
 const getProductById = (prisma, id) => {
-    return prisma.product.findUnique({
-        where: {
-            id
-        },
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            categories: { select: { id: true, name: true } }
-        }
-    });
+    return getProductByIdPrisma(prisma, id);
 };
 
 /**
@@ -33,14 +30,7 @@ const getProductById = (prisma, id) => {
  */
 //TODO: Add Filter
 const getAllProducts = prisma => {
-    return prisma.product.findMany({
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            categories: { select: { id: true, name: true } }
-        }
-    });
+    return getAllProductsPrisma(prisma);
 };
 
 /**
@@ -51,19 +41,7 @@ const getAllProducts = prisma => {
  * @throws {error}
  */
 const createProduct = (prisma, { name, quantity, categories }) => {
-    return prisma.product.create({
-        data: {
-            name,
-            quantity,
-            categories: { connect: categories }
-        },
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            categories: { select: { id: true, name: true } }
-        }
-    });
+    return createProductPrisma(prisma, { name, quantity, categories });
 };
 
 /**
@@ -74,11 +52,7 @@ const createProduct = (prisma, { name, quantity, categories }) => {
  * @throws {error}
  */
 const deleteProducts = (prisma, ids) => {
-    return prisma.product.deleteMany({
-        where: {
-            id: { in: ids }
-        }
-    });
+    return deleteProductsPrisma(prisma, ids);
 };
 
 /**
@@ -89,25 +63,7 @@ const deleteProducts = (prisma, ids) => {
  * @returns {Promise<Product>} - Returns the update product
  */
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
-    return prisma.product.update({
-        where: { id },
-        data: {
-            name,
-            quantity,
-            categories: { connect: categories }
-        },
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            categories: {
-                select: {
-                    id: true,
-                    name: true
-                }
-            }
-        }
-    });
+    updateProductPrisma(prisma, { id, name, quantity, categories });
 };
 
 module.exports = {
