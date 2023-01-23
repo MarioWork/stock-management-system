@@ -61,7 +61,7 @@ const getCategoryById = async (prisma, id) => {
  * Update Category by id
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {Category} Object - Category Object
- * @returns {Category} - Updated Category
+ * @returns {Promise<Category>} - Updated Category
  * @throws {error}
  */
 const updateCategory = (prisma, { id, name }) => {
@@ -79,7 +79,7 @@ const updateCategory = (prisma, { id, name }) => {
  * Delete categories by its ids
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {number[]} ids - Ids of the categories to be deleted
- * @returns {{count: number}} - Number of categories deleted
+ * @returns {Promise<{count: number}>} - Number of categories deleted
  */
 const deleteCategories = (prisma, ids) => {
     return prisma.category.deleteMany({
