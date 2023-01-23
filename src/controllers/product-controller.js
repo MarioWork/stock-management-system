@@ -63,7 +63,7 @@ const deleteProducts = (prisma, ids) => {
  * @returns {Promise<Product>} - Returns the update product
  */
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
-    updateProductPrisma(prisma, { id, name, quantity, categories });
+    return updateProductPrisma(prisma, { id, name, quantity, categories });
 };
 
 module.exports = {
