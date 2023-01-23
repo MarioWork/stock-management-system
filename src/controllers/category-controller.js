@@ -1,6 +1,6 @@
 /**
- * @typedef { import("@prisma/client").PrismaClient } PrismaClient
- * @typedef {{id: number, name: string}} Category
+ * @typedef { import("../types/prisma-docs-type") } PrismaClient
+ * @typedef { import("../types/prisma-docs-type") } Category
  */
 
 /**

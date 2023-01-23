@@ -1,12 +1,7 @@
 /**
- * @typedef { import("@prisma/client").PrismaClient } PrismaClient
- * @typedef {import('../controllers/category-controller').Category} Category
- * @typedef {{
- *  id: number,
- *  name: string,
- *  quantity: number,
- *  categories: Category[]}
- * } Product
+ * @typedef { import("../types/prisma-docs-type") } PrismaClient
+ * @typedef { import('../types/category-docs-type') } Category
+ * @typedef { import('../types/product-docs-type') } Product
  */
 
 /**
