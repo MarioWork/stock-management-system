@@ -3,6 +3,14 @@
  * @typedef { import("../types/prisma-docs-type") } Category
  */
 
+const {
+    createCategory: createCategoryPrisma,
+    getAllCategories: getAllCategoriesPrisma,
+    getCategoryById: getCategoryByIdPrisma,
+    updateCategory: updateCategoryPrisma,
+    deleteCategories: deleteCategoriesPrisma
+} = require('../services/prisma/category-service');
+
 /**
  * Creates a category with the given params
  * @param {PrismaClient} prisma - RM Dependency
@@ -11,17 +19,7 @@
  * @throws {error}
  */
 const createCategory = (prisma, newCategory) => {
-    const { name } = newCategory;
-
-    return prisma.category.create({
-        data: {
-            name
-        },
-        select: {
-            id: true,
-            name: true
-        }
-    });
+    return createCategoryPrisma(prisma, newCategory);
 };
 
 /** Retrieves all categories
@@ -30,12 +28,7 @@ const createCategory = (prisma, newCategory) => {
  * @throws {error}
  */
 const getAllCategories = prisma => {
-    return prisma.category.findMany({
-        select: {
-            id: true,
-            name: true
-        }
-    });
+    return getAllCategoriesPrisma(prisma);
 };
 
 /**
@@ -46,47 +39,28 @@ const getAllCategories = prisma => {
  * @throws {error}
  */
 const getCategoryById = async (prisma, id) => {
-    return prisma.category.findUnique({
-        where: {
-            id: id
-        },
-        select: {
-            id: true,
-            name: true
-        }
-    });
+    return getCategoryByIdPrisma(prisma, id);
 };
 
 /**
  * Update Category by id
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {Category} Object - Category Object
- * @returns {Category} - Updated Category
+ * @returns {Promise<Category>} - Updated Category
  * @throws {error}
  */
 const updateCategory = (prisma, { id, name }) => {
-    return prisma.category.update({
-        where: {
-            id
-        },
-        data: {
-            name
-        }
-    });
+    return updateCategoryPrisma(prisma, { id, name });
 };
 
 /**
  * Delete categories by its ids
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {number[]} ids - Ids of the categories to be deleted
- * @returns {{count: number}} - Number of categories deleted
+ * @returns {Promise<{count: number}>} - Number of categories deleted
  */
 const deleteCategories = (prisma, ids) => {
-    return prisma.category.deleteMany({
-        where: {
-            id: { in: ids }
-        }
-    });
+    return deleteCategoriesPrisma(prisma, ids);
 };
 
 module.exports = {
