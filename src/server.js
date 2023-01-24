@@ -16,6 +16,7 @@ const server = require('fastify')({
     }
 });
 
+//To use an encapsulation of try and catch && http errors
 server.register(sensible);
 
 //Auto load all plugins
@@ -23,7 +24,7 @@ server.register(autoload, {
     dir: path.join(__dirname, 'plugins')
 });
 
-//Auto load all routes
+//Auto load all routes plugins
 server.register(autoload, {
     dir: path.join(__dirname, 'routes'),
     options: { prefix: '/api' },
