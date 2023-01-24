@@ -10,6 +10,12 @@ const schema = {
 
 const options = { schema };
 
+/**
+ * Route to update a user by ID
+ * Fastify plugin to behave as
+ * @async
+ * @param {*} server -  Fastify server instance
+ */
 module.exports = async server => {
     const { prisma, to } = server;
 

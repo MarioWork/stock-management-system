@@ -11,6 +11,12 @@ const options = {
     schema
 };
 
+/**
+ * Route to retrieve a category by ID
+ * Fastify plugin to behave as
+ * @async
+ * @param {*} server -  Fastify server instance decorated with prisma
+ */
 module.exports = async server => {
     const { prisma, to } = server;
     server.get('/', options, async (request, reply) => {

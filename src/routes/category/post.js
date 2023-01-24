@@ -11,6 +11,12 @@ const schema = {
 
 const options = { schema };
 
+/**
+ * Fastify plugin to behave as
+ * Route to create a category
+ * @async
+ * @param {*} server -  Fastify server instance decorated with prisma
+ */
 module.exports = async server => {
     const { prisma, to } = server;
 
