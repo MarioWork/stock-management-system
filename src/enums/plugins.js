@@ -1,5 +1,7 @@
 module.exports = {
-    FIREBASE: 'firebase',
-    PRISMA: 'prisma',
-    SENSIBLE: 'fastifySensible'
+    PluginNames: {
+        FIREBASE: 'Firebase',
+        PRISMA: 'Prisma',
+        SENSIBLE: 'Sensible'
+    }
 };
