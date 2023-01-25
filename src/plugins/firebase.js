@@ -1,24 +1,26 @@
 require('dotenv').config();
 
 const fp = require('fastify-plugin');
-const { initializeApp } = require('firebase/app');
+
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getStorage } = require('firebase-admin/storage');
+
+const serviceAccount = require('../../credentials.json');
 
 const NAME = 'Firebase';
-
-const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID
-};
 
 const plugin = async server => {
     server.log.info(`Registering ${NAME} plugin...`);
 
     try {
-        const firebaseApp = initializeApp(firebaseConfig);
+        initializeApp({
+            credential: cert(serviceAccount),
+            storageBucket: 'products-stock.appspot.com'
+        });
+
+        const storage = getStorage().bucket();
+
+        server.decorate('storage', storage);
     } catch (error) {
         server.log.error(error);
     }
