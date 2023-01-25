@@ -8,6 +8,7 @@ const { getStorage } = require('firebase-admin/storage');
 const serviceAccount = require('../../credentials.json');
 
 const NAME = 'Firebase';
+const FILE_URL_EXPIRATION_DATE = '01-01-2026';
 
 const plugin = async server => {
     server.log.info(`Registering ${NAME} plugin...`);
@@ -15,12 +16,18 @@ const plugin = async server => {
     try {
         initializeApp({
             credential: cert(serviceAccount),
-            storageBucket: 'products-stock.appspot.com'
+            storageBucket: process.env.STORAGE_BUCKET
         });
 
-        const storage = getStorage().bucket();
+        const storageBucket = getStorage().bucket();
 
-        server.decorate('storage', storage);
+        server.decorate('saveFile', async (file, filename) => {
+            const fileRef = storageBucket.file('images/' + filename);
+
+            await fileRef.save(file);
+
+            return fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
+        });
     } catch (error) {
         server.log.error(error);
     }
