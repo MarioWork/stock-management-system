@@ -1,15 +1,14 @@
 const fp = require('fastify-plugin');
 const { PrismaClient } = require('@prisma/client');
 
-const NAME = 'Prisma';
-
+const { PluginNames } = require('../enums/plugins');
 /**
  * Creates a Prisma connection to the database
  * Decorates the fastify instance with a prisma client instance
  * @param {*} server - Fastify server instance
  */
 const plugin = async server => {
-    server.log.info(`Registering ${NAME} plugin...`);
+    server.log.info(`Registering ${PluginNames.PRISMA} plugin...`);
 
     const prisma = new PrismaClient();
 
@@ -26,6 +25,6 @@ const plugin = async server => {
     });
 };
 
-const options = { name: NAME };
+const options = { name: PluginNames.PRISMA };
 
 module.exports = fp(plugin, options);

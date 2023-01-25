@@ -5,7 +5,7 @@ const fp = require('fastify-plugin');
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getStorage } = require('firebase-admin/storage');
 
-const PluginNames = require('../enums/plugins');
+const { PluginNames } = require('../enums/plugins');
 const serviceAccount = require('../../credentials.json');
 
 const FILE_URL_EXPIRATION_DATE = '01-01-2026';
