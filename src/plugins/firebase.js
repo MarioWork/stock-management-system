@@ -5,13 +5,14 @@ const fp = require('fastify-plugin');
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getStorage } = require('firebase-admin/storage');
 
+const PluginNames = require('../enums/plugins');
 const serviceAccount = require('../../credentials.json');
 
-const NAME = 'Firebase';
 const FILE_URL_EXPIRATION_DATE = '01-01-2026';
 
 const plugin = async server => {
-    server.log.info(`Registering ${NAME} plugin...`);
+    server.log.info(`Registering ${PluginNames.FIREBASE} plugin...`);
+    const { to } = server;
 
     try {
         initializeApp({
@@ -24,19 +25,17 @@ const plugin = async server => {
         server.decorate('saveFile', async (file, filename) => {
             const fileRef = storageBucket.file('images/' + filename);
 
-            try {
-                await fileRef.save(file);
-            } catch (error) {
-                return error;
-            }
+            const [error] = await to(fileRef.save(file));
 
-            return fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
+            return error
+                ? error
+                : fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
         });
     } catch (error) {
         server.log.error(error);
     }
 };
 
-const options = { name: NAME };
+const options = { name: PluginNames.FIREBASE };
 
 module.exports = fp(plugin, options);
