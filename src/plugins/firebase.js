@@ -24,7 +24,11 @@ const plugin = async server => {
         server.decorate('saveFile', async (file, filename) => {
             const fileRef = storageBucket.file('images/' + filename);
 
-            await fileRef.save(file);
+            try {
+                await fileRef.save(file);
+            } catch (error) {
+                return error;
+            }
 
             return fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
         });
