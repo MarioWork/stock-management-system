@@ -66,7 +66,7 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
     return updateProductPrisma(prisma, { id, name, quantity, categories });
 };
 //TODO: add docs
-const addImageUrlToProduct = ({ prisma }, { id, url }) => {
+const addImageUrlToProduct = (prisma, { id, url }) => {
     return prisma.product.update({
         where: {
             id
@@ -74,6 +74,18 @@ const addImageUrlToProduct = ({ prisma }, { id, url }) => {
         data: {
             images: {
                 push: url
+            }
+        },
+        select: {
+            id: true,
+            name: true,
+            quantity: true,
+            images: true,
+            categories: {
+                select: {
+                    id: true,
+                    name: true
+                }
             }
         }
     });
