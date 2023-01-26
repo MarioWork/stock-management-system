@@ -25,7 +25,10 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(data.file, data.mimetype));
+        //TODO: allow only png jpg and jpeg
+        const fileType = data.mimetype.split('/')[1];
+
+        const [saveFileError, url] = await to(saveFile(data.file, fileType));
 
         if (saveFileError) {
             server.log.error(saveFileError);
