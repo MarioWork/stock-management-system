@@ -24,6 +24,7 @@ const plugin = async server => {
 
         const storageBucket = getStorage().bucket();
 
+        //TODO: Move this to firebase service
         server.decorate('saveFile', async (file, type) => {
             const randomID = randomUUID();
 
@@ -37,6 +38,7 @@ const plugin = async server => {
             return 'http://127.0.0.1:5000/api/image/' + randomID + '?type=' + type;
         });
 
+        //TODO: MOve this to firebase service
         server.decorate('downloadFile', async (fileId, type) => {
             return await storageBucket.file('images/' + fileId + '.' + type).download();
         });

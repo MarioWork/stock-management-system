@@ -65,7 +65,7 @@ const deleteProducts = (prisma, ids) => {
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
     return updateProductPrisma(prisma, { id, name, quantity, categories });
 };
-//TODO: add docs
+//TODO: add docs && refactor to prisma service
 const addImageUrlToProduct = (prisma, { id, url }) => {
     return prisma.product.update({
         where: {
