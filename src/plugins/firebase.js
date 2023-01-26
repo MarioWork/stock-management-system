@@ -30,7 +30,8 @@ const plugin = async server => {
 
             await pipelineAsync(file, fileRef.createWriteStream(filename));
 
-            return 'http://127.0.0.1/api/image/' + randomID + '&filename=' + filename;
+            //TODO add baseurl to env
+            return 'http://127.0.0.1:5000/api/image/' + randomID + '?filename=' + filename;
         });
 
         server.decorate('downloadFile', async (fileId, fileName) => {
