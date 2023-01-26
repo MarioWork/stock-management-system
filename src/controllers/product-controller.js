@@ -65,11 +65,25 @@ const deleteProducts = (prisma, ids) => {
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
     return updateProductPrisma(prisma, { id, name, quantity, categories });
 };
+//TODO: add docs
+const addImageUrlToProduct = ({ prisma }, { id, url }) => {
+    return prisma.product.update({
+        where: {
+            id
+        },
+        data: {
+            images: {
+                push: url
+            }
+        }
+    });
+};
 
 module.exports = {
     createProduct,
     deleteProducts,
     getProductById,
     getAllProducts,
-    updateProduct
+    updateProduct,
+    addImageUrlToProduct
 };
