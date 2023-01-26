@@ -104,6 +104,7 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
             id: true,
             name: true,
             quantity: true,
+            images: true,
             categories: {
                 select: {
                     id: true,
