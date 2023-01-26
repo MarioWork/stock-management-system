@@ -1,11 +1,12 @@
 const S = require('fluent-json-schema');
 
+const productSchema = require('../../../../schemas/product-schema');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
     response: {
-        200: S.object().prop('message', S.string()).required(['message'])
+        200: productSchema
     }
 };
 
@@ -24,7 +25,7 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(data.file, data.filename));
+        const [saveFileError, url] = await to(saveFile(data.file, data.mimetype));
 
         if (saveFileError) {
             server.log.error(saveFileError);
@@ -32,16 +33,21 @@ module.exports = async server => {
             return;
         }
 
-        const [addImageUrlError] = await to(addImageUrlToProduct({ prisma }, { id, url }));
+        const [addImageUrlError, product] = await to(addImageUrlToProduct(prisma, { id, url }));
 
         //TODO: create method to delete image in case of error
+        if (!product) {
+            await reply.notFound();
+            return;
+        }
 
+        //TODO: create method to delete image in case of error
         if (addImageUrlError) {
             server.log.error(addImageUrlError);
             await reply.internalServerError();
             return;
         }
 
-        await reply.code(200).send({ message: 'Added image successfully' });
+        await reply.code(200).send(product);
     });
 };
