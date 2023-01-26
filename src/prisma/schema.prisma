@@ -24,5 +24,6 @@ model Product {
   updatedAt  DateTime   @updatedAt
   name       String
   quantity   Int        @default(0)
+  url        String
   categories Category[]
 }
