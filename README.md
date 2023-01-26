@@ -7,6 +7,7 @@
 -   -   [x] /product/id - DELETE - removes a product
 -   -   [x] /product/id - PATCH - updates a product
 -   -   [x] /product/ - POST - creates a product
+-   -   [x] /product/image - POST - add image to cloud bucket and connect url to product
 
 #
 
