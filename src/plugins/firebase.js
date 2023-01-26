@@ -24,18 +24,23 @@ const plugin = async server => {
 
         const storageBucket = getStorage().bucket();
 
-        server.decorate('saveFile', async (file, filename) => {
+        server.decorate('saveFile', async (file, mimetype) => {
             const randomID = randomUUID();
-            const fileRef = storageBucket.file('images/' + randomID + '/' + filename);
 
-            await pipelineAsync(file, fileRef.createWriteStream(filename));
+            const fileType = mimetype.split('/')[1];
+
+            const fileName = randomID + '.' + fileType;
+
+            const fileRef = storageBucket.file('images/' + fileName);
+
+            await pipelineAsync(file, fileRef.createWriteStream(fileName));
 
             //TODO add baseurl to env
-            return 'http://127.0.0.1:5000/api/image/' + randomID + '?filename=' + filename;
+            return 'http://127.0.0.1:5000/api/image/' + randomID + '?type=' + fileType;
         });
 
-        server.decorate('downloadFile', async (fileId, fileName) => {
-            return await storageBucket.file('images/' + fileId + '/' + fileName).download();
+        server.decorate('downloadFile', async (fileId, type) => {
+            return await storageBucket.file('images/' + fileId + '.' + type).download();
         });
     } catch (error) {
         server.log.error(error);
