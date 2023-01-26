@@ -16,9 +16,15 @@ module.exports = async server => {
 
     server.post('/', options, async (request, reply) => {
         const data = await request.file();
+
+        if (data.filename === '') {
+            await reply.badRequest('Missing file content');
+            return;
+        }
+
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(data.file, data.filename));
+        const [saveFileError, url] = await to(saveFile(data.file, data.filename, id));
 
         if (saveFileError) {
             server.log.error(saveFileError);
@@ -27,6 +33,8 @@ module.exports = async server => {
         }
 
         const [addImageUrlError] = await to(addImageUrlToProduct({ prisma }, { id, url }));
+
+        //TODO: create method to delete image in case of error
 
         if (addImageUrlError) {
             server.log.error(addImageUrlError);
