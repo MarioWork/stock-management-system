@@ -24,6 +24,6 @@ model Product {
   updatedAt  DateTime   @updatedAt
   name       String
   quantity   Int        @default(0)
-  url        String
+  images     String[]
   categories Category[]
 }
