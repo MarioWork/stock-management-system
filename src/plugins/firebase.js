@@ -2,7 +2,7 @@ require('dotenv').config();
 const util = require('util');
 const { pipeline } = require('stream');
 
-const pump = util.promisify(pipeline);
+const pipelineAsync = util.promisify(pipeline);
 
 const fp = require('fastify-plugin');
 
@@ -29,7 +29,7 @@ const plugin = async server => {
         server.decorate('saveFile', async (file, filename) => {
             const fileRef = storageBucket.file('images/' + filename);
 
-            const [error] = await to(pump(file, fileRef.createWriteStream(filename)));
+            const [error] = await to(pipelineAsync(file, fileRef.createWriteStream(filename)));
 
             if (error) {
                 throw error;
