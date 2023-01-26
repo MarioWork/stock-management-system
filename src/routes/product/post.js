@@ -17,22 +17,19 @@ const schema = {
 const options = { schema };
 
 module.exports = async server => {
-    const { prisma, saveFile, to } = server;
+    const { prisma, to } = server;
 
     server.post('/', options, async (request, reply) => {
         const { name, quantity, categories } = request.body;
 
-        const categoriesArray = categories?.value.split(',').map(el => ({ id: parseInt(el) }));
+        const categoriesArray = categories?.split(',').map(el => ({ id: parseInt(el) }));
 
         const [error, product] = await to(
-            createProduct(
-                { prisma, saveFile },
-                {
-                    name: name.value,
-                    quantity: quantity?.value,
-                    categories: categoriesArray
-                }
-            )
+            createProduct(prisma, {
+                name: name,
+                quantity: quantity,
+                categories: categoriesArray
+            })
         );
 
         if (error) {
