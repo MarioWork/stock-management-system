@@ -1,4 +1,8 @@
 require('dotenv').config();
+const util = require('util');
+const { pipeline } = require('stream');
+
+const pump = util.promisify(pipeline);
 
 const fp = require('fastify-plugin');
 
@@ -25,11 +29,13 @@ const plugin = async server => {
         server.decorate('saveFile', async (file, filename) => {
             const fileRef = storageBucket.file('images/' + filename);
 
-            const [error] = await to(fileRef.save(file));
+            const [error] = await to(pump(file, fileRef.createWriteStream(filename)));
 
-            return error
-                ? error
-                : fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
+            if (error) {
+                throw error;
+            }
+
+            return fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
         });
     } catch (error) {
         server.log.error(error);
