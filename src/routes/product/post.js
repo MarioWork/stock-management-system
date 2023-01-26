@@ -1,14 +1,7 @@
-const S = require('fluent-json-schema');
-
 const productSchema = require('../../schemas/product-schema');
 const { createProduct } = require('../../controllers/product-controller');
 
 const schema = {
-    body: S.object()
-        .additionalProperties(false)
-        .prop('name', S.string().required())
-        .prop('quantity', S.number())
-        .prop('categories', S.array().items(S.number())),
     response: {
         201: productSchema
     }
@@ -17,16 +10,32 @@ const schema = {
 const options = { schema };
 
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, saveFile, to } = server;
 
     server.post('/', options, async (request, reply) => {
-        const { name, categories, quantity } = request.body;
+        const data = await request.file();
 
-        const [error, product] = await to(createProduct(prisma, { name, quantity, categories }));
+        const { name, quantity, categories } = data.fields;
+
+        const categoriesArray = categories?.value.split(',').map(el => ({ id: parseInt(el) }));
+
+        const [error, product] = await to(
+            createProduct(
+                { prisma, saveFile },
+                {
+                    name: name.value,
+                    quantity: quantity?.value,
+                    categories: categoriesArray,
+                    imageFile: data.file,
+                    imageName: data.filename
+                }
+            )
+        );
 
         if (error) {
             server.log.error(error);
             await reply.internalServerError();
+            return;
         }
 
         await reply.code(201).send(product);
