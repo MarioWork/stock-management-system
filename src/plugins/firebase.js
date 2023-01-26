@@ -13,8 +13,6 @@ const { getStorage } = require('firebase-admin/storage');
 const { PluginNames } = require('../enums/plugins');
 const serviceAccount = require('../../credentials.json');
 
-const FILE_URL_EXPIRATION_DATE = '01-01-2026';
-
 const plugin = async server => {
     server.log.info(`Registering ${PluginNames.FIREBASE} plugin...`);
 
@@ -26,15 +24,17 @@ const plugin = async server => {
 
         const storageBucket = getStorage().bucket();
 
-        server.decorate('saveFile', async (file, filename, productId) => {
+        server.decorate('saveFile', async (file, filename) => {
             const randomID = randomUUID();
-            const fileRef = storageBucket.file(
-                'images/' + productId + '/' + randomID + '/' + filename
-            );
+            const fileRef = storageBucket.file('images/' + randomID + '/' + filename);
 
             await pipelineAsync(file, fileRef.createWriteStream(filename));
 
-            return fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
+            return 'http://127.0.0.1/api/image/' + randomID + '&filename=' + filename;
+        });
+
+        server.decorate('downloadFile', async (fileId, fileName) => {
+            return await storageBucket.file('images/' + fileId + '/' + fileName).download();
         });
     } catch (error) {
         server.log.error(error);
