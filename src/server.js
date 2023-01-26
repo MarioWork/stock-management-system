@@ -3,6 +3,7 @@ const path = require('path');
 
 const sensible = require('@fastify/sensible');
 const autoload = require('@fastify/autoload');
+const multipart = require('@fastify/multipart');
 
 const server = require('fastify')({
     logger: {
@@ -18,6 +19,9 @@ const server = require('fastify')({
 
 //To use an encapsulation of try and catch && http errors
 server.register(sensible);
+
+//Parse Multipart content-type
+server.register(multipart);
 
 //Auto load all plugins
 server.register(autoload, {
