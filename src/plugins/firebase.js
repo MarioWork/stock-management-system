@@ -1,6 +1,7 @@
 require('dotenv').config();
 const util = require('util');
 const { pipeline } = require('stream');
+const { randomUUID } = require('crypto');
 
 const pipelineAsync = util.promisify(pipeline);
 
@@ -25,8 +26,11 @@ const plugin = async server => {
 
         const storageBucket = getStorage().bucket();
 
-        server.decorate('saveFile', async (file, filename) => {
-            const fileRef = storageBucket.file('images/' + filename);
+        server.decorate('saveFile', async (file, filename, productId) => {
+            const randomID = randomUUID();
+            const fileRef = storageBucket.file(
+                'images/' + productId + '/' + randomID + '/' + filename
+            );
 
             await pipelineAsync(file, fileRef.createWriteStream(filename));
 
