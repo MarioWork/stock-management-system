@@ -33,15 +33,19 @@ const getAllProducts = prisma => {
     return getAllProductsPrisma(prisma);
 };
 
-/**
+/**TODO: update docs
  * Creates a product with the properties given
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {{name: string, quantity: number, categories: Category[]}} object - Object represents the product to create
  * @returns {Promise<Product>} - Promise object that returns product or error
  * @throws {error}
  */
-const createProduct = (prisma, { name, quantity, categories }) => {
-    return createProductPrisma(prisma, { name, quantity, categories });
+const createProduct = async (
+    { prisma, saveFile },
+    { name, quantity, categories, imageFile, imageName }
+) => {
+    const url = await saveFile(imageFile, imageName);
+    return createProductPrisma(prisma, { name, quantity, categories, url: url[0] });
 };
 
 /**
