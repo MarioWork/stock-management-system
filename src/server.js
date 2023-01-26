@@ -4,6 +4,7 @@ const path = require('path');
 const sensible = require('@fastify/sensible');
 const autoload = require('@fastify/autoload');
 const multipart = require('@fastify/multipart');
+const cors = require('@fastify/cors');
 
 const server = require('fastify')({
     logger: {
@@ -27,6 +28,8 @@ server.register(multipart);
 server.register(autoload, {
     dir: path.join(__dirname, 'plugins')
 });
+
+server.register(cors, { origin: '*' });
 
 //Auto load all routes plugins
 server.register(autoload, {
