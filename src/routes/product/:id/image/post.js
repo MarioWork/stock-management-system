@@ -24,7 +24,7 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(data.file, data.filename, id));
+        const [saveFileError, url] = await to(saveFile(data.file, data.filename));
 
         if (saveFileError) {
             server.log.error(saveFileError);
