@@ -37,7 +37,7 @@ module.exports = async server => {
 
         //TODO: create method to delete image in case of error
         if (!product) {
-            await reply.notFound();
+            await reply.notFound(`No product found with ID: ${id}`);
             return;
         }
 
