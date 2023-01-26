@@ -20,6 +20,7 @@ const getProductById = (prisma, id) => {
             id: true,
             name: true,
             quantity: true,
+            images: true,
             categories: { select: { id: true, name: true } }
         }
     });
@@ -38,6 +39,7 @@ const getAllProducts = prisma => {
             id: true,
             name: true,
             quantity: true,
+            images: true,
             categories: { select: { id: true, name: true } }
         }
     });
