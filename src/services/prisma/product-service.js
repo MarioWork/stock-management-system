@@ -62,7 +62,7 @@ const createProduct = (prisma, { name, quantity, categories, url }) => {
             id: true,
             name: true,
             quantity: true,
-            url: true,
+            images: true,
             categories: { select: { id: true, name: true } }
         }
     });
