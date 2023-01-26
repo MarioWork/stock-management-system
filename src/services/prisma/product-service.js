@@ -43,24 +43,26 @@ const getAllProducts = prisma => {
     });
 };
 
-/**
+/** TODO: Update docs
  * Creates a product with the properties given
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{name: string, quantity: number, categories: Category[]}} object - Object represents the product to create
+ * @param {{name: string, quantity: number, categories: {id: number}[]}} object - Object represents the product to create
  * @returns {Promise<Product>} - Promise object that returns product or error
  * @throws {error}
  */
-const createProduct = (prisma, { name, quantity, categories }) => {
+const createProduct = (prisma, { name, quantity, categories, url }) => {
     return prisma.product.create({
         data: {
             name,
             quantity,
+            url,
             categories: { connect: categories }
         },
         select: {
             id: true,
             name: true,
             quantity: true,
+            url: true,
             categories: { select: { id: true, name: true } }
         }
     });
