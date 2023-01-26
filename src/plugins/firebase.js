@@ -16,7 +16,6 @@ const FILE_URL_EXPIRATION_DATE = '01-01-2026';
 
 const plugin = async server => {
     server.log.info(`Registering ${PluginNames.FIREBASE} plugin...`);
-    const { to } = server;
 
     try {
         initializeApp({
@@ -29,11 +28,7 @@ const plugin = async server => {
         server.decorate('saveFile', async (file, filename) => {
             const fileRef = storageBucket.file('images/' + filename);
 
-            const [error] = await to(pipelineAsync(file, fileRef.createWriteStream(filename)));
-
-            if (error) {
-                throw error;
-            }
+            await pipelineAsync(file, fileRef.createWriteStream(filename));
 
             return fileRef.getSignedUrl({ action: 'read', expires: FILE_URL_EXPIRATION_DATE });
         });
