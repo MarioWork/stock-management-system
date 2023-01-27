@@ -1,11 +1,6 @@
 const S = require('fluent-json-schema');
 
-//TODO: Move to separate file
-const AllowedFileType = {
-    PNG: 'png',
-    JPG: 'jpg',
-    JPEG: 'jpeg'
-};
+const { AllowedFileType } = require('../../../enums/allowed-files-type');
 
 const schema = {
     params: S.object().prop('id', S.string()).required(['id']),
@@ -22,6 +17,7 @@ module.exports = async server => {
         const { type } = request.query;
 
         const fileBuffer = await server.downloadFile(id, type);
+        //TODO: Add error if the file does not exist
 
         reply.type('image');
         await reply.send(fileBuffer[0]);
