@@ -34,8 +34,7 @@ const plugin = async server => {
 
             await pipelineAsync(file, fileRef.createWriteStream(fileName));
 
-            //TODO add baseurl to env
-            return 'http://127.0.0.1:5000/api/image/' + randomID + '?type=' + type;
+            return process.env.IMAGE_BASE_URL + randomID + '?type=' + type;
         });
 
         //TODO: MOve this to firebase service
