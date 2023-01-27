@@ -1,7 +1,7 @@
 const S = require('fluent-json-schema');
 
 const productSchema = require('../../../../schemas/product-schema');
-const { AllowedFileType } = require('../../../../enums/allowed-files-type');
+const { AllowedFileType } = require('../../../../enums/allowed-file-type');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
 
 const schema = {
