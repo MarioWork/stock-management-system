@@ -26,7 +26,7 @@ module.exports = async server => {
         const [error, updatedCategory] = await to(updateCategory(prisma, { id, name }));
 
         if (!updatedCategory) {
-            await reply.notFound();
+            await reply.notFound(`Category with ID: ${id} was not found`);
             return;
         }
 

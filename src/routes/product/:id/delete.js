@@ -20,7 +20,7 @@ module.exports = async server => {
         const [error, { count }] = await to(deleteProducts(prisma, [id]));
 
         if (count === 0) {
-            await reply.notFound();
+            await reply.notFound(`Product with ID: ${id} was not found`);
             return;
         }
 

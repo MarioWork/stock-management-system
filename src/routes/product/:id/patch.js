@@ -33,7 +33,7 @@ module.exports = async server => {
         );
 
         if (!updatedProduct) {
-            await reply.notFound();
+            await reply.notFound(`Product with ID: ${id} was not found`);
             return;
         }
 

@@ -20,10 +20,11 @@ const options = {
 module.exports = async server => {
     const { prisma, to } = server;
     server.get('/', options, async (request, reply) => {
-        const [error, category] = await to(getCategoryById(prisma, parseInt(request.params.id)));
+        const { id } = request.params.id;
+        const [error, category] = await to(getCategoryById(prisma, parseInt(id)));
 
         if (!category) {
-            await reply.notFound();
+            await reply.notFound(`Category with ID: ${id} was not found`);
             return;
         }
 
