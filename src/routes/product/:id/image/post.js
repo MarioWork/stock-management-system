@@ -1,6 +1,7 @@
 const S = require('fluent-json-schema');
 
 const productSchema = require('../../../../schemas/product-schema');
+const { AllowedFileType } = require('../../../../enums/allowed-files-type');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
 
 const schema = {
@@ -25,8 +26,12 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        //TODO: allow only png jpg and jpeg
         const fileType = data.mimetype.split('/')[1];
+
+        if (!Object.values(AllowedFileType).includes(fileType.toLowerCase())) {
+            await reply.badRequest('File type not allowed');
+            return;
+        }
 
         const [saveFileError, url] = await to(saveFile(data.file, fileType));
 
