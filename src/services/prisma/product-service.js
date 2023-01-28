@@ -29,12 +29,18 @@ const getProductById = (prisma, id) => {
 /**
  * Retrieves all products
  * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} query - text to search with
  * @returns {Promise<Product[]>} - Promise object that returns product array or error
  * @throws {error}
  */
 //TODO: Add Filter
-const getAllProducts = prisma => {
+const getAllProducts = (prisma, query) => {
     return prisma.product.findMany({
+        where: {
+            name: {
+                contains: query
+            }
+        },
         select: {
             id: true,
             name: true,

@@ -25,12 +25,12 @@ const getProductById = (prisma, id) => {
 /**
  * Retrieves all products
  * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} query - text to search with
  * @returns {Promise<Product[]>} - Promise object that returns product array or error
  * @throws {error}
  */
-//TODO: Add Filter
-const getAllProducts = prisma => {
-    return getAllProductsPrisma(prisma);
+const getAllProducts = (prisma, query) => {
+    return getAllProductsPrisma(prisma, query);
 };
 
 /**

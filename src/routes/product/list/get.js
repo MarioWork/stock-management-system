@@ -12,8 +12,10 @@ const options = { schema };
 module.exports = async server => {
     const { prisma, to } = server;
 
-    server.get('/', options, async (_, reply) => {
-        const [error, products] = await to(getAllProducts(prisma));
+    server.get('/', options, async (request, reply) => {
+        const { query } = request.query;
+
+        const [error, products] = await to(getAllProducts(prisma, query));
 
         if (error) {
             server.log.error(error);
