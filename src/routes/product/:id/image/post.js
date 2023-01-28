@@ -3,7 +3,7 @@ const S = require('fluent-json-schema');
 const productSchema = require('../../../../schemas/product-schema');
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
-const { saveFile } = require('../../../../services/cloud-storage/file-service');
+const { saveFile, deleteFile } = require('../../../../services/cloud-storage/file-service');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
@@ -14,26 +14,29 @@ const schema = {
 
 const options = { schema };
 
+//TODO: Move some logic to image controller
 module.exports = async server => {
     const { prisma, storage, to } = server;
 
     server.post('/', options, async (request, reply) => {
         const { mimetype, filename, file } = await request.file();
-        const fileType = mimetype.split('/')[1];
+        const fileType = mimetype.split('/')[1]?.toLowerCase();
 
         if (filename === '') {
             await reply.badRequest('Missing file content');
             return;
         }
 
-        if (!Object.values(AllowedFileType).includes(fileType.toLowerCase())) {
+        if (!Object.values(AllowedFileType).includes(fileType)) {
             await reply.badRequest('File type not allowed');
             return;
         }
 
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(storage, { file: file, type: fileType }));
+        const [saveFileError, { url, fileID }] = await to(
+            saveFile(storage, { file: file, type: fileType })
+        );
 
         if (saveFileError) {
             server.log.error(saveFileError);
@@ -43,13 +46,12 @@ module.exports = async server => {
 
         const [addImageUrlError, product] = await to(addImageUrlToProduct(prisma, { id, url }));
 
-        //TODO: create method to delete image in case of error
         if (!product) {
+            deleteFile(storage, { id: fileID, type: fileType });
             await reply.notFound(`Product with ID: ${id} was not found`);
             return;
         }
 
-        //TODO: create method to delete image in case of error
         if (addImageUrlError) {
             server.log.error(addImageUrlError);
             await reply.internalServerError();
