@@ -12,7 +12,7 @@ const options = { schema };
 module.exports = async server => {
     const { prisma, to } = server;
 
-    server.get('/', options, async (request, reply) => {
+    server.get('/', options, async (_, reply) => {
         const [error, products] = await to(getAllProducts(prisma));
 
         if (error) {
