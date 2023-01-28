@@ -122,10 +122,18 @@ const updateProduct = (prisma, { id, name, quantity, categories, url }) => {
     });
 };
 
+const productExists = (prisma, id) => {
+    return prisma.product.findUnique({
+        where: { id },
+        select: { id: true }
+    });
+};
+
 module.exports = {
     createProduct,
     deleteProducts,
     getProductById,
     getAllProducts,
-    updateProduct
+    updateProduct,
+    productExists
 };

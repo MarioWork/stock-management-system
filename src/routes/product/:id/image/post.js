@@ -3,7 +3,6 @@ const S = require('fluent-json-schema');
 const productSchema = require('../../../../schemas/product-schema');
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
-const { saveFile, deleteFile } = require('../../../../services/cloud-storage/file-service');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
@@ -21,11 +20,13 @@ module.exports = async server => {
         const { mimetype, filename, file } = await request.file();
         const fileType = mimetype.split('/')[1]?.toLowerCase();
 
+        //If there is not file content
         if (filename === '') {
             await reply.badRequest('Missing file content');
             return;
         }
 
+        //If the file type is not allowed
         if (!Object.values(AllowedFileType).includes(fileType)) {
             await reply.badRequest('File type not allowed');
             return;
@@ -33,28 +34,19 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        //TODO: Move this logic to Product Controller
-        const [saveFileError, { url, fileID }] = await to(
-            saveFile(storage, { file: file, type: fileType })
+        const [error, product] = await to(
+            addImageUrlToProduct({ prisma, storage, to }, { productId: id, file, fileType })
         );
 
-        if (saveFileError) {
-            server.log.error(saveFileError);
-            await reply.internalServerError();
+        //TODO: localize strings
+        //If the product does not exist
+        if (error === 404) {
+            await reply.notFound(`Product with ID: ${id} does not exist`);
             return;
         }
 
-        const [addImageUrlError, product] = await to(addImageUrlToProduct(prisma, { id, url }));
-
-        if (!product) {
-            deleteFile(storage, { id: fileID, type: fileType });
-            await reply.notFound(`Product with ID: ${id} was not found`);
-            return;
-        }
-
-        if (addImageUrlError) {
-            deleteFile(storage, { id: fileID, type: fileType });
-            server.log.error(addImageUrlError);
+        if (error) {
+            server.log.error(error);
             await reply.internalServerError();
             return;
         }

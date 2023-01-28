@@ -3,12 +3,15 @@
  * @typedef { import('../types/category-docs-type') } Category
  * @typedef { import('../types/product-docs-type') } Product
  */
+
+const { saveFile, deleteFile } = require('../services/cloud-storage/file-service');
 const {
     createProduct: createProductPrisma,
     deleteProducts: deleteProductsPrisma,
     getProductById: getProductByIdPrisma,
     getAllProducts: getAllProductsPrisma,
-    updateProduct: updateProductPrisma
+    updateProduct: updateProductPrisma,
+    productExists
 } = require('../services/prisma/product-service');
 
 /**
@@ -71,8 +74,22 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
  * @param {{id: number, url: string}} object - Object with product id and image url
  * @returns {Promise<Product>} - Return the updated product
  */
-const addImageUrlToProduct = (prisma, { id, url }) => {
-    return updateProductPrisma(prisma, { id, url });
+const addImageUrlToProduct = async ({ prisma, storage, to }, { productId, file, fileType }) => {
+    //TODO: UPDATE DOCS
+
+    const [findProductError, product] = await to(productExists(prisma, productId));
+
+    if (!product) throw 404;
+    if (findProductError) throw findProductError;
+
+    const { url, fileId } = await saveFile(storage, { file: file, type: fileType });
+
+    const [error, _] = await to(updateProductPrisma(prisma, { id: productId, url }));
+
+    if (error) {
+        deleteFile(storage, { id: fileId, type: fileType });
+        throw error;
+    }
 };
 
 module.exports = {
