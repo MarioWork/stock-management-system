@@ -1,10 +1,10 @@
 const S = require('fluent-json-schema');
 
-const productSchema = require('../../../schemas/category-schema');
+const productSchema = require('../../../schemas/product-schema');
 const { getAllProducts } = require('../../../controllers/product-controller');
 
 const schema = {
-    response: { 200: S.array().items(S.oneOf([productSchema, S.null()])) }
+    response: { 200: S.array().items(productSchema) }
 };
 
 const options = { schema };
