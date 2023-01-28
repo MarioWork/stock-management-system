@@ -34,6 +34,7 @@ module.exports = async server => {
 
         const { id } = request.params;
 
+        //TODO: Move this logic to Product Controller
         const [saveFileError, { url, fileID }] = await to(
             saveFile(storage, { file: file, type: fileType })
         );
