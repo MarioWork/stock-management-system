@@ -1,6 +1,6 @@
 const S = require('fluent-json-schema');
 
-const { downloadFile } = require('../../../services/firebase/file-service');
+const { downloadFile } = require('../../../services/cloud-storage/file-service');
 const { AllowedFileType } = require('../../../enums/allowed-file-type');
 
 const schema = {

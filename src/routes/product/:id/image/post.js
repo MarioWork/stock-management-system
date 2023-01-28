@@ -3,7 +3,7 @@ const S = require('fluent-json-schema');
 const productSchema = require('../../../../schemas/product-schema');
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
-const { saveFile } = require('../../../../services/firebase/file-service');
+const { saveFile } = require('../../../../services/cloud-storage/file-service');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
