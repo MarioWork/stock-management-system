@@ -33,7 +33,6 @@ const getProductById = (prisma, id) => {
  * @returns {Promise<Product[]>} - Promise object that returns product array or error
  * @throws {error}
  */
-//TODO: Add Filter
 const getAllProducts = (prisma, query) => {
     return prisma.product.findMany({
         where: {
