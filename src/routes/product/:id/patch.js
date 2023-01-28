@@ -25,6 +25,7 @@ module.exports = async server => {
 
         if (!name && !quantity && !categories) {
             await reply.badRequest('Needs at least one property (name, quantity or categories)');
+            return;
         }
 
         const [error, updatedProduct] = await to(
@@ -33,11 +34,13 @@ module.exports = async server => {
 
         if (!updatedProduct) {
             await reply.notFound(`Product with ID: ${id} was not found`);
+            return;
         }
 
         if (error) {
             server.log.error(error);
             await reply.internalServerError();
+            return;
         }
 
         await reply.code(200).send(updatedProduct);

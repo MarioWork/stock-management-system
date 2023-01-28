@@ -27,11 +27,13 @@ module.exports = async server => {
 
         if (!updatedCategory) {
             await reply.notFound(`Category with ID: ${id} was not found`);
+            return;
         }
 
         if (error) {
             server.log.error(error);
             await reply.internalServerError();
+            return;
         }
 
         await reply.code(200).send(updatedCategory);
