@@ -24,7 +24,6 @@ module.exports = async server => {
         if (error) {
             server.log.error(error);
             await reply.internalServerError();
-            return;
         }
 
         await reply.code(200).send(categories);

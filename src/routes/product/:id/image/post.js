@@ -21,7 +21,6 @@ module.exports = async server => {
 
         if (data.filename === '') {
             await reply.badRequest('Missing file content');
-            return;
         }
 
         const { id } = request.params;
@@ -30,7 +29,6 @@ module.exports = async server => {
 
         if (!Object.values(AllowedFileType).includes(fileType.toLowerCase())) {
             await reply.badRequest('File type not allowed');
-            return;
         }
 
         const [saveFileError, url] = await to(saveFile(data.file, fileType));
@@ -38,7 +36,6 @@ module.exports = async server => {
         if (saveFileError) {
             server.log.error(saveFileError);
             await reply.internalServerError();
-            return;
         }
 
         const [addImageUrlError, product] = await to(addImageUrlToProduct(prisma, { id, url }));
@@ -46,14 +43,12 @@ module.exports = async server => {
         //TODO: create method to delete image in case of error
         if (!product) {
             await reply.notFound(`Product with ID: ${id} was not found`);
-            return;
         }
 
         //TODO: create method to delete image in case of error
         if (addImageUrlError) {
             server.log.error(addImageUrlError);
             await reply.internalServerError();
-            return;
         }
 
         await reply.code(200).send(product);

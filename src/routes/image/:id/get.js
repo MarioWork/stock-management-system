@@ -22,11 +22,9 @@ module.exports = async server => {
         if (error) {
             if (error.code === 404) {
                 await reply.notFound();
-                return;
             }
             server.log.error(error);
             await reply.internalServerError();
-            return;
         }
 
         reply.type('image');

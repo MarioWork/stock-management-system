@@ -21,13 +21,11 @@ module.exports = async server => {
 
         if (count === 0) {
             await reply.notFound(`Product with ID: ${id} was not found`);
-            return;
         }
 
         if (error) {
             server.log.error(error);
             await reply.internalServerError();
-            return;
         }
 
         await reply.code(200).send({ message: 'Delete successfully!' });
