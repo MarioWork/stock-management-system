@@ -38,7 +38,8 @@ const getAllProducts = (prisma, query) => {
     return prisma.product.findMany({
         where: {
             name: {
-                contains: query
+                contains: query,
+                mode: 'insensitive'
             }
         },
         select: {
