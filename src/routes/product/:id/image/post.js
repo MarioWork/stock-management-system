@@ -14,7 +14,6 @@ const schema = {
 
 const options = { schema };
 
-//TODO: Move some logic to image controller
 module.exports = async server => {
     const { prisma, storage, to } = server;
 
