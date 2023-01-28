@@ -65,30 +65,14 @@ const deleteProducts = (prisma, ids) => {
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
     return updateProductPrisma(prisma, { id, name, quantity, categories });
 };
-//TODO: add docs && refactor to prisma service
+/**
+ * Adds a image url to the list of images of the product
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: number, url: string}} object - Object with product id and image url
+ * @returns {Promise<Product>} - Return the updated product
+ */
 const addImageUrlToProduct = (prisma, { id, url }) => {
-    return prisma.product.update({
-        where: {
-            id
-        },
-        data: {
-            images: {
-                push: url
-            }
-        },
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            images: true,
-            categories: {
-                select: {
-                    id: true,
-                    name: true
-                }
-            }
-        }
-    });
+    return updateProductPrisma(prisma, { id, url });
 };
 
 module.exports = {

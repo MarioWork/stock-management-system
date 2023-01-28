@@ -87,18 +87,19 @@ const deleteProducts = (prisma, ids) => {
 
 /**
  * Updates the category based on the properties given
- * Does not need all properties but, needs at least one (name, quantity, categories)
+ * Does not need all properties but, needs at least one (name, quantity, categories, url)
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id: number,quantity: number=, categories: Category[]=}} object - Object that represents what to update
+ * @param {{id: number,quantity: number=, categories: Category[]=, url: string=}} object - Object that represents what data to update
  * @returns {Promise<Product>} - Returns the update product
  */
-const updateProduct = (prisma, { id, name, quantity, categories }) => {
+const updateProduct = (prisma, { id, name, quantity, categories, url }) => {
     return prisma.product.update({
         where: { id },
         data: {
             name,
             quantity,
-            categories: { connect: categories }
+            categories: { connect: categories },
+            images: { push: url }
         },
         select: {
             id: true,
