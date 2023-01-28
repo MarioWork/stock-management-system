@@ -1,5 +1,5 @@
 /**
- * @typedef { import("../types/prisma-docs-type") } PrismaClient
+ * @typedef {import("../types/prisma-docs-type")} PrismaClient
  * @typedef { import('../types/category-docs-type') } Category
  * @typedef { import('../types/product-docs-type') } Product
  */
@@ -70,13 +70,12 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
 };
 /**
  * Adds a image url to the list of images of the product
- * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{prisma: PrismaClient, storage: *, to: *}} object - Dependencies
  * @param {{id: number, url: string}} object - Object with product id and image url
- * @returns {Promise<Product>} - Return the updated product
+ * @returns {Product} - Returns the updated product
+ * @throws {error}
  */
 const addImageUrlToProduct = async ({ prisma, storage, to }, { productId, file, fileType }) => {
-    //TODO: UPDATE DOCS
-
     const [findProductError, product] = await to(productExists(prisma, productId));
 
     if (!product) throw 404;
@@ -84,12 +83,14 @@ const addImageUrlToProduct = async ({ prisma, storage, to }, { productId, file, 
 
     const { url, fileId } = await saveFile(storage, { file: file, type: fileType });
 
-    const [error, _] = await to(updateProductPrisma(prisma, { id: productId, url }));
+    const [error, updatedProduct] = await to(updateProductPrisma(prisma, { id: productId, url }));
 
     if (error) {
         deleteFile(storage, { id: fileId, type: fileType });
         throw error;
     }
+
+    return updatedProduct;
 };
 
 module.exports = {

@@ -1,3 +1,3 @@
 /**
- * @typedef { import("@prisma/client").PrismaClient } PrismaClient
+ * @typedef {import("@prisma/client").PrismaClient} PrismaClient
  */
