@@ -33,7 +33,7 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(storage, { file: file, fileType }));
+        const [saveFileError, url] = await to(saveFile(storage, { file: file, type: fileType }));
 
         if (saveFileError) {
             server.log.error(saveFileError);
