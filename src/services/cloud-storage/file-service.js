@@ -7,7 +7,13 @@ const { pipeline } = require('stream');
 
 const pipelineAsync = util.promisify(pipeline);
 
-//TODO: Add docs
+/**
+ * Saves a file to storage bucket
+ * @param {*} storage - Storage bucket instance
+ * @param {{file: FileStream, type: string}} object - Object with file: FileStream and type: string
+ * @returns {{url: string, fileId: number}} - Object with file url and fileID
+ * @throws {error}
+ */
 const saveFile = async (storage, { file, type }) => {
     const randomID = randomUUID();
 
@@ -20,11 +26,24 @@ const saveFile = async (storage, { file, type }) => {
     return { url: process.env.IMAGE_BASE_URL + randomID + '?type=' + type, fileId: randomID };
 };
 
-//TODO: Add docs
+/**
+ * Downloads file from storage bucket and return its buffer
+ * @param {*} storage - Storage bucket instance
+ * @param {{file: FileStream, type: string}} object - Object with file: FileStream and type: string
+ * @returns {Buffer} - File Buffer
+ * @throws {error}
+ */
 const downloadFile = async (storage, { id, type }) => {
     return await storage.file(BASE_PATH + id + '.' + type).download();
 };
 
+/**
+ * Deletes a file from the storage bucket
+ * @param {*} storage - Storage bucket instance
+ * @param {{file: FileStream, type: string}} object - Object with file: FileStream and type: string
+ * @returns
+ * @throws {error}
+ */
 const deleteFile = async (storage, { id, type }) => {
     return await storage.file(BASE_PATH + id + '.' + type).delete();
 };
