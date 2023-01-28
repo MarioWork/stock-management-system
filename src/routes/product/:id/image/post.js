@@ -53,6 +53,7 @@ module.exports = async server => {
         }
 
         if (addImageUrlError) {
+            deleteFile(storage, { id: fileID, type: fileType });
             server.log.error(addImageUrlError);
             await reply.internalServerError();
             return;
