@@ -3,6 +3,7 @@ const S = require('fluent-json-schema');
 const productSchema = require('../../../../schemas/product-schema');
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
 const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
+const { saveFile } = require('../../../../services/firebase/file-service');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
@@ -14,13 +15,13 @@ const schema = {
 const options = { schema };
 
 module.exports = async server => {
-    const { prisma, saveFile, to } = server;
+    const { prisma, storage, to } = server;
 
     server.post('/', options, async (request, reply) => {
-        const data = await request.file();
-        const fileType = data.mimetype.split('/')[1];
+        const { mimetype, filename, file } = await request.file();
+        const fileType = mimetype.split('/')[1];
 
-        if (data.filename === '') {
+        if (filename === '') {
             await reply.badRequest('Missing file content');
             return;
         }
@@ -32,7 +33,7 @@ module.exports = async server => {
 
         const { id } = request.params;
 
-        const [saveFileError, url] = await to(saveFile(data.file, fileType));
+        const [saveFileError, url] = await to(saveFile(storage, { file: file, fileType }));
 
         if (saveFileError) {
             server.log.error(saveFileError);
