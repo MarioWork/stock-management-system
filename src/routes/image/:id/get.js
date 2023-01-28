@@ -1,5 +1,6 @@
 const S = require('fluent-json-schema');
 
+const { downloadFile } = require('../../../services/firebase/file-service');
 const { AllowedFileType } = require('../../../enums/allowed-file-type');
 
 const schema = {
@@ -12,12 +13,12 @@ const schema = {
 const options = { schema };
 
 module.exports = async server => {
-    const { to, downloadFile } = server;
+    const { to, storage } = server;
     server.get('/', options, async (request, reply) => {
         const { id } = request.params;
         const { type } = request.query;
 
-        const [error, fileBuffer] = await to(downloadFile(id, type));
+        const [error, fileBuffer] = await to(downloadFile(storage, { id, type }));
 
         if (error) {
             if (error.code === 404) {
