@@ -7,7 +7,7 @@ const { pipeline } = require('stream');
 
 const pipelineAsync = util.promisify(pipeline);
 
-const createBucketPath = ({ id, type }) => BASE_PATH + id + '.' + type;
+const createBucketObjPath = ({ id, type }) => BASE_PATH + id + '.' + type;
 
 /**
  * Saves a file to storage bucket
@@ -35,9 +35,8 @@ const saveFile = async (storage, { file, type }) => {
  * @returns {Buffer} - File Buffer
  * @throws {error}
  */
-const downloadFile = async (storage, { id, type }) => {
-    return await storage.file(createBucketPath(id, type)).download();
-};
+const downloadFile = async (storage, { id, type }) =>
+    await storage.file(createBucketObjPath(id, type)).download();
 
 /**
  * Deletes a file from the storage bucket
@@ -46,9 +45,8 @@ const downloadFile = async (storage, { id, type }) => {
  * @returns
  * @throws {error}
  */
-const deleteFile = async (storage, { id, type }) => {
-    return await storage.file(createBucketPath({ id, type })).delete();
-};
+const deleteFile = async (storage, { id, type }) =>
+    await storage.file(createBucketObjPath({ id, type })).delete();
 
 module.exports = {
     saveFile,
