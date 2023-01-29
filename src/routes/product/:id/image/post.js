@@ -2,7 +2,7 @@ const S = require('fluent-json-schema');
 
 const productSchema = require('../../../../schemas/product-schema');
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
-const { addImageUrlToProduct } = require('../../../../controllers/product-controller');
+const { addImageToProduct } = require('../../../../controllers/product-controller');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
@@ -36,7 +36,7 @@ module.exports = async server => {
         const { id } = request.params;
 
         const [error, product] = await to(
-            addImageUrlToProduct({ prisma, storage, to }, { productId: id, file, fileType })
+            addImageToProduct({ prisma, storage, to }, { productId: id, file, fileType })
         );
 
         //TODO: localize strings

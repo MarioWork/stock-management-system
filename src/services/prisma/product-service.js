@@ -97,14 +97,13 @@ const deleteProducts = (prisma, ids) => {
  * @param {{id: number,quantity: number=, categories: Category[]=, url: string=}} object - Object that represents what data to update
  * @returns {Promise<Product>} - Returns the update product
  */
-const updateProduct = (prisma, { id, name, quantity, categories, url }) => {
+const updateProduct = (prisma, { id, name, quantity, categories }) => {
     return prisma.product.update({
         where: { id },
         data: {
             name,
             quantity,
-            categories: { connect: categories },
-            images: { push: url }
+            categories: { connect: categories }
         },
         select: {
             id: true,
@@ -117,6 +116,34 @@ const updateProduct = (prisma, { id, name, quantity, categories, url }) => {
                     name: true
                 }
             }
+        }
+    });
+};
+
+//TODO: add docs
+const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => {
+    return prisma.product.update({
+        where: { id: productId },
+        data: {
+            images: {
+                connectOrCreate: {
+                    where: { id: fileId },
+                    create: {
+                        id: fileId,
+                        url: fileUrl,
+                        type: fileType
+                    }
+                }
+            }
+        },
+        select: {
+            id: true,
+            name: true,
+            quantity: true,
+            images: {
+                select: { id: true, url: true }
+            },
+            categories: { select: { id: true, name: true } }
         }
     });
 };
@@ -142,5 +169,6 @@ module.exports = {
     getProductById,
     getAllProducts,
     updateProduct,
-    productExists
+    productExists,
+    addImageToProduct
 };

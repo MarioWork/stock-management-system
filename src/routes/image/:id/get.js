@@ -1,24 +1,19 @@
 const S = require('fluent-json-schema');
 
 const { downloadFile } = require('../../../services/cloud-storage/file-service');
-const { AllowedFileType } = require('../../../enums/allowed-file-type');
 
 const schema = {
-    params: S.object().prop('id', S.string()).required(['id']),
-    query: S.object()
-        .prop('type', S.string().enum(Object.values(AllowedFileType)))
-        .required(['type'])
+    params: S.object().prop('id', S.string()).required(['id'])
 };
 
 const options = { schema };
 
 module.exports = async server => {
-    const { to, storage } = server;
+    const { to, storage, prisma } = server;
     server.get('/', options, async (request, reply) => {
         const { id } = request.params;
-        const { type } = request.query;
 
-        const [error, fileBuffer] = await to(downloadFile(storage, { id, type }));
+        const [error, fileBuffer] = await to(downloadFile({ storage, prisma }, { id }));
 
         if (error) {
             if (error.code === 404) {

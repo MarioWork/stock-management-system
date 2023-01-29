@@ -7,6 +7,8 @@ const { pipeline } = require('stream');
 
 const pipelineAsync = util.promisify(pipeline);
 
+const { getFile } = require('../../controllers/file-controller');
+
 const createBucketObjPath = ({ id, type }) => BASE_PATH + id + '.' + type;
 
 /**
@@ -25,7 +27,7 @@ const saveFile = async (storage, { file, type }) => {
 
     await pipelineAsync(file, fileRef.createWriteStream(fileName));
 
-    return { url: process.env.IMAGE_BASE_URL + randomID + '?type=' + type, fileId: randomID };
+    return { fileUrl: process.env.IMAGE_BASE_URL + randomID, fileId: randomID };
 };
 
 /**
@@ -35,8 +37,11 @@ const saveFile = async (storage, { file, type }) => {
  * @returns {Buffer} - File Buffer
  * @throws {error}
  */
-const downloadFile = async (storage, { id, type }) =>
-    await storage.file(createBucketObjPath(id, type)).download();
+//TODO: update docs depndencies
+const downloadFile = async ({ storage, prisma }, { id }) => {
+    const { type } = await getFile(prisma, id);
+    return await storage.file(createBucketObjPath({ id, type })).download();
+};
 
 /**
  * Deletes a file from the storage bucket

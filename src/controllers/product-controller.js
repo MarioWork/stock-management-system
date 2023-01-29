@@ -11,6 +11,7 @@ const {
     getProductById: getProductByIdPrisma,
     getAllProducts: getAllProductsPrisma,
     updateProduct: updateProductPrisma,
+    addImageToProduct: addImageToProductPrisma,
     productExists
 } = require('../services/prisma/product-service');
 
@@ -75,18 +76,20 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
  * @returns {Product} - Returns the updated product
  * @throws {error}
  */
-const addImageUrlToProduct = async ({ prisma, storage, to }, { productId, file, fileType }) => {
+const addImageToProduct = async ({ prisma, storage, to }, { productId, file, fileType }) => {
     const [findProductError, product] = await to(productExists(prisma, productId));
 
     if (!product) throw 404;
     if (findProductError) throw findProductError;
 
-    const { url, fileId } = await saveFile(storage, { file: file, type: fileType });
+    const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
 
-    const [error, updatedProduct] = await to(updateProductPrisma(prisma, { id: productId, url }));
+    const [error, updatedProduct] = await to(
+        addImageToProductPrisma(prisma, { productId, fileId, fileType, fileUrl })
+    );
 
     if (error) {
-        deleteFile(storage, { id: fileId, type: fileType });
+        await deleteFile(storage, { id: fileId, type: fileType });
         throw error;
     }
 
@@ -99,5 +102,5 @@ module.exports = {
     getProductById,
     getAllProducts,
     updateProduct,
-    addImageUrlToProduct
+    addImageToProduct
 };
