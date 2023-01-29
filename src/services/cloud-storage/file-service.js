@@ -1,15 +1,18 @@
 require('dotenv').config();
-
-const BASE_PATH = 'images/';
 const { randomUUID } = require('crypto');
 const util = require('util');
 const { pipeline } = require('stream');
 
+const BASE_PATH = 'images/';
 const pipelineAsync = util.promisify(pipeline);
 
 const { getFile } = require('../../controllers/file-controller');
 
 const createBucketObjPath = ({ id, type }) => BASE_PATH + id + '.' + type;
+
+/**
+ * @typedef { import("../../types/prisma-docs-type") } PrismaClient
+ */
 
 /**
  * Saves a file to storage bucket
@@ -32,12 +35,11 @@ const saveFile = async (storage, { file, type }) => {
 
 /**
  * Downloads file from storage bucket and return its buffer
- * @param {*} storage - Storage bucket instance
+ * @param {{storage:*, prisma: PrismaClient}} Dependencies - Storage bucket instance
  * @param {{file: FileStream, type: string}} object - Object with file: FileStream and type: string
  * @returns {Buffer} - File Buffer
  * @throws {error}
  */
-//TODO: update docs depndencies
 const downloadFile = async ({ storage, prisma }, { id }) => {
     const { type } = await getFile(prisma, id);
     return await storage.file(createBucketObjPath({ id, type })).download();
