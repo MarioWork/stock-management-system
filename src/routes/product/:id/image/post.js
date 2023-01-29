@@ -13,7 +13,6 @@ const schema = {
 
 const options = { schema };
 
-//TODO: refactor save image into its own model with id && type && url && created at / updated at
 module.exports = async server => {
     const { prisma, storage, to } = server;
 
