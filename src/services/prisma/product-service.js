@@ -122,6 +122,14 @@ const updateProduct = (prisma, { id, name, quantity, categories, url }) => {
     });
 };
 
+/**
+ * Checks if a product exists with a quick query
+ * that only returns the id if it was found
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {number} id - Product id
+ * @returns {id: number} - Product id if exists
+ * @throws {error}
+ */
 const productExists = (prisma, id) => {
     return prisma.product.findUnique({
         where: { id },
