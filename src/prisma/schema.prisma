@@ -24,6 +24,14 @@ model Product {
   updatedAt  DateTime   @updatedAt
   name       String
   quantity   Int        @default(0)
-  images     String[]
+  images     File[]
   categories Category[]
+}
+
+model File {
+  id        String   @id @unique
+  url       String
+  type      String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
 }
