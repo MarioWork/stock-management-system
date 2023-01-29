@@ -40,7 +40,7 @@ const downloadFile = async (storage, { id, type }) => {
 /**
  * Deletes a file from the storage bucket
  * @param {*} storage - Storage bucket instance
- * @param {{file: FileStream, type: string}} object - Object with file: FileStream and type: string
+ * @param {{id: number, type: string}} object - Object with file: FileStream and type: string
  * @returns
  * @throws {error}
  */
