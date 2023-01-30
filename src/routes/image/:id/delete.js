@@ -10,10 +10,9 @@ module.exports = async server => {
     server.delete('/', options, async (request, reply) => {
         const { id } = request.params;
 
-        const [error, count] = await to(deleteFile({ prisma, storage }, id));
+        const [error, deletedFile] = await to(deleteFile({ prisma, storage }, id));
 
-        if (count === 0 || error === 404) {
-            console.log('xd');
+        if (!deletedFile || error === 404 || error.code === 404) {
             await reply.notFound();
             return;
         }

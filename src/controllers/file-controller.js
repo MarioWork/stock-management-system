@@ -30,12 +30,12 @@ const deleteFile = async ({ storage, prisma }, id) => {
 
     if (!type) throw 404;
 
-    const [{ count }] = await Promise.all([
+    const [deleteFile] = await Promise.all([
         deleteFilePrisma(prisma, id),
         deleteFileCloud(storage, { id, type })
     ]);
 
-    return count;
+    return deleteFile;
 };
 
 //TODO: Add docs
