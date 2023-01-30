@@ -6,7 +6,7 @@ const { pipeline } = require('stream');
 const BASE_PATH = 'images/';
 const pipelineAsync = util.promisify(pipeline);
 
-const { getFile } = require('../../controllers/file-controller');
+const { getFile } = require('../../services/prisma/file-service');
 
 const createBucketObjPath = ({ id, type }) => BASE_PATH + id + '.' + type;
 
@@ -35,13 +35,12 @@ const saveFile = async (storage, { file, type }) => {
 
 /**
  * Downloads file from storage bucket and return its buffer
- * @param {{storage:*, prisma: PrismaClient}} Dependencies - Storage bucket instance
+ * @param {*} storage - Storage bucket instance
  * @param {{file: FileStream, type: string}} object - Object with file: FileStream and type: string
  * @returns {Buffer} - File Buffer
  * @throws {error}
  */
-const downloadFile = async ({ storage, prisma }, { id }) => {
-    const { type } = await getFile(prisma, id);
+const downloadFile = async (storage, { id, type }) => {
     return await storage.file(createBucketObjPath({ id, type })).download();
 };
 
