@@ -26,7 +26,7 @@
 
 - - [x] /image/:id - GET - returns a image by id
   - Query Params -> 'type' - Required - The image type (ex: png)
-- - [ ] /image/:id - DELETE - removes a image by id
+- - [x] /image/:id - DELETE - removes a image by id
 
 #
 
