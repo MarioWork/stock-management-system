@@ -6,8 +6,6 @@ const { pipeline } = require('stream');
 const BASE_PATH = 'images/';
 const pipelineAsync = util.promisify(pipeline);
 
-const { getFile } = require('../../services/prisma/file-service');
-
 const createBucketObjPath = ({ id, type }) => BASE_PATH + id + '.' + type;
 
 /**
