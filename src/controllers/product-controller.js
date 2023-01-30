@@ -4,7 +4,7 @@
  * @typedef { import('../types/product-docs-type') } Product
  */
 
-const { saveFile, deleteFile } = require('../services/cloud-storage/file-service');
+const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
 const {
     createProduct: createProductPrisma,
     deleteProducts: deleteProductsPrisma,
