@@ -1,6 +1,6 @@
 const S = require('fluent-json-schema');
 
-const { downloadFile } = require('../../../services/cloud-storage/file-service');
+const { downloadFile } = require('../../../services/cloud-storage/cloud-file-service');
 
 const schema = {
     params: S.object().prop('id', S.string()).required(['id'])
