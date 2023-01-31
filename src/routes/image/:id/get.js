@@ -13,7 +13,7 @@ module.exports = async server => {
     server.get('/', options, async (request, reply) => {
         const { id } = request.params;
 
-        const [error, fileBuffer] = await to(downloadFile({ storage, prisma }, { id }));
+        const [error, fileBuffer] = await to(downloadFile({ storage, prisma }, id));
 
         if (error) {
             if (error.code === 404) {
