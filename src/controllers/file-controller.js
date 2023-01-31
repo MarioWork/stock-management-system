@@ -24,7 +24,13 @@ const getFile = (prisma, id) => {
     return getFilePrisma(prisma, id);
 };
 
-//TODO:: Add docs
+/**
+ * Deletes file from database and cloud storage by Id
+ * @param {{storage:*,prisma: PrismaClient}} object - Dependencies object
+ * @param {string} id - file Id
+ * @returns Returns the deleted file
+ * @throws {error}
+ */
 const deleteFile = async ({ storage, prisma }, id) => {
     const { type } = (await getFilePrisma(prisma, id)) || {};
 
@@ -38,8 +44,14 @@ const deleteFile = async ({ storage, prisma }, id) => {
     return deleteFile;
 };
 
-//TODO: Add docs
-const downloadFile = async ({ storage, prisma }, { id }) => {
+/**
+ * Downloads file buffer from cloud by Id
+ * @param {{storage:*,prisma: PrismaClient}} object - Dependencies object
+ * @param {string} id - file Id
+ * @returns Returns the buffer of the file
+ * @throws {error}
+ */
+const downloadFile = async ({ storage, prisma }, id) => {
     const { type } = (await getFile(prisma, id)) || {};
     return downloadFileCloud(storage, { id, type });
 };
