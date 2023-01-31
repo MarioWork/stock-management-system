@@ -120,7 +120,13 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
     });
 };
 
-//TODO: add docs
+/**
+ * Creates a file entry in database and connects it to product
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{productId: number, fileId: string, fileType: string, fileUrl: string}} object - Object that represents what data to update and what product to update
+ * @returns {Promise<Product>} - Returns the update product with the new file
+ * @throws {error}
+ */
 const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => {
     return prisma.product.update({
         where: { id: productId },
