@@ -5,7 +5,7 @@ const { getStorage } = require('firebase-admin/storage');
 
 const { PluginNames } = require('../enums/plugins');
 
-const plugin = async server => {
+const plugin = (server, _, done) => {
     server.log.info(`Registering ${PluginNames.CLOUD_STORAGE} plugin...`);
 
     try {
@@ -15,6 +15,8 @@ const plugin = async server => {
     } catch (error) {
         server.log.error(error);
     }
+
+    done();
 };
 
 const options = { name: PluginNames.CLOUD_STORAGE, dependencies: [PluginNames.FIREBASE] };
