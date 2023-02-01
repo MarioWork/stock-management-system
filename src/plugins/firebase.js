@@ -7,17 +7,19 @@ const { initializeApp, cert } = require('firebase-admin/app');
 const { PluginNames } = require('../enums/plugins');
 const serviceAccount = require('../../credentials.json');
 
-const plugin = async server => {
+const plugin = (server, _, done) => {
     server.log.info(`Registering ${PluginNames.FIREBASE} plugin...`);
 
     try {
-        await initializeApp({
+        initializeApp({
             credential: cert(serviceAccount),
             storageBucket: process.env.STORAGE_BUCKET
         });
     } catch (error) {
         server.log.error(error);
     }
+
+    done();
 };
 
 const options = { name: PluginNames.FIREBASE };
