@@ -3,7 +3,7 @@
 ### Product
 
 -   -   [x] /product/list - GET - returns all products
-    - Query Params -> 'query' - Optional - to filter the products name
+    -   Query Params -> 'query' - Optional - to filter the products name
 -   -   [x] /product/:id - GET - returns a single product
 -   -   [x] /product/:id - DELETE - removes a product
 -   -   [x] /product/:id - PATCH - updates a product
@@ -24,16 +24,16 @@
 
 ### Image
 
-- - [x] /image/:id - GET - returns a image by id
-  - Query Params -> 'type' - Required - The image type (ex: png)
-- - [x] /image/:id - DELETE - removes a image by id
+-   -   [x] /image/:id - GET - returns a image by id
+    -   Query Params -> 'type' - Required - The image type (ex: png)
+-   -   [x] /image/:id - DELETE - removes a image by id
 
 #
 
 ### Future features
 
-- - [ ] Authentication with fireabase 
-- - [ ] Role check for certain routes
-- - [ ] Pagination
-- - [ ] Add product supplier table
-- - [ ] Add staff / roles table
+-   -   [ ] Authentication with fireabase
+-   -   [ ] Role check for certain routes
+-   -   [ ] Pagination
+-   -   [ ] Add product supplier table
+-   -   [ ] Add staff / roles table
