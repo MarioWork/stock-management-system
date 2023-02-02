@@ -40,8 +40,8 @@ module.exports = async server => {
 
         //TODO: localize strings
         //If the product does not exist
-        if (error === 404) {
-            await reply.notFound(`Product with ID: ${id} does not exist`);
+        if (error.statusCode === 404) {
+            await reply.notFound(error.message);
             return;
         }
 
