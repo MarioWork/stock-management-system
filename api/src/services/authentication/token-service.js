@@ -1,9 +1,7 @@
-const authorize = async (authService, { token, roles }) => {
-    const decodedToken = await authService.verifyIdToken(token);
-
-    return decodedToken;
+const addUserRole = async (authService, { uid, roles }) => {
+    await authService.setCustomUserClaims(uid, { roles });
 };
 
 module.exports = {
-    authorize
+    addUserRole
 };

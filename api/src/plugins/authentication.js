@@ -8,6 +8,7 @@ const plugin = (server, _, done) => {
 
     try {
         server.decorate('authService', getAuth());
+        server.decorateRequest('user', null);
     } catch (error) {
         server.log.error(error);
     }
