@@ -3,6 +3,7 @@ module.exports = {
         FIREBASE: 'Firebase',
         PRISMA: 'Prisma',
         SENSIBLE: 'Sensible',
-        CLOUD_STORAGE: 'Cloud Storage'
+        CLOUD_STORAGE: 'Cloud Storage',
+        AUTHENTICATION: 'Authentication'
     }
 };
