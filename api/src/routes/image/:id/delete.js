@@ -13,7 +13,7 @@ module.exports = async server => {
         const [error, deletedFile] = await to(deleteFile({ prisma, storage }, id));
 
         if (!deletedFile || error === 404 || error.code === 404) {
-            await reply.notFound();
+            await reply.notFound(error.message);
             return;
         }
 

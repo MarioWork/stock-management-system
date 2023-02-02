@@ -17,7 +17,7 @@ module.exports = async server => {
 
         if (error) {
             if (error.code === 404) {
-                await reply.notFound();
+                await reply.notFound('Image not found');
                 return;
             }
             server.log.error(error);

@@ -2,6 +2,7 @@
  * @typedef { import("../types/prisma-docs-type") } PrismaClient
  * @typedef { import("../types/file-docs-type") } File
  */
+const { NotFound } = require('http-errors');
 
 const {
     deleteFile: deleteFilePrisma,
@@ -34,7 +35,7 @@ const getFile = (prisma, id) => {
 const deleteFile = async ({ storage, prisma }, id) => {
     const { type } = (await getFilePrisma(prisma, id)) || {};
 
-    if (!type) throw 404;
+    if (!type) throw new NotFound('File not found');
 
     const [deleteFile] = await Promise.all([
         deleteFilePrisma(prisma, id),
