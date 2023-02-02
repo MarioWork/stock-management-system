@@ -4,6 +4,7 @@
  * @typedef { import('../types/product-docs-type') } Product
  */
 
+const { NotFound } = require('http-errors');
 const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
 const {
     createProduct: createProductPrisma,
@@ -79,7 +80,7 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
 const addImageToProduct = async ({ prisma, storage, to }, { productId, file, fileType }) => {
     const [findProductError, product] = await to(productExists(prisma, productId));
 
-    if (!product) throw 404;
+    if (!product) throw new NotFound(`Product with ID: ${productId} was not found`);
     if (findProductError) throw findProductError;
 
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });

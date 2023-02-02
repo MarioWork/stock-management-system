@@ -19,7 +19,7 @@ module.exports = async server => {
         const [error, product] = await to(getProductById(prisma, parseInt(id)));
 
         if (!product) {
-            await reply.notFound(`Product with ID: ${id} was not found`);
+            if (error.statuscode === 404) await reply.notFound(error.message);
             return;
         }
 
