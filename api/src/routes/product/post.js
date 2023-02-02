@@ -24,6 +24,7 @@ module.exports = async server => {
 
         const categoriesArray = categories?.split(',').map(el => ({ id: parseInt(el) }));
 
+        //TODO: In case the categories do not exist and only allow string with numbers
         const [error, product] = await to(
             createProduct(prisma, {
                 name: name,
