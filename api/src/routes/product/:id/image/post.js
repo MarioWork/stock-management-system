@@ -38,14 +38,12 @@ module.exports = async server => {
             addImageToProduct({ prisma, storage, to }, { productId: id, file, fileType })
         );
 
-        //TODO: localize strings
-        //If the product does not exist
-        if (error.statusCode === 404) {
-            await reply.notFound(error.message);
-            return;
-        }
-
         if (error) {
+            if (error?.statusCode === 404) {
+                await reply.notFound(error.message);
+                return;
+            }
+
             server.log.error(error);
             await reply.internalServerError();
             return;

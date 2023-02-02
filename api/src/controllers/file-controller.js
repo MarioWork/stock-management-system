@@ -35,7 +35,7 @@ const getFile = (prisma, id) => {
 const deleteFile = async ({ storage, prisma }, id) => {
     const { type } = (await getFilePrisma(prisma, id)) || {};
 
-    if (!type) throw new NotFound('File not found');
+    if (!type) throw new NotFound('Image not found');
 
     const [deleteFile] = await Promise.all([
         deleteFilePrisma(prisma, id),
