@@ -1,0 +1,16 @@
+{
+  "name": "firebase-client",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "firebase": "^9.16.0"
+  }
+}
