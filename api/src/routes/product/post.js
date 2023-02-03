@@ -22,7 +22,6 @@ module.exports = async server => {
     server.post('/', options, async (request, reply) => {
         const { name, quantity, categories } = request.body;
 
-        //TODO: In case the categories do not exist
         const [error, product] = await to(
             createProduct(prisma, {
                 name,
