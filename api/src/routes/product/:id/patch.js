@@ -32,12 +32,10 @@ module.exports = async server => {
             updateProduct(prisma, { id, name, quantity, categories })
         );
 
-        if (!updatedProduct) {
-            await reply.notFound(`Product with ID: ${id} was not found`);
-            return;
-        }
-
         if (error) {
+            if (error.statusCode === 404) {
+                await reply.notFound(error.message);
+            }
             server.log.error(error);
             await reply.internalServerError();
             return;

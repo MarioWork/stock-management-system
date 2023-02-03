@@ -31,7 +31,12 @@ module.exports = async server => {
             })
         );
 
+        //TODO: Better code
         if (error) {
+            if (error.statusCode === 404) {
+                await reply.notFound(error.message);
+                return;
+            }
             server.log.error(error);
             await reply.internalServerError();
             return;
