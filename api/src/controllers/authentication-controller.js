@@ -6,21 +6,25 @@ const decodeToken = async (authService, token) => await authService.verifyIdToke
 
 //TODO: Add docs
 const authorize = (authService, roles) => async (request, _, done) => {
-    const token = request.headers.authorization.split(' ')[1];
+    const token = request.headers.authorization?.split(' ')[1];
 
     if (!token) throw new Forbidden('Missing authorization token');
 
-    const user = await decodeToken(authService, token);
+    try {
+        const user = await decodeToken(authService, token);
 
-    //TODO: check for claims
-    if (!user) throw new Forbidden('Invalid authorization token');
+        //TODO: check for claims
+        if (!user) throw new Forbidden('Invalid authorization token');
 
-    //const isAuthorized = roles.every(role => !user.claims?.roles.includes(role));
-    const isAuthorized = true;
+        //const isAuthorized = roles.every(role => !user.claims?.roles.includes(role));
+        const isAuthorized = true;
 
-    if (!isAuthorized) throw new Forbidden('Not Authorized');
+        if (!isAuthorized) throw new Forbidden('Not Authorized');
 
-    request.user = user;
+        request.user = user;
+    } catch (error) {
+        if (error.code === 'auth/id-token-expired') throw new Forbidden('Expired token');
+    }
 
     done();
 };
