@@ -8,7 +8,7 @@ const schema = {
         .additionalProperties(false)
         .prop('name', S.string().required())
         .prop('quantity', S.number())
-        .prop('categories', S.string()),
+        .prop('categories', S.array().items(S.number())),
     response: {
         201: productSchema
     }
@@ -22,14 +22,12 @@ module.exports = async server => {
     server.post('/', options, async (request, reply) => {
         const { name, quantity, categories } = request.body;
 
-        const categoriesArray = categories?.split(',').map(el => ({ id: parseInt(el) }));
-
-        //TODO: In case the categories do not exist and only allow string with numbers
+        //TODO: In case the categories do not exist
         const [error, product] = await to(
             createProduct(prisma, {
-                name: name,
-                quantity: quantity,
-                categories: categoriesArray
+                name,
+                quantity,
+                categories
             })
         );
 

@@ -46,7 +46,8 @@ const getAllProducts = (prisma, query) => {
  * @throws {error}
  */
 const createProduct = (prisma, { name, quantity, categories }) => {
-    return createProductPrisma(prisma, { name, quantity, categories });
+    const categoriesObjArray = categories.map(catId => ({ id: catId }));
+    return createProductPrisma(prisma, { name, quantity, categories: categoriesObjArray });
 };
 
 /**
@@ -68,7 +69,8 @@ const deleteProducts = (prisma, ids) => {
  * @returns {Promise<Product>} - Returns the update product
  */
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
-    return updateProductPrisma(prisma, { id, name, quantity, categories });
+    const categoriesObjArray = categories.map(catId => ({ id: catId }));
+    return updateProductPrisma(prisma, { id, name, quantity, categories: categoriesObjArray });
 };
 /**
  * Adds a image url to the list of images of the product
