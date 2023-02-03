@@ -42,7 +42,7 @@ const getAllProducts = (prisma, query) => {
  * Creates a product with the properties given
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {{name: string, quantity: number, categories: {id: number}[]}} object - Object represents the product to create
- * @returns {Product} - Promise object that returns product or error
+ * @returns {Product}
  * @throws {error}
  */
 const createProduct = async (prisma, { name, quantity, categories }) => {
@@ -75,7 +75,7 @@ const deleteProducts = (prisma, ids) => {
  * Does not need all properties but, needs at least one (name, quantity, categories)
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {{id: number,quantity: number=, categories: Category[]=}} object - Object that represents what to update
- * @returns {Product} - Returns the update product
+ * @returns {Product}
  */
 const updateProduct = async (prisma, { id, name, quantity, categories }) => {
     const categoriesObjArray = categories.map(catId => ({ id: catId }));
