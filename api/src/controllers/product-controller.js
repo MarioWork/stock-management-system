@@ -55,7 +55,7 @@ const createProduct = async (prisma, { name, quantity, categories }) => {
             categories: categoriesObjArray
         });
     } catch (error) {
-        if (error.code === 'P2025') throw new NotFound('Categories with those ids do not exist');
+        if (error.code === 'P2025') throw new NotFound('Categories with those ids do not exist'); //TODO: add ids
     }
 };
 
