@@ -1,3 +1,4 @@
+//TODO: Add docs
 const getUser = (prisma, id) => {
     return prisma.user.findUnique({
         where: {
@@ -10,6 +11,7 @@ const getUser = (prisma, id) => {
     });
 };
 
+//TODO: Add docs
 const createUser = (prisma, { id, roles }) => {
     return prisma.user.create({
         data: {
