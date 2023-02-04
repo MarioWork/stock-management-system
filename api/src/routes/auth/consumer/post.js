@@ -19,6 +19,11 @@ module.exports = async server => {
             createUser(prisma, { id: request.user?.uid, roles: [UserRoles.CONSUMER] })
         );
 
-        await reply.code(200).send({ user: request.user });
+        if (error) {
+            server.log.error(error);
+            await reply.internalServerError();
+        }
+
+        await reply.code(201).send(user);
     });
 };
