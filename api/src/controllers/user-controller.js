@@ -30,12 +30,8 @@ const authorize = (authService, roles) => async (request, _, done) => {
 };
 
 //TODO:Add docs
-const createUser = async ({ authService, prisma }, { token, roles }) => {
-    const { uid } = decodeToken(authService, token);
-
-    if (!uid) throw 403;
-
-    return await createUserPrisma(prisma, { id: uid, roles });
+const createUser = async (prisma, { id, roles }) => {
+    return await createUserPrisma(prisma, { id, roles });
 };
 
 module.exports = {
