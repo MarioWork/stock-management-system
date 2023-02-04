@@ -39,14 +39,8 @@ model File {
 }
 
 model User {
-  id        String     @id @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  role      UserRole[]
-}
-
-model UserRole {
-  id    Int    @id @default(autoincrement())
-  name  String
-  users User[]
+  id        String   @id @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roles     String[]
 }
