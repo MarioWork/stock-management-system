@@ -1,7 +1,7 @@
 const S = require('fluent-json-schema');
 
 const { UserRoles } = require('../../enums/user-roles');
-const { authorize } = require('../../controllers/authentication-controller');
+const { authorize } = require('../../controllers/user-controller');
 
 const schema = {
     headers: S.object().prop('authorization', S.string()).required(['authorization'])

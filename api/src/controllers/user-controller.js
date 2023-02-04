@@ -1,6 +1,6 @@
 const { Forbidden } = require('http-errors');
 
-const { addUserRole: addUserRoleService } = require('../services/authentication/token-service');
+const { createUser: createUserPrisma } = require('../services/prisma/user-service');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
 
@@ -29,15 +29,16 @@ const authorize = (authService, roles) => async (request, _, done) => {
     done();
 };
 
-const addUserRole = (authService, { token, roles }) => {
+//TODO:Add docs
+const createUser = async ({ authService, prisma }, { token, roles }) => {
     const { uid } = decodeToken(authService, token);
 
     if (!uid) throw 403;
 
-    addUserRoleService(authService, { uid, roles });
+    return await createUserPrisma(prisma, { id: uid, roles });
 };
 
 module.exports = {
-    addUserRole,
+    createUser,
     authorize
 };
