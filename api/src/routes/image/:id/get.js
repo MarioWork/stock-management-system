@@ -16,7 +16,10 @@ module.exports = async server => {
         const [error, fileBuffer] = await to(downloadFile({ storage, prisma }, id));
 
         if (error) {
-            if (error.statusCode === 404) await reply.notFound('Image not found');
+            if (error.statusCode === 404) {
+                await reply.notFound('Image not found');
+                return;
+            }
             server.log.error(error);
             await reply.internalServerError();
             return;
