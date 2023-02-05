@@ -1,5 +1,6 @@
 const S = require('fluent-json-schema');
 
+const UserSchema = require('../../../../schemas/user-schema');
 const { UserRoles } = require('../../../../enums/user-roles');
 const { authorize, createUser } = require('../../../../controllers/user-controller');
 
@@ -9,7 +10,10 @@ const schema = {
         .prop('email', S.string())
         .prop('password', S.string())
         .prop('name', S.string())
-        .required(['email', 'password', 'name'])
+        .required(['email', 'password', 'name']),
+    response: {
+        201: UserSchema
+    }
 };
 
 const options = authService => ({
@@ -35,7 +39,10 @@ module.exports = async server => {
         );
 
         if (error) {
-            if (error.statusCode === 400) await reply.badRequest(error.message);
+            if (error.statusCode === 400) {
+                await reply.badRequest(error.message);
+                return;
+            }
             server.log.error(error);
             await reply.internalServerError();
             return;
