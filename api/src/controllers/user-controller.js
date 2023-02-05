@@ -14,12 +14,10 @@ const authorize = (authService, roles) => async (request, _) => {
     try {
         const user = await decodeToken(authService, token);
 
-        //TODO: check for claims
         if (!user) throw new Forbidden('Invalid authorization token');
 
-        //TODO: Grab roles from prisma
-        //const isAuthorized = roles.every(role => !user.claims?.roles.includes(role));
-        const isAuthorized = true;
+        //TODO: Grab roles from prism
+        const isAuthorized = roles.every(role => !user.claims?.roles.includes(role));
 
         if (!isAuthorized) throw new Forbidden('Not Authorized');
 
