@@ -1,6 +1,7 @@
-const { Forbidden } = require('http-errors');
+const { Forbidden, BadRequest } = require('http-errors');
 
 const { createUser: createUserPrisma } = require('../services/prisma/user-service');
+const { createUser: createUserFirebase } = require('../services/firebase/user-service');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
 
@@ -16,6 +17,7 @@ const authorize = (authService, roles) => async (request, _, done) => {
         //TODO: check for claims
         if (!user) throw new Forbidden('Invalid authorization token');
 
+        //TODO: Grab roles from prisma
         //const isAuthorized = roles.every(role => !user.claims?.roles.includes(role));
         const isAuthorized = true;
 
@@ -30,8 +32,14 @@ const authorize = (authService, roles) => async (request, _, done) => {
 };
 
 //TODO:Add docs
-const createUser = async (prisma, { id, roles }) => {
-    return await createUserPrisma(prisma, { id, roles });
+const createUser = async ({ prisma, authService }, { email, password, name, role }) => {
+    try {
+        const { uid } = await createUserFirebase(authService, { email, password, name });
+        return createUserPrisma(prisma, { id: uid, role });
+    } catch (error) {
+        if (error.code === 'auth/invalid-email') throw BadRequest(error.message);
+        throw error;
+    }
 };
 
 module.exports = {
