@@ -6,7 +6,7 @@ const { createUser: createUserFirebase } = require('../services/firebase/user-se
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
 
 //TODO: Add docs
-const authorize = (authService, roles) => async (request, _, done) => {
+const authorize = (authService, roles) => async (request, _) => {
     const token = request.headers.authorization?.split(' ')[1];
 
     if (!token) throw new Forbidden('Missing authorization token');
@@ -27,17 +27,18 @@ const authorize = (authService, roles) => async (request, _, done) => {
     } catch (error) {
         if (error.code === 'auth/id-token-expired') throw new Forbidden('Expired token');
     }
-
-    done();
 };
 
 //TODO:Add docs
 const createUser = async ({ prisma, authService }, { email, password, name, role }) => {
     try {
         const { uid } = await createUserFirebase(authService, { email, password, name });
-        return createUserPrisma(prisma, { id: uid, role });
+        const user = await createUserPrisma(prisma, { id: uid, role });
+        return { uid, email, name, role: user.role };
     } catch (error) {
-        if (error.code === 'auth/invalid-email') throw BadRequest(error.message);
+        if (error.code === 'auth/invalid-email' || error.code === 'auth/email-already-exists')
+            throw new BadRequest(error.message);
+
         throw error;
     }
 };
