@@ -12,15 +12,15 @@ const getUser = (prisma, id) => {
 };
 
 //TODO: Add docs
-const createUser = (prisma, { id, roles }) => {
+const createUser = (prisma, { id, role }) => {
     return prisma.user.create({
         data: {
             id,
-            roles
+            role
         },
         select: {
             id: true,
-            roles: true
+            role: true
         }
     });
 };
