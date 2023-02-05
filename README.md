@@ -35,7 +35,7 @@
 
 ### Future features
 
-- - ~~ [x] Authentication with fireabase ~~
+- - ~~[x] Authentication with fireabase
 - - [ ] Role check for certain routes
 - - [ ] Pagination
 - - [ ] Add product supplier table
