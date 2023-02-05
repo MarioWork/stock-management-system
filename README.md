@@ -33,11 +33,9 @@
 
 - - [x] /auth/signup/employee - POST - create a user with the "employee" role
 
-#
-
 ### Future features
 
-- - [ ] Authentication with fireabase
+- - ~~ [x] Authentication with fireabase ~~
 - - [ ] Role check for certain routes
 - - [ ] Pagination
 - - [ ] Add product supplier table
