@@ -4,10 +4,10 @@ const UserSchema = S.object()
     .prop('id', S.string())
     .prop('firstName', S.string())
     .prop('lastName', S.string())
-    .prop('nif', S.string())
+    .prop('nif', S.string().minLength(9))
     .prop('profilePicture', S.string())
     .prop('email', S.string())
     .prop('roles', S.array().items(S.string()))
-    .required(['id', 'name', 'email', 'roles', 'firstName', 'lastName', 'nif', 'profilePicture']);
+    .required(['id', 'email', 'roles', 'firstName', 'lastName', 'nif', 'profilePicture']);
 
 module.exports = UserSchema;
