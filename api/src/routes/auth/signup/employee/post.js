@@ -33,7 +33,7 @@ module.exports = async server => {
                     email,
                     password,
                     name,
-                    role: UserRoles.EMPLOYEE
+                    roles: [UserRoles.EMPLOYEE]
                 }
             )
         );
