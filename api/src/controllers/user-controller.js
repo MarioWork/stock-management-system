@@ -5,7 +5,13 @@ const { createUser: createUserFirebase } = require('../services/firebase/user-se
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
 
-//TODO: Add docs
+/**
+ * Checks if the user is authorized to make the request
+ * Decorates request with user after authorization
+ * @param {*} authService - Firebase auth service
+ * @param {String[]} roles - Roles that are authorized
+ *
+ */
 const authorize = (authService, roles) => async (request, _) => {
     const token = request.headers.authorization?.split(' ')[1];
 
