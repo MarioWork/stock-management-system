@@ -16,14 +16,14 @@ const schema = {
     }
 };
 
-const options = authService => ({
+const options = ({ authService, prisma }) => ({
     schema,
-    preValidation: authorize(authService, [UserRoles.ADMIN])
+    preValidation: authorize({ authService, prisma }, [UserRoles.ADMIN])
 });
 
 module.exports = async server => {
     const { authService, prisma, to } = server;
-    server.post('/', options(authService), async (request, reply) => {
+    server.post('/', options({ authService, prisma }), async (request, reply) => {
         const { email, password, name } = request.body;
 
         const [error, user] = await to(
