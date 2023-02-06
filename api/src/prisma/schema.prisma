@@ -42,5 +42,5 @@ model User {
   id        String   @id @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  role      String
+  role      String[]
 }
