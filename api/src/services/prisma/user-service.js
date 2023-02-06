@@ -3,7 +3,7 @@
  */
 
 /**
- * Creates a user record on database with its id and role
+ * Get a user record from database with its id and role
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {string} id - User ID
  * @returns {Promise<{id: string, roles: string}>} Promise when resolved returns user
@@ -21,7 +21,13 @@ const getUser = (prisma, id) => {
     });
 };
 
-//TODO: Add docs
+/**
+ * Creates a user record on database with its id and role
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - User ID
+ * @returns {Promise<{id: string, roles: string}>} Promise when resolved returns user
+ * @throws {error}
+ */
 const createUser = (prisma, { id, role }) => {
     return prisma.user.create({
         data: {
