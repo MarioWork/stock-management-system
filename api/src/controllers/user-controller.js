@@ -1,5 +1,6 @@
 /**
  * @typedef { import('../types/prisma-docs-type') } PrismaClient
+ * @typedef { import('../types/user-docs-type') } User
  */
 
 const { Forbidden, BadRequest } = require('http-errors');
@@ -44,17 +45,33 @@ const authorize =
 /**
  * Creates a user in the firebase authentication and adds a record with the role to database
  * @param {{prisma: PrismaClient, authService: *}} obj - Dependencies object
- * @param {{email: string, password: string, name: string, roles: string[]}} obj - user data object
- * @returns {{uid: string, email: string, name: string, roles: string[]}} Obj that represents all user data
+ * @param {{
+ *  firstName: string,
+ *  lastName: string,
+ *  nif: string,
+ *  email: string,
+ *  password: string,
+ *  name: string,
+ * roles: string[]
+ * }} obj - user data object
+ * @returns {Promise<User>} Obj that represents all user data
  * @throws {error}
  */
-//TODO: add missing fields
-const createUser = async ({ prisma, authService }, { email, password, name, roles }) => {
+const createUser = async (
+    { prisma, authService },
+    { firstName, lastName, password, nif, email, roles }
+) => {
     try {
-        const { uid } = await createUserFirebase(authService, { email, password, name });
+        const { uid } = await createUserFirebase(authService, { email, password });
 
-        const user = await createUserPrisma(prisma, { id: uid, roles });
-        return { uid, email, name, roles: user.roles };
+        return await createUserPrisma(prisma, {
+            id: uid,
+            firstName,
+            lastName,
+            nif,
+            email,
+            roles
+        });
     } catch (error) {
         if (error.code === 'auth/invalid-email' || error.code === 'auth/email-already-exists')
             throw new BadRequest(error.message);
