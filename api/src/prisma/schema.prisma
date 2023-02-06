@@ -36,11 +36,18 @@ model File {
   type      String
   Product   Product? @relation(fields: [productId], references: [id])
   productId Int?
+  User      User[]
 }
 
 model User {
-  id        String   @id @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  roles     String[]
+  id             String   @id @unique
+  email          String   @unique
+  nif            String   @unique
+  firstName      String
+  lastName       String
+  roles          String[]
+  profilePicture File     @relation(fields: [fileId], references: [id])
+  fileId         String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

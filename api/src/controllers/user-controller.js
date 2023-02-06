@@ -48,10 +48,11 @@ const authorize =
  * @returns {{uid: string, email: string, name: string, roles: string[]}} Obj that represents all user data
  * @throws {error}
  */
+//TODO: add missing fields
 const createUser = async ({ prisma, authService }, { email, password, name, roles }) => {
     try {
         const { uid } = await createUserFirebase(authService, { email, password, name });
-        //TODO: return user created email and name saved
+
         const user = await createUserPrisma(prisma, { id: uid, roles });
         return { uid, email, name, roles: user.roles };
     } catch (error) {
