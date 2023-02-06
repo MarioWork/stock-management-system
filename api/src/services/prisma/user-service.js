@@ -28,15 +28,17 @@ const getUser = (prisma, id) => {
  * @returns {Promise<{id: string, roles: string}>} Promise when resolved returns user
  * @throws {error}
  */
-const createUser = (prisma, { id, role }) => {
+const createUser = (prisma, { id, roles }) => {
     return prisma.user.create({
         data: {
             id,
-            role
+            roles: {
+                set: roles
+            }
         },
         select: {
             id: true,
-            role: true
+            roles: true
         }
     });
 };
