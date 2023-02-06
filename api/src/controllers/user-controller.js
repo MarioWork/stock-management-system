@@ -1,3 +1,7 @@
+/**
+ * @typedef { import('../types/prisma-docs-type') } PrismaClient
+ */
+
 const { Forbidden, BadRequest } = require('http-errors');
 
 const { createUser: createUserPrisma } = require('../services/prisma/user-service');
@@ -12,7 +16,7 @@ const decodeToken = async (authService, token) => await authService.verifyIdToke
  * @param {String[]} roles - Roles that are authorized
  *
  */
-const authorize = (authService, roles) => async (request, _) => {
+const authorize = (authService, roles) => async request => {
     const token = request.headers.authorization?.split(' ')[1];
 
     if (!token) throw new Forbidden('Missing authorization token');
@@ -33,7 +37,13 @@ const authorize = (authService, roles) => async (request, _) => {
     }
 };
 
-//TODO:Add docs
+/**
+ * Creates a user in the firebase authentication and adds a record with the role to database
+ * @param {{prisma: PrismaClient, authService: *}} obj - Dependencies object
+ * @param {{email: string, password: string, name: string, role: string}} obj - user data object
+ * @returns {{uid: string, email: string, name: string, role: string}} Obj that represents all user data
+ */
+//TODO: Encrypt/decrypt password
 const createUser = async ({ prisma, authService }, { email, password, name, role }) => {
     try {
         const { uid } = await createUserFirebase(authService, { email, password, name });
