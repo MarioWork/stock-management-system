@@ -44,7 +44,6 @@ const authorize = (authService, roles) => async request => {
  * @returns {{uid: string, email: string, name: string, role: string}} Obj that represents all user data
  * @throws {error}
  */
-//TODO: Encrypt/decrypt password
 const createUser = async ({ prisma, authService }, { email, password, name, role }) => {
     try {
         const { uid } = await createUserFirebase(authService, { email, password, name });
