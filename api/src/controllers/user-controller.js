@@ -5,6 +5,7 @@
 const { Forbidden, BadRequest } = require('http-errors');
 
 const { createUser: createUserPrisma } = require('../services/prisma/user-service');
+const { getUser: getUserPrisma } = require('../services/prisma/user-service');
 const { createUser: createUserFirebase } = require('../services/firebase/user-service');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
@@ -13,29 +14,32 @@ const decodeToken = async (authService, token) => await authService.verifyIdToke
  * Checks if the user is authorized to make the request
  * Decorates request with user after authorization
  * @param {*} authService - Firebase auth service
- * @param {String[]} roles - Roles that are authorized
+ * @param {String[]} authorizedRoles - Roles that are authorized
  * @throws {error}
  */
-const authorize = (authService, roles) => async request => {
-    const token = request.headers.authorization?.split(' ')[1];
+const authorize =
+    ({ authService, prisma }, authorizedRoles) =>
+    async request => {
+        const token = request.headers.authorization?.split(' ')[1];
 
-    if (!token) throw new Forbidden('Missing authorization token');
+        if (!token) throw new Forbidden('Missing authorization token');
 
-    try {
-        const user = await decodeToken(authService, token);
+        try {
+            const user = await decodeToken(authService, token);
 
-        if (!user) throw new Forbidden('Invalid authorization token');
+            if (!user) throw new Forbidden('Invalid authorization token');
 
-        //TODO: Grab roles from prism
-        const isAuthorized = roles.every(role => !user.claims?.roles.includes(role));
+            const { roles } = await getUserPrisma(prisma, user.uid);
 
-        if (!isAuthorized) throw new Forbidden('Not Authorized');
+            const isAuthorized = authorizedRoles.every(role => user.roles.includes(role));
 
-        request.user = user;
-    } catch (error) {
-        if (error.code === 'auth/id-token-expired') throw new Forbidden('Expired token');
-    }
-};
+            if (!isAuthorized) throw new Forbidden('Not Authorized');
+
+            request.user = { ...user, roles };
+        } catch (error) {
+            if (error.code === 'auth/id-token-expired') throw new Forbidden('Expired token');
+        }
+    };
 
 /**
  * Creates a user in the firebase authentication and adds a record with the role to database
