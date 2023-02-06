@@ -46,8 +46,8 @@ model User {
   firstName      String
   lastName       String
   roles          String[]
-  profilePicture File     @relation(fields: [fileId], references: [id])
-  fileId         String
+  profilePicture File?    @relation(fields: [fileId], references: [id])
+  fileId         String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
