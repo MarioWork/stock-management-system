@@ -1,7 +1,7 @@
-const createUser = (authService, { email, password, name }) => {
+//TODO: add docs
+const createUser = (authService, { email, password }) => {
     return authService.createUser({
         email,
-        displayName: name,
         password
     });
 };
