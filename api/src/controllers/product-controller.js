@@ -41,7 +41,7 @@ const getAllProducts = (prisma, query) => {
 /**
  * Creates a product with the properties given
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{name: string, quantity: number, categories: {id: number}[]}} object - Object represents the product to create
+ * @param {{name: string, quantity: number, categories: number[]}} object - Object represents the product to create
  * @returns {Product}
  * @throws {error}
  */
@@ -55,7 +55,8 @@ const createProduct = async (prisma, { name, quantity, categories }) => {
             categories: categoriesObjArray
         });
     } catch (error) {
-        if (error.code === 'P2025') throw new NotFound('Categories with those ids do not exist'); //TODO: add ids
+        if (error.code === 'P2025')
+            throw new NotFound(`Categories with id: ${categories.join(',')} do not exist`);
     }
 };
 
@@ -88,7 +89,8 @@ const updateProduct = async (prisma, { id, name, quantity, categories }) => {
         });
     } catch (error) {
         if (error.code === 'P2016') throw new NotFound(`Product with ID: ${id} was not found`);
-        if (error.code === 'P2025') throw new NotFound('Categories with those ids do not exist'); //TODO: add ids
+        if (error.code === 'P2025')
+            throw new NotFound(`Categories with id: ${categories.join(',')} do not exist`);
     }
 };
 /**
