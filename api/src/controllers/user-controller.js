@@ -14,7 +14,7 @@ const decodeToken = async (authService, token) => await authService.verifyIdToke
  * Decorates request with user after authorization
  * @param {*} authService - Firebase auth service
  * @param {String[]} roles - Roles that are authorized
- *
+ * @throws {error}
  */
 const authorize = (authService, roles) => async request => {
     const token = request.headers.authorization?.split(' ')[1];
@@ -42,6 +42,7 @@ const authorize = (authService, roles) => async request => {
  * @param {{prisma: PrismaClient, authService: *}} obj - Dependencies object
  * @param {{email: string, password: string, name: string, role: string}} obj - user data object
  * @returns {{uid: string, email: string, name: string, role: string}} Obj that represents all user data
+ * @throws {error}
  */
 //TODO: Encrypt/decrypt password
 const createUser = async ({ prisma, authService }, { email, password, name, role }) => {
