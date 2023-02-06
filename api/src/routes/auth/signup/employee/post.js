@@ -9,8 +9,10 @@ const schema = {
     body: S.object()
         .prop('email', S.string())
         .prop('password', S.string())
-        .prop('name', S.string())
-        .required(['email', 'password', 'name']),
+        .prop('firstName', S.string())
+        .prop('lastName', S.string())
+        .prop('nif', S.string().minLength(8))
+        .required(['email', 'password', 'firstName', 'lastName', 'nif']),
     response: {
         201: UserSchema
     }
@@ -24,15 +26,17 @@ const options = ({ authService, prisma }) => ({
 module.exports = async server => {
     const { authService, prisma, to } = server;
     server.post('/', options({ authService, prisma }), async (request, reply) => {
-        const { email, password, name } = request.body;
+        const { firstName, lastName, nif, email, password } = request.body;
 
         const [error, user] = await to(
             createUser(
                 { prisma, authService },
                 {
+                    firstName,
+                    lastName,
+                    nif,
                     email,
                     password,
-                    name,
                     roles: [UserRoles.EMPLOYEE]
                 }
             )
