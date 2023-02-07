@@ -6,7 +6,7 @@
 const { Forbidden, BadRequest } = require('http-errors');
 
 const { createUser: createUserPrisma } = require('../services/prisma/user-service');
-const { getUser: getUserPrisma } = require('../services/prisma/user-service');
+const { getUserById: getUserByIdPrisma } = require('../services/prisma/user-service');
 const { createUser: createUserFirebase } = require('../services/firebase/user-service');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
@@ -26,18 +26,23 @@ const authorize =
         if (!token) throw new Forbidden('Missing authorization token');
 
         try {
-            const user = await decodeToken(authService, token);
+            const { uid } = await decodeToken(authService, token);
 
-            if (!user) throw new Forbidden('Invalid authorization token');
+            if (!uid) throw new Forbidden('Invalid authorization token');
 
-            const { roles } = await getUserPrisma(prisma, user.uid);
+            const user = await getUserByIdPrisma(prisma, uid);
+
+            if (!user) throw new Forbidden('User not found');
+
+            if (!user?.roles) throw new Forbidden('No roles to validate');
 
             const isAuthorized = authorizedRoles.every(role => user.roles.includes(role));
 
             if (!isAuthorized) throw new Forbidden('Not Authorized');
 
-            request.user = { ...user, roles };
+            request.user = user;
         } catch (error) {
+            if (error.statusCode === 403) throw new Forbidden(error.message);
             if (error.code === 'auth/id-token-expired') throw new Forbidden('Expired token');
         }
     };
