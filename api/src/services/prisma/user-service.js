@@ -10,7 +10,7 @@
  * @returns {Promise<{User}>} Promise when resolved returns user
  * @throws {error}
  */
-const getUser = (prisma, id) => {
+const getUserById = (prisma, id) => {
     return prisma.user.findUnique({
         where: {
             id
@@ -67,6 +67,6 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
 };
 
 module.exports = {
-    getUser,
+    getUserById,
     createUser
 };
