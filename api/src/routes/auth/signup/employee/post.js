@@ -25,6 +25,7 @@ const options = ({ authService, prisma }) => ({
 
 module.exports = async server => {
     const { authService, prisma, to } = server;
+
     server.post('/', options({ authService, prisma }), async (request, reply) => {
         const { firstName, lastName, nif, email, password } = request.body;
 
