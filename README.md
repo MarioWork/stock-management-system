@@ -35,8 +35,11 @@
 
 ### Future features
 
-- - [x] <s>Authentication with fireabase</s>
+- - [x] <s>Authentication with firebase</s>
+- - [x] <s>Add users with roles table</s>
+- - [ ] Add user profile picture
 - - [ ] Role check for certain routes
 - - [ ] Pagination
 - - [ ] Add product supplier table
-- - [ ] Add staff / roles table
+- - [ ] Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)
+- - [ ] Add more fields to category (user who created)
