@@ -20,12 +20,12 @@ const UserType = {
 
 const users = {
   employee: {
-    email: "mariovieira.work+employee@hotmail.com",
-    password: "mario12345",
+    email: process.env.EMPLOYEE_EMAIL,
+    password: process.env.EMPLOYEE_PASSWORD,
   },
   admin: {
-    email: "mariovieira.work+admin@hotmail.com",
-    password: "mario12345",
+    email: process.env.ADMIN_EMAIL,
+    password: process.env.ADMIN_PASSWORD,
   },
 };
 
