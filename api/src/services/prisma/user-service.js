@@ -66,7 +66,38 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
     });
 };
 
+//TODO: add docs
+const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
+    return prisma.user.update({
+        where: { id },
+        data: {
+            profilePicture: {
+                connectOrCreate: {
+                    where: { id: fileId },
+                    create: {
+                        id: fileId,
+                        url: fileUrl,
+                        type: fileType
+                    }
+                }
+            }
+        },
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            nif: true,
+            profilePicture: {
+                select: { url: true }
+            },
+            email: true,
+            roles: true
+        }
+    });
+};
+
 module.exports = {
     getUserById,
-    createUser
+    createUser,
+    addImageToUser: addProfilePicture
 };
