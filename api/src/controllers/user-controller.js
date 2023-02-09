@@ -5,9 +5,14 @@
 
 const { Forbidden, BadRequest } = require('http-errors');
 
-const { createUser: createUserPrisma } = require('../services/prisma/user-service');
-const { getUserById: getUserByIdPrisma } = require('../services/prisma/user-service');
+const {
+    getUserById: getUserByIdPrisma,
+    createUser: createUserPrisma,
+    addProfilePicture: addProfilePicturePrisma
+} = require('../services/prisma/user-service');
+
 const { createUser: createUserFirebase } = require('../services/firebase/user-service');
+const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
 
@@ -88,7 +93,25 @@ const createUser = async (
     }
 };
 
+//TODO: add docs
+const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }) => {
+    const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
+
+    try {
+        return await addProfilePicturePrisma(prisma, {
+            id: userId,
+            fileId,
+            fileUrl,
+            fileType
+        });
+    } catch (error) {
+        await deleteFile(storage, { id: fileId, type: fileType });
+        throw error;
+    }
+};
+
 module.exports = {
     createUser,
-    authorize
+    authorize,
+    addProfilePicture
 };
