@@ -99,5 +99,5 @@ const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
 module.exports = {
     getUserById,
     createUser,
-    addImageToUser: addProfilePicture
+    addProfilePicture
 };
