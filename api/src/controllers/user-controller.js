@@ -41,7 +41,7 @@ const authorize =
 
             if (!user?.roles) throw new Forbidden('No roles to validate');
 
-            const isAuthorized = authorizedRoles.every(role => user.roles.includes(role));
+            const isAuthorized = user.roles.every(role => authorizedRoles.includes(role));
 
             if (!isAuthorized) throw new Forbidden('Not Authorized');
 
