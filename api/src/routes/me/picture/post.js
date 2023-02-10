@@ -1,5 +1,4 @@
-const S = require('fluent-json-schema');
-
+const UserSchema = require('../../../schemas/user-schema');
 const { authorize } = require('../../../controllers/user-controller');
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -8,7 +7,7 @@ const { addProfilePicture } = require('../../../controllers/user-controller');
 
 const schema = {
     response: {
-        200: S.object()
+        200: UserSchema
     }
 };
 const options = ({ prisma, authService }) => ({
@@ -20,14 +19,17 @@ module.exports = async server => {
     const { prisma, storage, to, authService } = server;
 
     server.post('/', options({ prisma, authService }), async (request, reply) => {
-        const { mimetype, filename, file } = await request.file();
-        const fileType = mimetype.split('/')[1]?.toLowerCase();
+        const data = await request.file();
 
         //If there is not file content
-        if (filename === '') {
+        if (!data?.filename) {
             await reply.badRequest('Missing file content');
             return;
         }
+
+        const { mimetype, file } = data;
+
+        const fileType = mimetype.split('/')[1]?.toLowerCase();
 
         //If the file type is not allowed
         if (!Object.values(AllowedFileType).includes(fileType)) {
