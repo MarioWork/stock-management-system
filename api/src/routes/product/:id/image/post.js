@@ -17,14 +17,16 @@ module.exports = async server => {
     const { prisma, storage, to } = server;
 
     server.post('/', options, async (request, reply) => {
-        const { mimetype, filename, file } = await request.file();
-        const fileType = mimetype.split('/')[1]?.toLowerCase();
+        const data = await request.file();
 
         //If there is not file content
-        if (filename === '') {
+        if (!data) {
             await reply.badRequest('Missing file content');
             return;
         }
+
+        const { mimetype, file } = await request.file();
+        const fileType = mimetype.split('/')[1]?.toLowerCase();
 
         //If the file type is not allowed
         if (!Object.values(AllowedFileType).includes(fileType)) {
