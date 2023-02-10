@@ -52,7 +52,6 @@ const authorize =
         }
     };
 
-//TODO: Encrypt password when saving to database or just remove password from database and leave it in the auth service
 /**
  * Creates a user in the firebase authentication and adds a record with the role to database
  * @param {{prisma: PrismaClient, authService: *}} obj - Dependencies object
@@ -94,8 +93,13 @@ const createUser = async (
     }
 };
 
-//TODO: add docs
 //TODO: check if user already has a picture if so delete it
+/**
+ * Saves the picture into cloud storage and connects it to user
+ * @param {{prisma: PrismaClient, storage: *}} obj - Object that represents dependencies
+ * @param {{userId: string, file: FileStream, fileType: string}} obj  - Object with data
+ * @returns
+ */
 const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }) => {
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
 
