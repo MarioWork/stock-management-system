@@ -96,8 +96,21 @@ const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
     });
 };
 
+//TODO: Add docs
+const hasProfilePicture = (prisma, id) => {
+    return prisma.user.findUnique({
+        where: { id },
+        select: {
+            profilePicture: {
+                select: { id: true, type: true }
+            }
+        }
+    });
+};
+
 module.exports = {
     getUserById,
     createUser,
-    addProfilePicture
+    addProfilePicture,
+    hasProfilePicture
 };

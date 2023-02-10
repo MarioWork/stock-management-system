@@ -8,8 +8,11 @@ const { Forbidden, BadRequest } = require('http-errors');
 const {
     getUserById: getUserByIdPrisma,
     createUser: createUserPrisma,
-    addProfilePicture: addProfilePicturePrisma
+    addProfilePicture: addProfilePicturePrisma,
+    hasProfilePicture
 } = require('../services/prisma/user-service');
+
+const { deleteFile: deleteFilePrisma } = require('../services/prisma/file-service');
 
 const { createUser: createUserFirebase } = require('../services/firebase/user-service');
 const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
@@ -93,14 +96,23 @@ const createUser = async (
     }
 };
 
-//TODO: check if user already has a picture if so delete it
 /**
- * Saves the picture into cloud storage and connects it to user
+ * Saves the picture into cloud storage and connects it to user.
+ * If there is already a profile picture reference it deletes the file and adds the new one
  * @param {{prisma: PrismaClient, storage: *}} obj - Object that represents dependencies
  * @param {{userId: string, file: FileStream, fileType: string}} obj  - Object with data
  * @returns
  */
 const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }) => {
+    const user = await hasProfilePicture(prisma, userId);
+
+    //Delete user picture/file if there is one already
+    if (user?.profilePicture?.id)
+        await Promise.all([
+            deleteFilePrisma(prisma, user.profilePicture.id),
+            deleteFile(storage, { id: user.profilePicture.id, type: user.profilePicture.type })
+        ]);
+
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
 
     try {
