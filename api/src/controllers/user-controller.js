@@ -94,6 +94,7 @@ const createUser = async (
 };
 
 //TODO: add docs
+//TODO: check if user already has a picture if so delete it
 const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }) => {
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
 
