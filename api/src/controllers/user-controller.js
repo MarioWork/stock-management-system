@@ -52,6 +52,7 @@ const authorize =
         }
     };
 
+//TODO: Encrypt password when saving to database or just remove password from database and leave it in the auth service
 /**
  * Creates a user in the firebase authentication and adds a record with the role to database
  * @param {{prisma: PrismaClient, authService: *}} obj - Dependencies object
