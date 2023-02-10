@@ -46,7 +46,7 @@ const getAllProducts = (prisma, query) => {
  * @throws {error}
  */
 const createProduct = async (prisma, { name, quantity, categories }) => {
-    const categoriesObjArray = categories.map(catId => ({ id: catId }));
+    const categoriesObjArray = categories?.map(catId => ({ id: catId }));
 
     try {
         return await createProductPrisma(prisma, {
