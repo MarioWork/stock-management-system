@@ -20,12 +20,12 @@ module.exports = async server => {
         const data = await request.file();
 
         //If there is not file content
-        if (!data) {
+        if (!data?.filename) {
             await reply.badRequest('Missing file content');
             return;
         }
 
-        const { mimetype, file } = await request.file();
+        const { mimetype, file } = data;
         const fileType = mimetype.split('/')[1]?.toLowerCase();
 
         //If the file type is not allowed
