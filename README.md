@@ -33,11 +33,15 @@
 
 - - [x] /auth/signup/employee - POST - create a user with the "employee" role
 
+### Me
+
+- - [x] /me/picture - POST - Add user profile picture
+
 ### Future features
 
 - - [x] <s>Authentication with firebase</s>
 - - [x] <s>Add users with roles table</s>
-- - [ ] Add user profile picture
+- - [x] <s>Add user profile picture</s>
 - - [ ] Role check for certain routes
 - - [ ] Pagination
 - - [ ] Add product supplier table
