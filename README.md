@@ -33,9 +33,17 @@
 
 - - [x] /auth/signup/employee - POST - create a user with the "employee" role
 
+#
+
 ### Me
 
 - - [x] /me/picture - POST - Add user profile picture
+
+### Users
+
+- - [ ] /users/list - GET - List all users
+- - [ ] /users/:id/ - GET - Get user by id
+- - [ ] /users/:id - DELETE - Remove User
 
 ### Future features
 
