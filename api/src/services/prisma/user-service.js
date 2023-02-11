@@ -66,7 +66,13 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
     });
 };
 
-//TODO: add docs
+/**
+ * Saves file to the cloud, creates a file record and connects it to the user
+ * @param {PrismaClient} prisma
+ * @param {{id: int, fileId: string, fileUrl: string, fileType: string }} obj
+ * @returns {Promise<User>} - Represents updated user
+ * @throws {error}
+ */
 const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
     return prisma.user.update({
         where: { id },
