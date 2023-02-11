@@ -5,7 +5,7 @@
  *  firstName: string,
  *  lastName: string,
  *  nif: string,
- *  profilePicture: string,
+ *  profilePicture: {{url: string}},
  *  email: roles,
  *  roles: string[]
  * }
