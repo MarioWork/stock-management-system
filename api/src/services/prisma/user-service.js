@@ -68,8 +68,8 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
 
 /**
  * Saves file to the cloud, creates a file record and connects it to the user
- * @param {PrismaClient} prisma
- * @param {{id: int, fileId: string, fileUrl: string, fileType: string }} obj
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: Number, fileId: String, fileUrl: String, fileType: String }} obj
  * @returns {Promise<User>} - Represents updated user
  * @throws {error}
  */
@@ -102,7 +102,13 @@ const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
     });
 };
 
-//TODO: Add docs
+/**
+ * Checks if there is a record of profilePicture for the user
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {Number} id - User Id
+ * @returns {Promise<{profilePicture: {{id: String, type: String}}}>} - users picture file metadata
+ * @throws {error}
+ */
 const hasProfilePicture = (prisma, id) => {
     return prisma.user.findUnique({
         where: { id },
