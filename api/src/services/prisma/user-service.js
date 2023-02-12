@@ -120,6 +120,30 @@ const hasProfilePicture = (prisma, id) => {
     });
 };
 
+//TODO: Add docs
+const listAllUsers = (prisma, role) => {
+    return prisma.user.findMany({
+        where: {
+            roles: {
+                has: role
+            }
+        },
+        select: {
+            id: true,
+            email: true,
+            nif: true,
+            firstName: true,
+            lastName: true,
+            roles: true,
+            profilePicture: {
+                url: true
+            },
+            createdAt: true,
+            updatedAt: true
+        }
+    });
+};
+
 module.exports = {
     getUserById,
     createUser,
