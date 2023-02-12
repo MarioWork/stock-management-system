@@ -121,6 +121,7 @@ const hasProfilePicture = (prisma, id) => {
 };
 
 //TODO: Add docs
+//TODO: Add more filters
 const listAllUsers = (prisma, role) => {
     const whereQuery = !role ? {} : { roles: { has: role } };
     return prisma.user.findMany({
