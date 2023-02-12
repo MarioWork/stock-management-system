@@ -51,6 +51,7 @@
 - - [x] <s>Authentication with firebase</s>
 - - [x] <s>Add users with roles table</s>
 - - [x] <s>Add user profile picture</s>
+- - [ ] Add schema for query params && path params
 - - [ ] Role check for certain routes
 - - [ ] Pagination
 - - [ ] Add product supplier table
