@@ -41,7 +41,8 @@
 
 ### Users
 
-- - [ ] /users/list - GET - List all users
+- - [x] /users/list - GET - List all users
+  - Query Params -> 'role' - Optional - to filter users by role
 - - [ ] /users/:id/ - GET - Get user by id
 - - [ ] /users/:id - DELETE - Remove User
 
