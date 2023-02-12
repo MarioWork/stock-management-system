@@ -9,6 +9,7 @@ const {
     getUserById: getUserByIdPrisma,
     createUser: createUserPrisma,
     addProfilePicture: addProfilePicturePrisma,
+    listAllUsers: listAllUsersPrisma,
     hasProfilePicture
 } = require('../services/prisma/user-service');
 
@@ -128,8 +129,14 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
     }
 };
 
+//TODO: add docs
+const listAllUsers = (prisma, role) => {
+    return listAllUsersPrisma(prisma, role);
+};
+
 module.exports = {
     createUser,
     authorize,
-    addProfilePicture
+    addProfilePicture,
+    listAllUsers
 };
