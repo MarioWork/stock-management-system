@@ -122,12 +122,9 @@ const hasProfilePicture = (prisma, id) => {
 
 //TODO: Add docs
 const listAllUsers = (prisma, role) => {
+    const whereQuery = !role ? {} : { roles: { has: role } };
     return prisma.user.findMany({
-        where: {
-            roles: {
-                has: role
-            }
-        },
+        where: whereQuery,
         select: {
             id: true,
             email: true,
@@ -136,7 +133,9 @@ const listAllUsers = (prisma, role) => {
             lastName: true,
             roles: true,
             profilePicture: {
-                url: true
+                select: {
+                    url: true
+                }
             },
             createdAt: true,
             updatedAt: true
@@ -148,5 +147,6 @@ module.exports = {
     getUserById,
     createUser,
     addProfilePicture,
-    hasProfilePicture
+    hasProfilePicture,
+    listAllUsers
 };
