@@ -7,6 +7,8 @@ const UserSchema = S.object()
     .prop('nif', S.string().minLength(9))
     .prop('profilePicture', S.object().prop('url', S.string()))
     .prop('email', S.string())
+    .prop('createdAt', S.string().format('time'))
+    .prop('updatedAt', S.string().format('time'))
     .prop('roles', S.array().items(S.string()))
     .required(['id', 'email', 'roles', 'firstName', 'lastName', 'nif', 'profilePicture']);
 
