@@ -1,6 +1,9 @@
 const { deleteFile } = require('../../../controllers/file-controller');
+const S = require('fluent-json-schema');
 
-const schema = {};
+const schema = {
+    params: S.object().prop('id', S.number()).required(['id'])
+};
 
 const options = { schema };
 
