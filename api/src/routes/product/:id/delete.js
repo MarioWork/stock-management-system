@@ -1,5 +1,8 @@
 const S = require('fluent-json-schema');
 
+const { UserRoles } = require('../../../enums/user-roles');
+
+const { authorize } = require('../../../controllers/user-controller');
 const { deleteProducts } = require('../../../controllers/product-controller');
 
 const schema = {
@@ -9,12 +12,15 @@ const schema = {
     params: S.object().prop('id', S.number()).required(['id'])
 };
 
-const options = { schema };
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, to, authService } = server;
 
-    server.delete('/', options, async (request, reply) => {
+    server.delete('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
 
         const [error, { count }] = await to(deleteProducts(prisma, [id]));
