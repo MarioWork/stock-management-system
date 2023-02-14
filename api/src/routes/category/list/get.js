@@ -1,15 +1,20 @@
 const S = require('fluent-json-schema');
+
 const CategorySchema = require('../../../schemas/category-schema');
+
+const { UserRoles } = require('../../../enums/user-roles');
+
 const { getAllCategories } = require('../../../controllers/category-controller');
+const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
     response: { 200: S.array().items(S.oneOf([CategorySchema, S.null()])) }
 };
 
-const options = {
-    schema
-};
-
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 /**
  * Fastify plugin to behave as
  * Route to retrieve all categories
@@ -17,8 +22,8 @@ const options = {
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to } = server;
-    server.get('/', options, async (_, reply) => {
+    const { prisma, to, authService } = server;
+    server.get('/', options({ prisma, authService }), async (_, reply) => {
         const [error, categories] = await to(getAllCategories(prisma));
 
         if (error) {
