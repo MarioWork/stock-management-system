@@ -1,5 +1,7 @@
 const S = require('fluent-json-schema');
 const { deleteCategories } = require('../../../controllers/category-controller');
+const { authorize } = require('../../../controllers/user-controller');
+const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
     response: {
@@ -8,7 +10,10 @@ const schema = {
     params: S.object().prop('id', S.number()).required(['id'])
 };
 
-const options = { schema };
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 
 /**
  * Route to delete a category
@@ -17,9 +22,9 @@ const options = { schema };
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, to, authService } = server;
 
-    server.delete('/', options, async (request, reply) => {
+    server.delete('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
 
         const [error, { count }] = await to(deleteCategories(prisma, id));
