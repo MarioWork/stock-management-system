@@ -1,15 +1,20 @@
-const CategorySchema = require('../../../schemas/category-schema');
 const S = require('fluent-json-schema');
+
+const CategorySchema = require('../../../schemas/category-schema');
+
+const { UserRoles } = require('../../../enums/user-roles');
 const { getCategoryById } = require('../../../controllers/category-controller');
+const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
     response: { 200: CategorySchema },
     params: S.object().prop('id', S.number()).required(['id'])
 };
 
-const options = {
-    schema
-};
+const options = ({ authService, prisma }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 
 /**
  * Route to retrieve a category by ID
@@ -18,8 +23,8 @@ const options = {
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to } = server;
-    server.get('/', options, async (request, reply) => {
+    const { prisma, to, authService } = server;
+    server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
         const [error, category] = await to(getCategoryById(prisma, parseInt(id)));
 
