@@ -7,7 +7,8 @@ const UserSchema = require('../../../schemas/user-schema');
 const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
-    response: { 200: S.array().items(UserSchema) }
+    response: { 200: S.array().items(UserSchema) },
+    query: S.object().prop('role', S.string().enum(Object.values(UserRoles)))
 };
 
 const options = ({ prisma, authService }) => ({

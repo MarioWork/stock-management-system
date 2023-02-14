@@ -8,7 +8,8 @@ const { authorize } = require('../../../controllers/user-controller');
 const { getAllProducts } = require('../../../controllers/product-controller');
 
 const schema = {
-    response: { 200: S.array().items(productSchema) }
+    response: { 200: S.array().items(productSchema) },
+    query: S.object().prop('query', S.string())
 };
 
 const options = ({ prisma, authService }) => ({
