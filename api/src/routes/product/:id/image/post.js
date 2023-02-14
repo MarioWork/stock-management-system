@@ -1,8 +1,12 @@
 const S = require('fluent-json-schema');
 
 const productSchema = require('../../../../schemas/product-schema');
+
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
+const { UserRoles } = require('../../../../enums/user-roles');
+
 const { addImageToProduct } = require('../../../../controllers/product-controller');
+const { authorize } = require('../../../../controllers/user-controller');
 
 const schema = {
     params: S.object().prop('id', S.number()).required(['id']),
@@ -11,12 +15,15 @@ const schema = {
     }
 };
 
-const options = { schema };
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 
 module.exports = async server => {
-    const { prisma, storage, to } = server;
+    const { prisma, storage, to, authService } = server;
 
-    server.post('/', options, async (request, reply) => {
+    server.post('/', options({ authService, prisma }), async (request, reply) => {
         const data = await request.file();
 
         //If there is not file content
