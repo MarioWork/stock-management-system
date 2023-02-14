@@ -1,7 +1,11 @@
 const S = require('fluent-json-schema');
 
-const { updateProduct } = require('../../../controllers/product-controller');
 const productSchema = require('../../../schemas/product-schema');
+
+const { UserRoles } = require('../../../enums/user-roles');
+
+const { updateProduct } = require('../../../controllers/product-controller');
+const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
     response: {
@@ -14,12 +18,15 @@ const schema = {
         .prop('categories', S.array().items(S.number()))
 };
 
-const options = { schema };
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, to, authService } = server;
 
-    server.patch('/', options, async (request, reply) => {
+    server.patch('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
         const { name, quantity, categories } = request.body;
 
