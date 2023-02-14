@@ -120,8 +120,13 @@ const hasProfilePicture = (prisma, id) => {
     });
 };
 
-//TODO: Add docs
 //TODO: Add more filters
+/**
+ * Retrieves all users with the filter options
+ * @param {PrismaClient} prisma
+ * @param {string} role
+ * @returns {Promise<User[]>}
+ */
 const listAllUsers = (prisma, role) => {
     const whereQuery = !role ? {} : { roles: { has: role } };
     return prisma.user.findMany({

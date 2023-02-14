@@ -129,7 +129,12 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
     }
 };
 
-//TODO: add docs
+/**
+ * Retrieves all users with the filter options
+ * @param {PrismaClient} prisma
+ * @param {string} role
+ * @returns {Promise<User[]>}
+ */
 const listAllUsers = (prisma, role) => {
     return listAllUsersPrisma(prisma, role);
 };
