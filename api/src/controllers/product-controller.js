@@ -79,7 +79,7 @@ const deleteProducts = (prisma, ids) => {
  * @returns {Product}
  */
 const updateProduct = async (prisma, { id, name, quantity, categories }) => {
-    const categoriesObjArray = categories.map(catId => ({ id: catId }));
+    const categoriesObjArray = categories?.map(catId => ({ id: catId }));
     try {
         return await updateProductPrisma(prisma, {
             id,
