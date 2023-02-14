@@ -1,18 +1,24 @@
 const S = require('fluent-json-schema');
 
 const productSchema = require('../../../schemas/product-schema');
+
+const { UserRoles } = require('../../../enums/user-roles');
+
+const { authorize } = require('../../../controllers/user-controller');
 const { getAllProducts } = require('../../../controllers/product-controller');
 
 const schema = {
     response: { 200: S.array().items(productSchema) }
 };
 
-const options = { schema };
-
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, to, authService } = server;
 
-    server.get('/', options, async (request, reply) => {
+    server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { query } = request.query;
 
         const [error, products] = await to(getAllProducts(prisma, query));
