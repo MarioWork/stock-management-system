@@ -120,7 +120,7 @@ const hasProfilePicture = (prisma, id) => {
     });
 };
 
-//TODO: Add more filters
+//TODO: Add more filters (name, email, nif)
 /**
  * Retrieves all users with the filter options
  * @param {PrismaClient} prisma
