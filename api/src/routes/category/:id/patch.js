@@ -1,6 +1,10 @@
 const S = require('fluent-json-schema');
-const { updateCategory } = require('../../../controllers/category-controller');
+
 const categorySchema = require('../../../schemas/category-schema');
+
+const { UserRoles } = require('../../../enums/user-roles');
+const { updateCategory } = require('../../../controllers/category-controller');
+const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
     response: { 200: categorySchema },
@@ -8,7 +12,10 @@ const schema = {
     body: S.object().additionalProperties(false).prop('name', S.string().required())
 };
 
-const options = { schema };
+const options = ({ prisma, authService }) => ({
+    schema,
+    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+});
 
 /**
  * Route to update a user by ID
@@ -17,9 +24,9 @@ const options = { schema };
  * @param {*} server -  Fastify server instance
  */
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, to, authService } = server;
 
-    server.patch('/', options, async (request, reply) => {
+    server.patch('/', options({ prisma, authService }), async (request, reply) => {
         const id = parseInt(request.params.id);
         const { name } = request.body;
 
