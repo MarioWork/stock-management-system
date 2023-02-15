@@ -8,7 +8,9 @@ const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
     response: { 200: S.array().items(UserSchema) },
-    query: S.object().prop('role', S.string().enum(Object.values(UserRoles)))
+    role: S.object()
+        .prop('role', S.string().enum(Object.values(UserRoles)))
+        .prop('query', S.string())
 };
 
 const options = ({ prisma, authService }) => ({
@@ -21,7 +23,8 @@ module.exports = async server => {
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const role = Object.keys(request.query).length === 0 ? null : request.query.role;
-        const [error, users] = await to(listAllUsers(prisma, role));
+        const query = request.query.query;
+        const [error, users] = await to(listAllUsers(prisma, { role, query }));
 
         if (error) {
             server.log.error(error);

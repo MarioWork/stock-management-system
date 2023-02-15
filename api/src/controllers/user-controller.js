@@ -132,11 +132,11 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
 /**
  * Retrieves all users with the filter options
  * @param {PrismaClient} prisma
- * @param {string} role
+ * @param {{role: String, query: String}} obj
  * @returns {Promise<User[]>}
  */
-const listAllUsers = (prisma, role) => {
-    return listAllUsersPrisma(prisma, role);
+const listAllUsers = (prisma, { role, query }) => {
+    return listAllUsersPrisma(prisma, { role, query });
 };
 
 module.exports = {

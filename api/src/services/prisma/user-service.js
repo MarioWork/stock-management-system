@@ -120,15 +120,22 @@ const hasProfilePicture = (prisma, id) => {
     });
 };
 
-//TODO: Add more filters (name, email, nif)
 /**
  * Retrieves all users with the filter options
  * @param {PrismaClient} prisma
- * @param {string} role
+ * @param {{role: String, query: String}} obj
  * @returns {Promise<User[]>}
  */
-const listAllUsers = (prisma, role) => {
-    const whereQuery = !role ? {} : { roles: { has: role } };
+const listAllUsers = (prisma, { role, query }) => {
+    const queries = {
+        email: { contains: query, mode: 'insensitive' },
+        nif: { contains: query, mode: 'insensitive' },
+        firstName: { contains: query, mode: 'insensitive' },
+        lastName: { contains: query, mode: 'insensitive' }
+    };
+
+    const whereQuery = !role ? { ...queries } : { ...queries, roles: { has: role } };
+
     return prisma.user.findMany({
         where: whereQuery,
         select: {
