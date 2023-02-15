@@ -43,8 +43,8 @@
 
 - - [x] /users/list - GET - List all users
   - Query Params:
-    -> 'role' - Optional - to filter users by role
-    -> 'query' - Optional - searches users by the query in the fields (firstName, lastName, nif, email)
+    - 'role' - Optional - to filter users by role
+    - 'query' - Optional - searches users by the query in the fields (firstName, lastName, nif, email)
 - - [ ] /users/:id/ - GET - Get user by id
 - - [ ] /users/:id - DELETE - Remove User
 
