@@ -127,14 +127,17 @@ const hasProfilePicture = (prisma, id) => {
  * @returns {Promise<User[]>}
  */
 const listAllUsers = (prisma, { role, query }) => {
-    const queries = {
-        email: { contains: query, mode: 'insensitive' },
-        nif: { contains: query, mode: 'insensitive' },
-        firstName: { contains: query, mode: 'insensitive' },
-        lastName: { contains: query, mode: 'insensitive' }
+    const mutated = query ?? '';
+    const textQueries = {
+        OR: [
+            { email: { contains: mutated, mode: 'insensitive' } },
+            { nif: { contains: mutated, mode: 'insensitive' } },
+            { firstName: { contains: mutated, mode: 'insensitive' } },
+            { lastName: { contains: mutated, mode: 'insensitive' } }
+        ]
     };
 
-    const whereQuery = !role ? { ...queries } : { ...queries, roles: { has: role } };
+    const whereQuery = !role ? textQueries : { ...textQueries, AND: { roles: { has: role } } };
 
     return prisma.user.findMany({
         where: whereQuery,
