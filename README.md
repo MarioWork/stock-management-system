@@ -59,4 +59,3 @@
 - - [ ] Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)
 - - [ ] Add more fields to category (user who created)
 - - [ ] Add order options to get queries
-- - [ ] Add more filtering options to product
