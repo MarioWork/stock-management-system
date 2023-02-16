@@ -29,18 +29,21 @@ const getProductById = (prisma, id) => {
 /**
  * Retrieves all products
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {string} query - text to search with
+ * @param {string} filter - text to search with
  * @returns {Promise<Product[]>} - Promise object that returns product array or error
  * @throws {error}
  */
-const getAllProducts = (prisma, query) => {
+//TODO: Fix docs
+const getAllProducts = (prisma, { filter, pagination }) => {
     return prisma.product.findMany({
         where: {
             name: {
-                contains: query,
+                contains: filter,
                 mode: 'insensitive'
             }
         },
+        take: pagination.querySize,
+        skip: pagination.recordsToSkip,
         select: {
             id: true,
             name: true,

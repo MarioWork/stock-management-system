@@ -9,7 +9,7 @@ const { getAllProducts } = require('../../../controllers/product-controller');
 
 const schema = {
     response: { 200: S.array().items(productSchema) },
-    query: S.object().prop('query', S.string())
+    query: S.object().prop('filter', S.string())
 };
 
 const options = ({ prisma, authService }) => ({
@@ -21,9 +21,10 @@ module.exports = async server => {
     const { prisma, to, authService } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
-        const { query } = request.query;
+        const { filter } = request.query;
+        const pagination = request.parsePaginationQuery();
 
-        const [error, products] = await to(getAllProducts(prisma, query));
+        const [error, products] = await to(getAllProducts(prisma, { filter, pagination }));
 
         if (error) {
             server.log.error(error);
