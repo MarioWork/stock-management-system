@@ -7,8 +7,8 @@ const { UserRoles } = require('../../../enums/user-roles');
 const { authorize } = require('../../../controllers/user-controller');
 const { getAllProducts } = require('../../../controllers/product-controller');
 
+//TODO: Update schema, with response schema
 const schema = {
-    response: { 200: S.array().items(productSchema) },
     query: S.object().prop('filter', S.string())
 };
 
@@ -24,6 +24,7 @@ module.exports = async server => {
         const { filter } = request.query;
         const pagination = request.parsePaginationQuery();
 
+        //TODO: add count
         const [error, products] = await to(getAllProducts(prisma, { filter, pagination }));
 
         if (error) {
@@ -32,6 +33,11 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(200).send(products);
+        await reply.code(200).withPagination({
+            total: 0,
+            page: pagination.currentPage,
+            size: products.length,
+            data: products
+        });
     });
 };
