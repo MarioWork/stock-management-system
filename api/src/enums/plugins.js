@@ -4,6 +4,7 @@ module.exports = {
         PRISMA: 'Prisma',
         SENSIBLE: 'Sensible',
         CLOUD_STORAGE: 'Cloud Storage',
-        AUTHENTICATION: 'Authentication'
+        AUTHENTICATION: 'Authentication',
+        PAGINATION: 'Pagination'
     }
 };
