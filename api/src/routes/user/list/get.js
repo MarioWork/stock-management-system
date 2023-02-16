@@ -23,8 +23,8 @@ module.exports = async server => {
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const role = Object.keys(request.query).length === 0 ? null : request.query.role;
-        const query = request.query.query;
-        const [error, users] = await to(listAllUsers(prisma, { role, query }));
+        const filter = request.query.filter;
+        const [error, users] = await to(listAllUsers(prisma, { role, filter }));
 
         if (error) {
             server.log.error(error);

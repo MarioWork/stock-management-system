@@ -123,17 +123,17 @@ const hasProfilePicture = (prisma, id) => {
 /**
  * Retrieves all users with the filter options
  * @param {PrismaClient} prisma
- * @param {{role: String, query: String}} obj
+ * @param {{role: String, filter: String}} obj
  * @returns {Promise<User[]>}
  */
-const listAllUsers = (prisma, { role, query }) => {
-    const mutated = query ?? '';
+const listAllUsers = (prisma, { role, filter }) => {
+    const mutatedFilter = filter ?? '';
     const textQueries = {
         OR: [
-            { email: { contains: mutated, mode: 'insensitive' } },
-            { nif: { contains: mutated, mode: 'insensitive' } },
-            { firstName: { contains: mutated, mode: 'insensitive' } },
-            { lastName: { contains: mutated, mode: 'insensitive' } }
+            { email: { contains: mutatedFilter, mode: 'insensitive' } },
+            { nif: { contains: mutatedFilter, mode: 'insensitive' } },
+            { firstName: { contains: mutatedFilter, mode: 'insensitive' } },
+            { lastName: { contains: mutatedFilter, mode: 'insensitive' } }
         ]
     };
 
