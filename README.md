@@ -3,7 +3,7 @@
 ### Product
 
 - - [x] /product/list - GET - returns all products
-  - Query Params -> 'query' - Optional - to filter the products name
+  - Query Params -> 'filter' - Optional - to filter the products name
 - - [x] /product/:id - GET - returns a single product
 - - [x] /product/:id - DELETE - removes a product
 - - [x] /product/:id - PATCH - updates a product
@@ -44,7 +44,7 @@
 - - [x] /users/list - GET - List all users
   - Query Params:
     - 'role' - Optional - to filter users by role
-    - 'query' - Optional - searches users by the query in the fields (firstName, lastName, nif, email)
+    - 'filter' - Optional - searches users by the filter in the fields (firstName, lastName, nif, email)
 - - [ ] /users/:id/ - GET - Get user by id
 - - [ ] /users/:id - DELETE - Remove User
 
