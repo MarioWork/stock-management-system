@@ -23,19 +23,14 @@ const plugin = (server, _, done) => {
         };
     });
 
-    server.decorateReply('withPagination', function ({ total, page, size, data }) {
-        const { pastRecordsCount, pageSize } = this.request.parsePaginationQuery();
+    server.decorateReply('withPagination', function ({ total, page, data }) {
+        const { pastRecordsCount } = this.request.parsePaginationQuery();
 
-        const pageRecordsCount = size === 0 ? pageSize : size;
-
-        const isMaxRange = page * pageRecordsCount > total;
-
-        if (isMaxRange) return this.code(416).send();
-
-        const empty = data.length === 0;
+        const size = data.length;
+        const empty = size === 0;
 
         const contentRange = `items ${
-            empty ? '*' : `${pastRecordsCount}-${pastRecordsCount + data.length - 1}`
+            empty ? '*/0' : `${pastRecordsCount}-${pastRecordsCount + data.length - 1}`
         }/${total}`;
 
         return this.header('Content-Range', contentRange).code(206).send({

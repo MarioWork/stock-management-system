@@ -42,7 +42,6 @@ module.exports = async server => {
         await reply.code(200).withPagination({
             total,
             page: pagination.currentPage,
-            size: products.length,
             data: products
         });
     });
