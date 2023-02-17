@@ -12,19 +12,31 @@ const plugin = (server, _, done) => {
                 const queryPage = Number.parseInt(query.page, 10);
                 return Number.isNaN(queryPage) ? 1 : queryPage;
             },
-            get querySize() {
-                const querySize = Number.parseInt(query.size, 10);
-                return Number.isNaN(querySize) ? DEFAULT_PAGE_SIZE : querySize;
+            get pageSize() {
+                const pageSize = Number.parseInt(query.size, 10);
+                return Number.isNaN(pageSize) ? DEFAULT_PAGE_SIZE : pageSize;
             },
-            get recordsToSkip() {
+            get pastRecordsCount() {
                 const page = this.currentPage - 1;
-                return page === 0 ? page : page * this.querySize;
+                return page === 0 ? page : page * this.pageSize;
             }
         };
     });
 
     server.decorateReply('withPagination', function ({ total, page, size, data }) {
-        return this.send({
+        const { pastRecordsCount } = this.request.parsePaginationQuery();
+
+        const isMaxRange = size * page + total > data.length;
+
+        if (isMaxRange) return this.code(416).send();
+
+        const empty = data.length === 0;
+
+        const contentRange = `items ${
+            empty ? '*' : `${pastRecordsCount}-${pastRecordsCount + data.length - 1}`
+        }/${total}`;
+
+        return this.header('Content-Range', contentRange).code(206).send({
             _metadata: {
                 page,
                 size,
