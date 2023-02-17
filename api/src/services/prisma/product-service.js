@@ -45,8 +45,8 @@ const getAllProducts = (prisma, { filter, pagination }) => {
     return Promise.all([
         prisma.product.findMany({
             where,
-            take: pagination.querySize,
-            skip: pagination.recordsToSkip,
+            take: pagination.pageSize,
+            skip: pagination.pastRecordsCount,
             select: {
                 id: true,
                 name: true,
