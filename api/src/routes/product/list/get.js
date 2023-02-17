@@ -24,7 +24,8 @@ module.exports = async server => {
         const { filter } = request.query;
         const pagination = request.parsePaginationQuery();
 
-        const [error, [products, total]] = await to(getAllProducts(prisma, { filter, pagination }));
+        const [error, result] = await to(getAllProducts(prisma, { filter, pagination }));
+        const [products, total] = result;
 
         if (error) {
             server.log.error(error);
