@@ -18,6 +18,7 @@ const options = ({ prisma, authService }) => ({
     preValidation: authorize({ authService, prisma }, [UserRoles.ADMIN])
 });
 
+//TODO: Apply pagination
 module.exports = async server => {
     const { prisma, authService, to } = server;
 
