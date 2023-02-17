@@ -31,10 +31,9 @@ const getProductById = (prisma, id) => {
  * Retrieves all products
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {string} filter - text to search with
- * @returns {Promise<Product[]>} - Promise object that returns product array or error
+ * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
-//TODO: Fix docs
 const getAllProducts = (prisma, { filter, pagination }) => {
     return getAllProductsPrisma(prisma, { filter, pagination });
 };
