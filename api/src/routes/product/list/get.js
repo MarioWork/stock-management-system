@@ -10,7 +10,7 @@ const { getAllProducts } = require('../../../controllers/product-controller');
 
 const schema = {
     response: {
-        200: S.object()
+        206: S.object()
             .prop('_metadata', paginationMetadataSchema)
             .prop('data', S.array().items(productSchema))
             .required(['data'])
