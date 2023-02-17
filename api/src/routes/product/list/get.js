@@ -1,14 +1,20 @@
 const S = require('fluent-json-schema');
 
 const productSchema = require('../../../schemas/product-schema');
+const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
 const { authorize } = require('../../../controllers/user-controller');
 const { getAllProducts } = require('../../../controllers/product-controller');
 
-//TODO: Update schema, with response schema
 const schema = {
+    response: {
+        200: S.object()
+            .prop('_metadata', paginationMetadataSchema)
+            .prop('data', S.array().items(productSchema))
+            .required(['data'])
+    },
     query: S.object().prop('filter', S.string())
 };
 
