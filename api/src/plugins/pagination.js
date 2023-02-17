@@ -24,9 +24,11 @@ const plugin = (server, _, done) => {
     });
 
     server.decorateReply('withPagination', function ({ total, page, size, data }) {
-        const { pastRecordsCount } = this.request.parsePaginationQuery();
+        const { pastRecordsCount, pageSize } = this.request.parsePaginationQuery();
 
-        const isMaxRange = size * page + total > data.length;
+        const pageRecordsCount = size === 0 ? pageSize : size;
+
+        const isMaxRange = page * pageRecordsCount > total;
 
         if (isMaxRange) return this.code(416).send();
 
