@@ -35,23 +35,28 @@ const getProductById = (prisma, id) => {
  */
 //TODO: Fix docs
 const getAllProducts = (prisma, { filter, pagination }) => {
-    return prisma.product.findMany({
-        where: {
-            name: {
-                contains: filter,
-                mode: 'insensitive'
-            }
-        },
-        take: pagination.querySize,
-        skip: pagination.recordsToSkip,
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            images: true,
-            categories: { select: { id: true, name: true } }
+    const where = {
+        name: {
+            contains: filter,
+            mode: 'insensitive'
         }
-    });
+    };
+
+    return Promise.all([
+        prisma.product.findMany({
+            where,
+            take: pagination.querySize,
+            skip: pagination.recordsToSkip,
+            select: {
+                id: true,
+                name: true,
+                quantity: true,
+                images: true,
+                categories: { select: { id: true, name: true } }
+            }
+        }),
+        prisma.product.count({ where })
+    ]);
 };
 
 /**

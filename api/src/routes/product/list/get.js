@@ -24,8 +24,7 @@ module.exports = async server => {
         const { filter } = request.query;
         const pagination = request.parsePaginationQuery();
 
-        //TODO: add count
-        const [error, products] = await to(getAllProducts(prisma, { filter, pagination }));
+        const [error, [products, total]] = await to(getAllProducts(prisma, { filter, pagination }));
 
         if (error) {
             server.log.error(error);
@@ -34,7 +33,7 @@ module.exports = async server => {
         }
 
         await reply.code(200).withPagination({
-            total: 0,
+            total,
             page: pagination.currentPage,
             size: products.length,
             data: products
