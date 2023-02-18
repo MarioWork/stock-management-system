@@ -1,6 +1,7 @@
 const S = require('fluent-json-schema');
 
 const CategorySchema = require('../../../schemas/category-schema');
+const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -8,7 +9,12 @@ const { getAllCategories } = require('../../../controllers/category-controller')
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
-    response: { 200: S.array().items(S.oneOf([CategorySchema, S.null()])) }
+    response: {
+        206: S.object()
+            .prop('_metadata', paginationMetadataSchema)
+            .prop('data', S.array().items(CategorySchema))
+            .required(['data'])
+    }
 };
 
 const options = ({ prisma, authService }) => ({
