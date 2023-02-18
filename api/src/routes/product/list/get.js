@@ -15,7 +15,7 @@ const schema = {
             .prop('data', S.array().items(productSchema))
             .required(['data'])
     },
-    query: S.object().prop('filter', S.string())
+    query: S.object().prop('filter', S.string()).prop('categoryId', S.number())
 };
 
 const options = ({ prisma, authService }) => ({
@@ -27,12 +27,14 @@ module.exports = async server => {
     const { prisma, to, authService } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
-        const { filter } = request.query;
+        const { filter, categoryId } = request.query;
         const pagination = request.parsePaginationQuery();
 
-        const [error, result] = await to(getAllProducts(prisma, { filter, pagination }));
-        const [products, total] = result;
+        const [error, result] = await to(
+            getAllProducts(prisma, { filter, pagination, categoryId })
+        );
 
+        const [products, total] = result;
         if (error) {
             server.log.error(error);
             await reply.internalServerError();

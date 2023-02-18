@@ -37,12 +37,23 @@ const getProductById = (prisma, id) => {
  * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
-const getAllProducts = (prisma, { filter, pagination }) => {
+const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
     const where = {
-        name: {
-            contains: filter,
-            mode: 'insensitive'
-        }
+        AND: [
+            {
+                name: {
+                    contains: filter,
+                    mode: 'insensitive'
+                }
+            },
+            {
+                categories: {
+                    some: {
+                        id: categoryId
+                    }
+                }
+            }
+        ]
     };
 
     return Promise.all([
