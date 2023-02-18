@@ -3,7 +3,9 @@
 ### Product
 
 - - [x] /product/list - GET - returns all products
-  - Query Params -> 'filter' - Optional - to filter the products name
+  - Query Params:
+    - 'filter' - Optional - searches products by the filter in the fields (name)
+    - 'categoryId' - Optional - to filter products by category
 - - [x] /product/:id - GET - returns a single product
 - - [x] /product/:id - DELETE - removes a product
 - - [x] /product/:id - PATCH - updates a product
