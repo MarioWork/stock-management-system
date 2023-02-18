@@ -21,7 +21,6 @@ const options = ({ prisma, authService }) => ({
  * @async
  * @param {*} server -  Fastify server instance decorated with prisma
  */
-//TODO: apply pagination
 module.exports = async server => {
     const { prisma, to, authService } = server;
     server.get('/', options({ prisma, authService }), async (request, reply) => {
