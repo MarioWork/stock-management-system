@@ -55,9 +55,9 @@
 - - [x] <s>Add user profile picture</s>
 - - [x] <s>Role check for certain routes</s>
 - - [x] <s>Add schema for query params && path params</s>
+- - [x] <s>Pagination</s>
 - - [ ] More filter options to product
 - - [ ] More filter options to category
-- - [ ] Pagination
 - - [ ] Add product supplier table
 - - [ ] Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)
 - - [ ] Add more fields to category (user who created)
