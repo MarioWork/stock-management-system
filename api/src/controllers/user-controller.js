@@ -135,8 +135,9 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
  * @param {{role: String, filter: String}} obj
  * @returns {Promise<User[]>}
  */
-const listAllUsers = (prisma, { role, filter }) => {
-    return listAllUsersPrisma(prisma, { role, filter });
+//TODO: fix docs
+const listAllUsers = (prisma, { role, filter, pagination }) => {
+    return listAllUsersPrisma(prisma, { role, filter, pagination });
 };
 
 module.exports = {

@@ -126,7 +126,8 @@ const hasProfilePicture = (prisma, id) => {
  * @param {{role: String, filter: String}} obj
  * @returns {Promise<User[]>}
  */
-const listAllUsers = (prisma, { role, filter }) => {
+//TODO: fix docs
+const listAllUsers = (prisma, { role, filter, pagination }) => {
     const mutatedFilter = filter ?? '';
     const textQueries = {
         OR: [
@@ -139,24 +140,29 @@ const listAllUsers = (prisma, { role, filter }) => {
 
     const whereQuery = !role ? textQueries : { ...textQueries, AND: { roles: { has: role } } };
 
-    return prisma.user.findMany({
-        where: whereQuery,
-        select: {
-            id: true,
-            email: true,
-            nif: true,
-            firstName: true,
-            lastName: true,
-            roles: true,
-            profilePicture: {
-                select: {
-                    url: true
-                }
-            },
-            createdAt: true,
-            updatedAt: true
-        }
-    });
+    return Promise.all([
+        prisma.user.findMany({
+            where: whereQuery,
+            skip: pagination.pastRecordsCount,
+            take: pagination.pageSize,
+            select: {
+                id: true,
+                email: true,
+                nif: true,
+                firstName: true,
+                lastName: true,
+                roles: true,
+                profilePicture: {
+                    select: {
+                        url: true
+                    }
+                },
+                createdAt: true,
+                updatedAt: true
+            }
+        }),
+        prisma.user.count({ where: whereQuery })
+    ]);
 };
 
 module.exports = {
