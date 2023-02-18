@@ -11,6 +11,12 @@ const createUser = (authService, { email, password }) => {
     });
 };
 
+//TODO: add docs
+const deleteUserById = (authService, id) => {
+    return authService.deleteUser(id);
+};
+
 module.exports = {
-    createUser
+    createUser,
+    deleteUserById
 };

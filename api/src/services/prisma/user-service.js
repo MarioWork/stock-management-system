@@ -94,7 +94,9 @@ const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
             lastName: true,
             nif: true,
             profilePicture: {
-                select: { url: true }
+                select: {
+                    url: true
+                }
             },
             email: true,
             roles: true
@@ -114,7 +116,9 @@ const hasProfilePicture = (prisma, id) => {
         where: { id },
         select: {
             profilePicture: {
-                select: { id: true, type: true }
+                select: {
+                    url: true
+                }
             }
         }
     });
@@ -165,10 +169,14 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
     ]);
 };
 
+//TODO: add docs
+const deleteUserById = (prisma, id) => prisma.user.delete({ where: { id } });
+
 module.exports = {
     getUserById,
     createUser,
     addProfilePicture,
     hasProfilePicture,
-    listAllUsers
+    listAllUsers,
+    deleteUserById
 };

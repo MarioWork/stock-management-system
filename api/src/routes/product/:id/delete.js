@@ -36,6 +36,6 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(200).send({ message: 'Delete successfully!' });
+        await reply.send({ message: 'Delete successfully!' });
     });
 };

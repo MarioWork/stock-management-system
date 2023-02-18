@@ -33,6 +33,7 @@ module.exports = async server => {
         const pagination = request.parsePaginationQuery();
 
         const [error, result] = await to(listAllUsers(prisma, { role, filter, pagination }));
+
         const [categories, total] = result;
 
         if (error) {

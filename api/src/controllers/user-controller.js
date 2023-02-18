@@ -3,19 +3,24 @@
  * @typedef { import('../types/user-docs-type') } User
  */
 
-const { Forbidden, BadRequest } = require('http-errors');
+const { Forbidden, BadRequest, NotFound } = require('http-errors');
 
 const {
     getUserById: getUserByIdPrisma,
     createUser: createUserPrisma,
     addProfilePicture: addProfilePicturePrisma,
     listAllUsers: listAllUsersPrisma,
+    deleteUserById: deleteUserByIdPrisma,
     hasProfilePicture
 } = require('../services/prisma/user-service');
 
 const { deleteFile: deleteFilePrisma } = require('../services/prisma/file-service');
 
-const { createUser: createUserFirebase } = require('../services/firebase/user-service');
+const {
+    createUser: createUserFirebase,
+    deleteUserById: deleteUserByIdFirebase
+} = require('../services/firebase/user-service');
+
 const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
@@ -142,10 +147,26 @@ const listAllUsers = (prisma, { role, filter, pagination }) =>
 //TODO: fix docs
 const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
 
+//TODO: add docs
+const deleteUserById = async ({ prisma, authService }, id) => {
+    try {
+        return await Promise.all([
+            deleteUserByIdPrisma(prisma, id),
+            deleteUserByIdFirebase(authService, id)
+        ]);
+    } catch (error) {
+        if (error.code === 'auth/user-not-found' || error.code === 'P2025')
+            throw new NotFound(`User with ID: ${id} was not found`);
+
+        throw error;
+    }
+};
+
 module.exports = {
     createUser,
     authorize,
     addProfilePicture,
     listAllUsers,
-    getUserById
+    getUserById,
+    deleteUserById
 };
