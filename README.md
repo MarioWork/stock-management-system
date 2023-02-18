@@ -45,7 +45,7 @@
   - Query Params:
     - 'role' - Optional - to filter users by role
     - 'filter' - Optional - searches users by the filter in the fields (firstName, lastName, nif, email)
-- - [ ] /users/:id/ - GET - Get user by id
+- - [x] /users/:id/ - GET - Get user by id
 - - [ ] /users/:id - DELETE - Remove User
 
 ### Future features
