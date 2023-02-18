@@ -5,6 +5,7 @@ module.exports = {
         SENSIBLE: 'Sensible',
         CLOUD_STORAGE: 'Cloud Storage',
         AUTHENTICATION: 'Authentication',
-        PAGINATION: 'Pagination'
+        PAGINATION: 'Pagination',
+        SHUTDOWN: 'Shutdown'
     }
 };
