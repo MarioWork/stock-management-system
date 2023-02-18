@@ -3,6 +3,20 @@
  * @typedef { import('../types/user-docs-type') } User
  */
 
+const selectQuery = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    nif: true,
+    profilePicture: {
+        select: {
+            url: true
+        }
+    },
+    email: true,
+    roles: true
+};
+
 /**
  * Get a user record from database with its id and role
  * @param {PrismaClient} prisma - ORM Dependency
@@ -15,19 +29,7 @@ const getUserById = (prisma, id) => {
         where: {
             id
         },
-        select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            nif: true,
-            profilePicture: {
-                select: {
-                    url: true
-                }
-            },
-            email: true,
-            roles: true
-        }
+        select: selectQuery
     });
 };
 
@@ -50,19 +52,7 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
                 set: roles
             }
         },
-        select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            nif: true,
-            profilePicture: {
-                select: {
-                    url: true
-                }
-            },
-            email: true,
-            roles: true
-        }
+        select: selectQuery
     });
 };
 
@@ -88,19 +78,7 @@ const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
                 }
             }
         },
-        select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            nif: true,
-            profilePicture: {
-                select: {
-                    url: true
-                }
-            },
-            email: true,
-            roles: true
-        }
+        select: selectQuery
     });
 };
 
@@ -149,21 +127,7 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
             where: whereQuery,
             skip: pagination.pastRecordsCount,
             take: pagination.pageSize,
-            select: {
-                id: true,
-                email: true,
-                nif: true,
-                firstName: true,
-                lastName: true,
-                roles: true,
-                profilePicture: {
-                    select: {
-                        url: true
-                    }
-                },
-                createdAt: true,
-                updatedAt: true
-            }
+            select: selectQuery
         }),
         prisma.user.count({ where: whereQuery })
     ]);
