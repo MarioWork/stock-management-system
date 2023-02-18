@@ -3,6 +3,11 @@
  * @typedef { import("../../types/prisma-docs-type") } Category
  */
 
+const selectQuery = {
+    id: true,
+    name: true
+};
+
 /**
  * Creates a category with the given params
  * @param {PrismaClient} prisma - RM Dependency
@@ -17,10 +22,7 @@ const createCategory = (prisma, newCategory) => {
         data: {
             name
         },
-        select: {
-            id: true,
-            name: true
-        }
+        select: selectQuery
     });
 };
 
@@ -35,10 +37,7 @@ const getAllCategories = (prisma, pagination) => {
         prisma.category.findMany({
             take: pagination.pageSize,
             skip: pagination.pastRecordsCount,
-            select: {
-                id: true,
-                name: true
-            }
+            select: selectQuery
         }),
         prisma.category.count()
     ]);
@@ -56,10 +55,7 @@ const getCategoryById = async (prisma, id) => {
         where: {
             id: id
         },
-        select: {
-            id: true,
-            name: true
-        }
+        select: selectQuery
     });
 };
 
