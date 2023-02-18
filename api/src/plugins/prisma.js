@@ -19,10 +19,6 @@ const plugin = async server => {
     }
 
     server.decorate('prisma', prisma);
-
-    server.addHook('onClose', async server => {
-        await server.prisma.$disconnect();
-    });
 };
 
 const options = { name: PluginNames.PRISMA };
