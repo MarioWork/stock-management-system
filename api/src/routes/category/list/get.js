@@ -24,8 +24,11 @@ const options = ({ prisma, authService }) => ({
 //TODO: apply pagination
 module.exports = async server => {
     const { prisma, to, authService } = server;
-    server.get('/', options({ prisma, authService }), async (_, reply) => {
-        const [error, categories] = await to(getAllCategories(prisma));
+    server.get('/', options({ prisma, authService }), async (request, reply) => {
+        const pagination = request.parsePaginationQuery();
+
+        const [error, result] = await to(getAllCategories(prisma, pagination));
+        const [categories, total] = result;
 
         if (error) {
             server.log.error(error);
@@ -33,6 +36,10 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(200).send(categories);
+        await reply.withPagination({
+            total,
+            page: pagination.currentPage,
+            data: categories
+        });
     });
 };

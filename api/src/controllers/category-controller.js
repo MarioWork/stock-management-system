@@ -27,8 +27,9 @@ const createCategory = (prisma, newCategory) => {
  * @returns {Promise<Category[]>} - Promise object that returns array of categories or error
  * @throws {error}
  */
-const getAllCategories = prisma => {
-    return getAllCategoriesPrisma(prisma);
+//TODO: fix docs
+const getAllCategories = (prisma, pagination) => {
+    return getAllCategoriesPrisma(prisma, pagination);
 };
 
 /**

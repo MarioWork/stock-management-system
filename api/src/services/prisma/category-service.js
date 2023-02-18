@@ -29,13 +29,19 @@ const createCategory = (prisma, newCategory) => {
  * @returns {Promise<Category[]>} - Promise object that returns array of categories or error
  * @throws {error}
  */
-const getAllCategories = prisma => {
-    return prisma.category.findMany({
-        select: {
-            id: true,
-            name: true
-        }
-    });
+//TODO: fix docs
+const getAllCategories = (prisma, pagination) => {
+    return Promise.all([
+        prisma.category.findMany({
+            take: pagination.pageSize,
+            skip: pagination.pastRecordsCount,
+            select: {
+                id: true,
+                name: true
+            }
+        }),
+        prisma.category.count()
+    ]);
 };
 
 /**

@@ -39,7 +39,7 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(200).withPagination({
+        await reply.withPagination({
             total,
             page: pagination.currentPage,
             data: products
