@@ -24,10 +24,9 @@ const createCategory = (prisma, newCategory) => {
 
 /** Retrieves all categories
  * @param {PrismaClient} prisma - ORM Dependency
- * @returns {Promise<Category[]>} - Promise object that returns array of categories or error
+ * @returns {Promise<{}[]>} - Promise object that returns array with categories and categories count
  * @throws {error}
  */
-//TODO: fix docs
 const getAllCategories = (prisma, pagination) => {
     return getAllCategoriesPrisma(prisma, pagination);
 };
