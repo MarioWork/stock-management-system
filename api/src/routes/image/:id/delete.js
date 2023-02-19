@@ -2,11 +2,13 @@ const S = require('fluent-json-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
+const { fileIdSchema } = require('../../../schemas/file-schema');
+
 const { deleteFile } = require('../../../controllers/file-controller');
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
-    params: S.object().prop('id', S.string()).required(['id'])
+    params: S.object().prop('id', fileIdSchema).required(['id'])
 };
 
 const options = ({ prisma, authService }) => ({
