@@ -3,7 +3,7 @@ const categorySchema = require('../schemas/category-schema');
 const fileSchema = require('../schemas/file-schema');
 
 const productSchema = S.object()
-    .prop('id', S.string())
+    .prop('id', S.string().format('uuid'))
     .prop('name', S.string())
     .prop('quantity', S.string())
     .prop('images', S.array().items(fileSchema))
