@@ -11,7 +11,7 @@ const schema = {
         .prop('password', S.string())
         .prop('firstName', S.string())
         .prop('lastName', S.string())
-        .prop('nif', S.string().minLength(8))
+        .prop('nif', S.string().minLength(9))
         .required(['email', 'password', 'firstName', 'lastName', 'nif']),
     response: {
         201: UserSchema
