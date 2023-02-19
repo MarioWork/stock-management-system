@@ -1,3 +1,3 @@
 /**
- * @typedef {{id: number, name: string}} Category
+ * @typedef {{id: string, name: string}} Category
  */
