@@ -1,14 +1,15 @@
 const S = require('fluent-json-schema');
 
-const CategorySchema = require('../../../schemas/category-schema');
+const { categorySchema, categoryIdSchema } = require('../../../schemas/category-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
+
 const { getCategoryById } = require('../../../controllers/category-controller');
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
-    response: { 200: CategorySchema },
-    params: S.object().prop('id', S.string().format('uuid')).required(['id'])
+    response: { 200: categorySchema },
+    params: S.object().prop('id', categoryIdSchema).required(['id'])
 };
 
 const options = ({ authService, prisma }) => ({
@@ -26,7 +27,7 @@ module.exports = async server => {
     const { prisma, to, authService } = server;
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
-        const [error, category] = await to(getCategoryById(prisma, parseInt(id)));
+        const [error, category] = await to(getCategoryById(prisma, id));
 
         if (!category) {
             await reply.notFound(`Category with ID: ${id} was not found`);

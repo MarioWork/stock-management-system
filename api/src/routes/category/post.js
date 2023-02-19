@@ -1,9 +1,14 @@
 const S = require('fluent-json-schema');
-const categorySchema = require('../../schemas/category-schema');
+
+const { categorySchema, categoryNameSchema } = require('../../schemas/category-schema');
+
 const { createCategory } = require('../../controllers/category-controller');
 
 const schema = {
-    body: S.object().additionalProperties(false).prop('name', S.string().required()),
+    body: S.object()
+        .additionalProperties(false)
+        .prop('name', categoryNameSchema)
+        .required(['name']),
     response: {
         201: categorySchema
     }

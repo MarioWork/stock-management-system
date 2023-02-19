@@ -1,6 +1,6 @@
 const S = require('fluent-json-schema');
 
-const CategorySchema = require('../../../schemas/category-schema');
+const { categorySchema } = require('../../../schemas/category-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -12,7 +12,7 @@ const schema = {
     response: {
         206: S.object()
             .prop('_metadata', paginationMetadataSchema)
-            .prop('data', S.array().items(CategorySchema))
+            .prop('data', S.array().items(categorySchema))
             .required(['data'])
     }
 };

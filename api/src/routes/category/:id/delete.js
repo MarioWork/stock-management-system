@@ -1,13 +1,17 @@
 const S = require('fluent-json-schema');
+
 const { deleteCategories } = require('../../../controllers/category-controller');
 const { authorize } = require('../../../controllers/user-controller');
+
+const { categoryIdSchema } = require('../../../schemas/category-schema');
+
 const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
     response: {
         200: S.object().prop('message', S.string()).required(['message'])
     },
-    params: S.object().prop('id', S.string().format('uuid')).required(['id'])
+    params: S.object().prop('id', categoryIdSchema).required(['id'])
 };
 
 const options = ({ prisma, authService }) => ({

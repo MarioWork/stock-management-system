@@ -1,5 +1,6 @@
 const S = require('fluent-json-schema');
-const categorySchema = require('../schemas/category-schema');
+
+const { categorySchema } = require('../schemas/category-schema');
 const fileSchema = require('../schemas/file-schema');
 
 const productSchema = S.object()

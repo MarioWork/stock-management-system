@@ -1,14 +1,15 @@
 const S = require('fluent-json-schema');
 
-const categorySchema = require('../../../schemas/category-schema');
+const { categorySchema, categoryIdSchema } = require('../../../schemas/category-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
+
 const { updateCategory } = require('../../../controllers/category-controller');
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
     response: { 200: categorySchema },
-    params: S.object().prop('id', S.string().format('uuid')).required(['id']),
+    params: S.object().prop('id', categoryIdSchema).required(['id']),
     body: S.object().additionalProperties(false).prop('name', S.string().required())
 };
 
@@ -27,7 +28,7 @@ module.exports = async server => {
     const { prisma, to, authService } = server;
 
     server.patch('/', options({ prisma, authService }), async (request, reply) => {
-        const id = parseInt(request.params.id);
+        const id = request.params.id;
         const { name } = request.body;
 
         const [error, updatedCategory] = await to(updateCategory(prisma, { id, name }));
