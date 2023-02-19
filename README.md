@@ -50,7 +50,7 @@
 - - [x] /users/:id/ - GET - Get user by id
 - - [x] /users/:id - DELETE - Remove User
 
-### TODOS
+### Features
 
 - - [x] <s>Authentication with firebase</s>
 - - [x] <s>Add users with roles table</s>
