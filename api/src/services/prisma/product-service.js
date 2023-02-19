@@ -46,13 +46,15 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
                     mode: 'insensitive'
                 }
             },
-            {
-                categories: {
-                    some: {
-                        id: categoryId
-                    }
-                }
-            }
+            categoryId
+                ? {
+                      categories: {
+                          some: {
+                              id: categoryId
+                          }
+                      }
+                  }
+                : {}
         ]
     };
 
