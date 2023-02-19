@@ -9,7 +9,7 @@ const { addImageToProduct } = require('../../../../controllers/product-controlle
 const { authorize } = require('../../../../controllers/user-controller');
 
 const schema = {
-    params: S.object().prop('id', S.number()).required(['id']),
+    params: S.object().prop('id', S.string().format('uuid')).required(['id']),
     response: {
         200: productSchema
     }

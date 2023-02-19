@@ -8,7 +8,7 @@ const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
     response: { 200: CategorySchema },
-    params: S.object().prop('id', S.number()).required(['id'])
+    params: S.object().prop('id', S.string().format('uuid')).required(['id'])
 };
 
 const options = ({ authService, prisma }) => ({

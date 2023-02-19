@@ -9,7 +9,7 @@ const schema = {
     response: {
         200: S.object().prop('message', S.string()).required(['message'])
     },
-    params: S.object().prop('id', S.number()).required(['id'])
+    params: S.object().prop('id', S.string().format('uuid')).required(['id'])
 };
 
 const options = ({ prisma, authService }) => ({

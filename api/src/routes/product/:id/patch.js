@@ -11,7 +11,7 @@ const schema = {
     response: {
         200: productSchema
     },
-    params: S.object().prop('id', S.number()).required(['id']),
+    params: S.object().prop('id', S.string().format('uuid')).required(['id']),
     body: S.object()
         .prop('name', S.string())
         .prop('quantity', S.number())
