@@ -19,7 +19,7 @@ model Category {
 }
 
 model Product {
-  id         Int        @id @default(autoincrement())
+  id         String     @id @default(uuid())
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   name       String
@@ -35,7 +35,7 @@ model File {
   url       String
   type      String
   Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  productId String?
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?  @unique
 }

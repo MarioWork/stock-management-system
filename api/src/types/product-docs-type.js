@@ -1,6 +1,6 @@
 /**
  * @typedef {{
- *  id: number,
+ *  id: string,
  *  name: string,
  *  quantity: number,
  *  images: string[],
