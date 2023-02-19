@@ -34,9 +34,8 @@ const getProductById = (prisma, id) => {
  * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
-const getAllProducts = (prisma, { filter, pagination, categoryId }) => {
-    return getAllProductsPrisma(prisma, { filter, categoryId, pagination });
-};
+const getAllProducts = (prisma, { filter, pagination, categoryId }) =>
+    getAllProductsPrisma(prisma, { filter, categoryId, pagination });
 
 /**
  * Creates a product with the properties given

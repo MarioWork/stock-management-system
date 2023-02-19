@@ -1,6 +1,11 @@
 const S = require('fluent-json-schema');
 
-const productSchema = require('../../../schemas/product-schema');
+const {
+    productSchema,
+    productIdSchema,
+    productNameSchema,
+    productQuantitySchema
+} = require('../../../schemas/product-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -11,10 +16,10 @@ const schema = {
     response: {
         200: productSchema
     },
-    params: S.object().prop('id', S.string().format('uuid')).required(['id']),
+    params: S.object().prop('id', productIdSchema).required(['id']),
     body: S.object()
-        .prop('name', S.string())
-        .prop('quantity', S.number())
+        .prop('name', productNameSchema)
+        .prop('quantity', productQuantitySchema)
         .prop('categories', S.array().items(S.number()))
 };
 

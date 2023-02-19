@@ -1,6 +1,6 @@
 const S = require('fluent-json-schema');
 
-const productSchema = require('../../../schemas/product-schema');
+const { productSchema, productIdSchema } = require('../../../schemas/product-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -9,7 +9,7 @@ const { getProductById } = require('../../../controllers/product-controller');
 
 const schema = {
     response: { 200: productSchema },
-    params: S.object().prop('id', S.string().format('uuid')).required(['id'])
+    params: S.object().prop('id', productIdSchema).required(['id'])
 };
 
 const options = ({ prisma, authService }) => ({
@@ -23,7 +23,7 @@ module.exports = async server => {
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
 
-        const [error, product] = await to(getProductById(prisma, parseInt(id)));
+        const [error, product] = await to(getProductById(prisma, id));
 
         if (!product) {
             await reply.notFound(`Product with ID: ${id} was not found`);

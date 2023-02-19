@@ -2,6 +2,8 @@ const S = require('fluent-json-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
+const { productIdSchema } = require('../../../schemas/product-schema');
+
 const { authorize } = require('../../../controllers/user-controller');
 const { deleteProducts } = require('../../../controllers/product-controller');
 
@@ -9,7 +11,7 @@ const schema = {
     response: {
         200: S.object().prop('message', S.string()).required(['message'])
     },
-    params: S.object().prop('id', S.string().format('uuid')).required(['id'])
+    params: S.object().prop('id', productIdSchema).required(['id'])
 };
 
 const options = ({ prisma, authService }) => ({

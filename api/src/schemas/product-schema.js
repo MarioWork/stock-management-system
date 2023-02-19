@@ -3,12 +3,29 @@ const S = require('fluent-json-schema');
 const { categorySchema } = require('../schemas/category-schema');
 const fileSchema = require('../schemas/file-schema');
 
+const productIdSchema = S.string().format('uuid');
+
+const productNameSchema = S.string();
+
+const productQuantitySchema = S.number();
+
+const productImagesSchema = S.array().items(fileSchema);
+
+const productCategoriesSchema = S.array().items(categorySchema);
+
 const productSchema = S.object()
-    .prop('id', S.string().format('uuid'))
-    .prop('name', S.string())
-    .prop('quantity', S.string())
-    .prop('images', S.array().items(fileSchema))
-    .prop('categories', S.array().items(categorySchema))
+    .prop('id', productIdSchema)
+    .prop('name', productNameSchema)
+    .prop('quantity', productQuantitySchema)
+    .prop('images', productImagesSchema)
+    .prop('categories', productCategoriesSchema)
     .required(['id', 'name', 'quantity', 'images', 'categories']);
 
-module.exports = productSchema;
+module.exports = {
+    productIdSchema,
+    productNameSchema,
+    productQuantitySchema,
+    productImagesSchema,
+    productCategoriesSchema,
+    productSchema
+};

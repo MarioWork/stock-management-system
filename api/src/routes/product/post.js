@@ -1,6 +1,8 @@
 const S = require('fluent-json-schema');
 
-const productSchema = require('../../schemas/product-schema');
+const { productSchema, productQuantitySchema } = require('../../schemas/product-schema');
+
+const { categoryIdSchema } = require('../../schemas/category-schema');
 
 const { UserRoles } = require('../../enums/user-roles');
 
@@ -10,9 +12,9 @@ const { createProduct } = require('../../controllers/product-controller');
 const schema = {
     body: S.object()
         .additionalProperties(false)
-        .prop('name', S.string().required())
-        .prop('quantity', S.number())
-        .prop('categories', S.array().items(S.number())),
+        .prop('name')
+        .prop('quantity', productQuantitySchema)
+        .prop('categories', S.array().items(categoryIdSchema)),
     response: {
         201: productSchema
     }

@@ -1,6 +1,7 @@
 const S = require('fluent-json-schema');
 
-const productSchema = require('../../../schemas/product-schema');
+const { productSchema } = require('../../../schemas/product-schema');
+const { categoryIdSchema } = require('../../../schemas/category-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -15,7 +16,7 @@ const schema = {
             .prop('data', S.array().items(productSchema))
             .required(['data'])
     },
-    query: S.object().prop('filter', S.string()).prop('categoryId', S.number())
+    query: S.object().prop('filter', S.string()).prop('categoryId', categoryIdSchema)
 };
 
 const options = ({ prisma, authService }) => ({
@@ -35,6 +36,7 @@ module.exports = async server => {
         );
 
         const [products, total] = result;
+
         if (error) {
             server.log.error(error);
             await reply.internalServerError();
