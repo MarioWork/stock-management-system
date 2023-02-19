@@ -50,7 +50,7 @@
 - - [x] /users/:id/ - GET - Get user by id
 - - [x] /users/:id - DELETE - Remove User
 
-### Future features
+### TODOS
 
 - - [x] <s>Authentication with firebase</s>
 - - [x] <s>Add users with roles table</s>
@@ -58,10 +58,10 @@
 - - [x] <s>Role check for certain routes</s>
 - - [x] <s>Add schema for query params && path params</s>
 - - [x] <s>Pagination</s>
+- - [x] <s>Centralize schemas (params/query/body should use the proper schema from userId etc instead always creating the same schema multiple times)</s>
 - - [ ] More filter options to product
 - - [ ] More filter options to category
 - - [ ] Add product supplier table
 - - [ ] Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)
 - - [ ] Add more fields to category (user who created)
 - - [ ] Add order options to get queries
-- - [ ] Centralize schemas (params/query/body should use the proper schema from userId etc instead always creating the same schema multiple times)
