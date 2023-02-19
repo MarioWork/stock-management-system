@@ -14,12 +14,12 @@ const {
 /**
  * Creates a category with the given params
  * @param {PrismaClient} prisma - RM Dependency
- * @param {{name: string} } Object - Object that represents the category to be added
+ * @param {{name: string, createdBy: string} } Object - Object that represents the category to be added
  * @returns {Promise<Category>} - Promise object that returns the created category or error
  * @throws {error}
  */
-const createCategory = (prisma, newCategory) => {
-    return createCategoryPrisma(prisma, newCategory);
+const createCategory = (prisma, { name, createdBy }) => {
+    return createCategoryPrisma(prisma, { name, createdBy });
 };
 
 /** Retrieves all categories

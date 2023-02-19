@@ -2,6 +2,9 @@ const S = require('fluent-json-schema');
 
 const { categorySchema, categoryNameSchema } = require('../../schemas/category-schema');
 
+const { UserRoles } = require('../../enums/user-roles');
+
+const { authorize } = require('../../controllers/user-controller');
 const { createCategory } = require('../../controllers/category-controller');
 
 const schema = {
@@ -14,7 +17,10 @@ const schema = {
     }
 };
 
-const options = { schema };
+const options = ({ authService, prisma }) => ({
+    schema,
+    preValidation: authorize({ prisma, authService }, [UserRoles.ADMIN, UserRoles.EMPLOYEE])
+});
 
 /**
  * Fastify plugin to behave as
@@ -23,10 +29,13 @@ const options = { schema };
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to } = server;
+    const { prisma, to, authService } = server;
+    server.post('/', options({ prisma, authService }), async (request, reply) => {
+        const { name } = request.body;
 
-    server.post('/', options, async (request, reply) => {
-        const [error, newCategory] = await to(createCategory(prisma, request.body));
+        const [error, newCategory] = await to(
+            createCategory(prisma, { name, createdBy: request.user.id })
+        );
 
         if (error) {
             server.log.error(error);
