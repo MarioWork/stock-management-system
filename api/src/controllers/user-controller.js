@@ -143,7 +143,13 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
 const listAllUsers = (prisma, { role, filter, pagination }) =>
     listAllUsersPrisma(prisma, { role, filter, pagination });
 
-//TODO: fix docs
+/**
+ * Get a user record from database with its id and role
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - User ID
+ * @returns {Promise<{User}>} Promise when resolved returns user
+ * @throws {error}
+ */
 const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
 
 //TODO: add docs
