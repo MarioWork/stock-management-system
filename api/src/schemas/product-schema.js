@@ -1,7 +1,7 @@
 const S = require('fluent-json-schema');
 
 const { categorySchema } = require('../schemas/category-schema');
-const fileSchema = require('../schemas/file-schema');
+const { fileSchema } = require('../schemas/file-schema');
 
 const productIdSchema = S.string().format('uuid');
 

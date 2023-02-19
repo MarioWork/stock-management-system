@@ -1,13 +1,14 @@
-const UserSchema = require('../../../schemas/user-schema');
-const { authorize } = require('../../../controllers/user-controller');
-const { UserRoles } = require('../../../enums/user-roles');
+const { userSchema } = require('../../../schemas/user-schema');
 
+const { UserRoles } = require('../../../enums/user-roles');
 const { AllowedFileType } = require('../../../enums/allowed-file-type');
+
+const { authorize } = require('../../../controllers/user-controller');
 const { addProfilePicture } = require('../../../controllers/user-controller');
 
 const schema = {
     response: {
-        200: UserSchema
+        200: userSchema
     }
 };
 const options = ({ prisma, authService }) => ({

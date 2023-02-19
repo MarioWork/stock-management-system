@@ -1,15 +1,51 @@
 const S = require('fluent-json-schema');
 
-const UserSchema = S.object()
-    .prop('id', S.string())
-    .prop('firstName', S.string())
-    .prop('lastName', S.string())
-    .prop('nif', S.string().minLength(9))
-    .prop('profilePicture', S.object())
-    .prop('email', S.string())
-    .prop('createdAt', S.string().format('time'))
-    .prop('updatedAt', S.string().format('time'))
-    .prop('roles', S.array().items(S.string()))
+const { UserRoles } = require('../enums/user-roles');
+
+const { fileSchema } = require('../schemas/file-schema');
+
+const userIdSchema = S.string();
+
+const userFirstNameSchema = S.string().minLength(2).maxLength(25);
+
+const userLastNameSchema = S.string().minLength(2).maxLength(25);
+
+const userNifSchema = S.string().minLength(9).maxLength(9);
+
+const userProfilePictureSchema = fileSchema;
+
+const userEmailSchema = S.string().format('email');
+
+const userPasswordSchema = S.string().minLength(8);
+
+const userCreatedAtSchema = S.string().format('date-time');
+
+const userUpdatedAtSchema = S.string().format('date-time');
+
+const userRolesSchema = S.array().items(S.string().enum(Object.values(UserRoles)));
+
+const userSchema = S.object()
+    .prop('id', userIdSchema)
+    .prop('firstName', userFirstNameSchema)
+    .prop('lastName', userLastNameSchema)
+    .prop('nif', userNifSchema)
+    .prop('profilePicture', userProfilePictureSchema)
+    .prop('email', userEmailSchema)
+    .prop('createdAt', userCreatedAtSchema)
+    .prop('updatedAt', userUpdatedAtSchema)
+    .prop('roles', userRolesSchema)
     .required(['id', 'email', 'roles', 'firstName', 'lastName', 'nif', 'profilePicture']);
 
-module.exports = UserSchema;
+module.exports = {
+    userIdSchema,
+    userFirstNameSchema,
+    userLastNameSchema,
+    userNifSchema,
+    userProfilePictureSchema,
+    userEmailSchema,
+    userCreatedAtSchema,
+    userUpdatedAtSchema,
+    userRolesSchema,
+    userPasswordSchema,
+    userSchema
+};

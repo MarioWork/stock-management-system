@@ -1,20 +1,29 @@
 const S = require('fluent-json-schema');
 
-const UserSchema = require('../../../../schemas/user-schema');
+const {
+    userSchema,
+    userEmailSchema,
+    userPasswordSchema,
+    userFirstNameSchema,
+    userLastNameSchema,
+    userNifSchema
+} = require('../../../../schemas/user-schema');
+
 const { UserRoles } = require('../../../../enums/user-roles');
+
 const { authorize, createUser } = require('../../../../controllers/user-controller');
 
 const schema = {
     headers: S.object().prop('authorization', S.string()).required(['authorization']),
     body: S.object()
-        .prop('email', S.string())
-        .prop('password', S.string())
-        .prop('firstName', S.string())
-        .prop('lastName', S.string())
-        .prop('nif', S.string().minLength(9))
+        .prop('email', userEmailSchema)
+        .prop('password', userPasswordSchema)
+        .prop('firstName', userFirstNameSchema)
+        .prop('lastName', userLastNameSchema)
+        .prop('nif', userNifSchema)
         .required(['email', 'password', 'firstName', 'lastName', 'nif']),
     response: {
-        201: UserSchema
+        201: userSchema
     }
 };
 

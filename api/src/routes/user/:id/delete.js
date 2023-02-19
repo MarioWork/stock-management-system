@@ -1,11 +1,13 @@
 const S = require('fluent-json-schema');
 
+const { userIdSchema } = require('../../../schemas/user-schema');
+
 const { UserRoles } = require('../../../enums/user-roles');
 
 const { authorize, deleteUserById } = require('../../../controllers/user-controller');
 
 const schema = {
-    params: S.object().prop('id', S.string()).required(['id']),
+    params: S.object().prop('id', userIdSchema).required(['id']),
     response: { 200: S.object().prop('message', S.string()).required(['message']) }
 };
 

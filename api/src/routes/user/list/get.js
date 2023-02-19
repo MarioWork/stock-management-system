@@ -2,7 +2,7 @@ const S = require('fluent-json-schema');
 
 const { listAllUsers, authorize } = require('../../../controllers/user-controller');
 
-const UserSchema = require('../../../schemas/user-schema');
+const { userSchema } = require('../../../schemas/user-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -11,7 +11,7 @@ const schema = {
     response: {
         206: S.object()
             .prop('_metadata', paginationMetadataSchema)
-            .prop('data', S.array().items(UserSchema))
+            .prop('data', S.array().items(userSchema))
             .required(['data'])
     },
     query: S.object()
