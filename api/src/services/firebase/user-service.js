@@ -11,7 +11,13 @@ const createUser = (authService, { email, password }) => {
     });
 };
 
-//TODO: add docs
+/**
+ * Returns a promise that deletes user by id
+ * @param {*} authService - Firebase Authentication Dependency
+ * @param {string} id - User ID
+ * @returns {Promise}
+ * @throws {error}
+ */
 const deleteUserById = (authService, id) => {
     return authService.deleteUser(id);
 };

@@ -137,6 +137,7 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {string} id - User ID
  * @returns {Promise}
+ * @throws {error}
  */
 const deleteUserById = (prisma, id) => prisma.user.delete({ where: { id } });
 
