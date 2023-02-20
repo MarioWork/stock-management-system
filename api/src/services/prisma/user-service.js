@@ -132,7 +132,12 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
     ]);
 };
 
-//TODO: add docs
+/**
+ * Returns a promise that deletes user by id
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - User ID
+ * @returns {Promise}
+ */
 const deleteUserById = (prisma, id) => prisma.user.delete({ where: { id } });
 
 module.exports = {
