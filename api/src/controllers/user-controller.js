@@ -152,7 +152,13 @@ const listAllUsers = (prisma, { role, filter, pagination }) =>
  */
 const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
 
-//TODO: add docs
+/**
+ * Deletes a user by id from firebase authentication and database
+ * @param {{prisma: PrismaClient, authService: *}} Dependencies
+ * @param {string} id
+ * @returns {Promise}
+ * @throws {error}
+ */
 const deleteUserById = async ({ prisma, authService }, id) => {
     try {
         return await Promise.all([
