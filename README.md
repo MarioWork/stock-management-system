@@ -60,8 +60,9 @@
 - - [x] <s>Pagination</s>
 - - [x] <s>Centralize schemas (params/query/body should use the proper schema from userId etc instead always creating the same schema multiple times)</s>
 - - [x] <s>More filter options to product</s>
+- - [x] <s>Add product supplier table</s>
 - - [ ] More filter options to category
-- - [ ] Add product supplier table
 - - [ ] Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)
 - - [ ] Add more fields to category (user who created)
 - - [ ] Add order options to get queries
+- - [ ] Fix schemas required in routes instead of dynamic schemas
