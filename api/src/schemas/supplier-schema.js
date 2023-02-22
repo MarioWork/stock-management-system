@@ -1,6 +1,6 @@
 const S = require('fluent-json-schema');
 
-const supplierIdSchema = S.string();
+const supplierIdSchema = S.string().format('uuid');
 
 const supplierNameSchema = S.string().minLength(2).maxLength(40);
 
