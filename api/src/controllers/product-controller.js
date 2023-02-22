@@ -34,6 +34,7 @@ const getProductById = (prisma, id) => {
  * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
+//TODO: add supplier filter
 const getAllProducts = (prisma, { filter, pagination, categoryId }) =>
     getAllProductsPrisma(prisma, { filter, categoryId, pagination });
 
