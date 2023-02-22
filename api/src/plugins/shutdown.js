@@ -16,7 +16,7 @@ const register = async function (server) {
 
             try {
                 await server.prisma.$disconnect();
-                server.close(() => process.exit());
+                await server.close(() => process.exit());
             } catch (error) {
                 server.log.error(error);
             }
