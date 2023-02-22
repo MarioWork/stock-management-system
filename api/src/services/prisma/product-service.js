@@ -11,7 +11,8 @@ const selectQuery = {
     images: {
         select: { id: true, url: true }
     },
-    categories: { select: { id: true, name: true } }
+    categories: { select: { id: true, name: true } },
+    supplier: { select: { id: true, name: true, nif: true } }
 };
 
 /**
@@ -76,12 +77,16 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
  * @returns {Promise<Product>} - Promise object that returns product or error
  * @throws {error}
  */
-const createProduct = (prisma, { name, quantity, categories }) => {
+//TODO: fix docs
+const createProduct = (prisma, { name, quantity, categories, supplier }) => {
     return prisma.product.create({
         data: {
             name,
             quantity,
-            categories: { connect: categories }
+            categories: { connect: categories },
+            supplier: {
+                connect: { id: supplier }
+            }
         },
         select: selectQuery
     });
