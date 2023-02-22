@@ -4,17 +4,6 @@
  * @typedef { import('../../types/product-docs-type') } Product
  */
 
-const selectQuery = {
-    id: true,
-    name: true,
-    quantity: true,
-    images: {
-        select: { id: true, url: true }
-    },
-    categories: { select: { id: true, name: true } },
-    supplier: { select: { id: true, name: true, nif: true } }
-};
-
 /**
  * Retrieves a product by Id
  * @param {PrismaClient} prisma - ORM Dependency
@@ -26,8 +15,7 @@ const getProductById = (prisma, id) => {
     return prisma.product.findUnique({
         where: {
             id
-        },
-        select: selectQuery
+        }
     });
 };
 
@@ -59,12 +47,23 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
         ]
     };
 
+    const select = {
+        id: true,
+        name: true,
+        quantity: true,
+        images: {
+            select: { id: true, url: true }
+        },
+        categories: { select: { id: true, name: true } },
+        supplier: { select: { id: true } }
+    };
+
     return Promise.all([
         prisma.product.findMany({
             where,
             take: pagination.pageSize,
             skip: pagination.pastRecordsCount,
-            select: selectQuery
+            select
         }),
         prisma.product.count({ where })
     ]);
@@ -87,8 +86,7 @@ const createProduct = (prisma, { name, quantity, categories, supplier }) => {
             supplier: {
                 connect: { id: supplier }
             }
-        },
-        select: selectQuery
+        }
     });
 };
 
@@ -121,8 +119,7 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
             name,
             quantity,
             categories: { connect: categories }
-        },
-        select: selectQuery
+        }
     });
 };
 
@@ -134,6 +131,13 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
  * @throws {error}
  */
 const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => {
+    const select = {
+        id: true,
+        images: {
+            select: { id: true, url: true }
+        }
+    };
+
     return prisma.product.update({
         where: { id: productId },
         data: {
@@ -148,7 +152,7 @@ const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => 
                 }
             }
         },
-        select: selectQuery
+        select
     });
 };
 

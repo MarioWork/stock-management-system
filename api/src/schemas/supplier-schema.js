@@ -16,7 +16,7 @@ const supplierSchema = S.object()
     .prop('nif', supplierNifSchema)
     .prop('updatedAt', supplierUpdatedAtSchema)
     .prop('createdAt', supplierCreatedAtSchema)
-    .required(['id', 'name', 'nif']);
+    .required(['id']);
 
 module.exports = {
     supplierIdSchema,

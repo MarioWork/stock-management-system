@@ -27,7 +27,7 @@ const productSchema = S.object()
     .prop('images', productImagesSchema)
     .prop('categories', productCategoriesSchema)
     .prop('supplier', supplierSchema)
-    .required(['id', 'name', 'quantity', 'images', 'categories', 'supplier']);
+    .required(['id']);
 
 module.exports = {
     productIdSchema,

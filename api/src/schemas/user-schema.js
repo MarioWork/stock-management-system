@@ -34,7 +34,7 @@ const userSchema = S.object()
     .prop('createdAt', userCreatedAtSchema)
     .prop('updatedAt', userUpdatedAtSchema)
     .prop('roles', userRolesSchema)
-    .required(['id', 'email', 'roles', 'firstName', 'lastName', 'nif', 'profilePicture']);
+    .required(['id']);
 
 module.exports = {
     userIdSchema,

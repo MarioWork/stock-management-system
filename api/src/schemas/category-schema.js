@@ -13,7 +13,7 @@ const categorySchema = S.object()
     .prop('name', categoryNameSchema)
     .prop('createdAt', categoryCreatedAtSchema)
     .prop('updatedAt', categoryUpdatedAtSchema)
-    .required(['id', 'name']);
+    .required(['id']);
 
 module.exports = {
     categoryIdSchema,
