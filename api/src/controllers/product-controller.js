@@ -56,8 +56,7 @@ const createProduct = async (prisma, { name, quantity, categories, supplier }) =
             supplier
         });
     } catch (error) {
-        if (error.code === 'P2025')
-            throw new NotFound(`Categories with id: ${categories.join(',')} do not exist`);
+        if (error.code === 'P2025') throw new NotFound(`Supplier or Categories do not exist`);
         throw error;
     }
 };
@@ -80,6 +79,7 @@ const deleteProducts = (prisma, ids) => {
  * @param {{id: number,quantity: number=, categories: Category[]=}} object - Object that represents what to update
  * @returns {Product}
  */
+//TODO: add supplier
 const updateProduct = async (prisma, { id, name, quantity, categories }) => {
     const categoriesObjArray = categories?.map(catId => ({ id: catId }));
     try {
@@ -93,6 +93,7 @@ const updateProduct = async (prisma, { id, name, quantity, categories }) => {
         if (error.code === 'P2016') throw new NotFound(`Product with ID: ${id} was not found`);
         if (error.code === 'P2025')
             throw new NotFound(`Categories with id: ${categories.join(',')} do not exist`);
+        throw error;
     }
 };
 /**
