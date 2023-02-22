@@ -44,18 +44,21 @@ const getAllProducts = (prisma, { filter, pagination, categoryId }) =>
  * @returns {Product}
  * @throws {error}
  */
-const createProduct = async (prisma, { name, quantity, categories }) => {
+//TODO: Fix docs
+const createProduct = async (prisma, { name, quantity, categories, supplier }) => {
     const categoriesObjArray = categories?.map(catId => ({ id: catId }));
 
     try {
         return await createProductPrisma(prisma, {
             name,
             quantity,
-            categories: categoriesObjArray
+            categories: categoriesObjArray,
+            supplier
         });
     } catch (error) {
         if (error.code === 'P2025')
             throw new NotFound(`Categories with id: ${categories.join(',')} do not exist`);
+        throw error;
     }
 };
 
