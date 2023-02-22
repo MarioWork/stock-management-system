@@ -28,6 +28,8 @@ model Product {
   quantity   Int        @default(0)
   images     File[]
   categories Category[]
+  supplier   Supplier   @relation(fields: [supplierId], references: [id])
+  supplierId String
 }
 
 model File {
@@ -53,4 +55,11 @@ model User {
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   Category       Category[]
+}
+
+model Supplier {
+  id      String    @id @default(uuid())
+  name    String
+  nif     String
+  Product Product[]
 }
