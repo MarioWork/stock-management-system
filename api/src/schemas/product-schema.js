@@ -2,6 +2,7 @@ const S = require('fluent-json-schema');
 
 const { categorySchema } = require('../schemas/category-schema');
 const { fileSchema } = require('../schemas/file-schema');
+const { supplierSchema } = require('../schemas/supplier-schema');
 
 const productIdSchema = S.string().format('uuid');
 
@@ -19,7 +20,8 @@ const productSchema = S.object()
     .prop('quantity', productQuantitySchema)
     .prop('images', productImagesSchema)
     .prop('categories', productCategoriesSchema)
-    .required(['id', 'name', 'quantity', 'images', 'categories']);
+    .prop('supplier', supplierSchema)
+    .required(['id', 'name', 'quantity', 'images', 'categories', 'supplier']);
 
 module.exports = {
     productIdSchema,
