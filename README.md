@@ -50,6 +50,14 @@
 - - [x] /users/:id/ - GET - Get user by id
 - - [x] /users/:id - DELETE - Remove User
 
+### Suppliers
+
+- - [ ] /supplier/list - GET - List all suppliers
+- - [ ] /supplier/ - POST - Create Supplier
+- - [ ] /supplier/:id - GET - Get supplier by id
+- - [ ] /supplier/:id - PATCH - Update supplier by id
+- - [ ] /supplier/:id - DELETE - DELETE supplier by id
+
 ### Features
 
 - - [x] <s>Authentication with firebase</s>
