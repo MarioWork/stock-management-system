@@ -56,7 +56,10 @@ const createProduct = async (prisma, { name, quantity, categories, supplier }) =
             supplier
         });
     } catch (error) {
-        if (error.code === 'P2025') throw new NotFound(`Supplier or Categories do not exist`);
+        if (error.code === 'P2025') {
+            const field = error.meta.cause.match(/'(.*?)'/i)[0];
+            throw new NotFound(`${field} does not exist`);
+        }
         throw error;
     }
 };
@@ -91,8 +94,10 @@ const updateProduct = async (prisma, { id, name, quantity, categories }) => {
         });
     } catch (error) {
         if (error.code === 'P2016') throw new NotFound(`Product with ID: ${id} was not found`);
-        if (error.code === 'P2025')
-            throw new NotFound(`Categories with id: ${categories.join(',')} do not exist`);
+        if (error.code === 'P2025') {
+            const field = error.meta.cause.match(/'(.*?)'/i)[0];
+            throw new NotFound(`${field} does not exist`);
+        }
         throw error;
     }
 };
