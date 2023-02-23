@@ -80,6 +80,20 @@ const createProduct = (
     prisma,
     { name, description, quantity, categories, supplier, upc, createdBy }
 ) => {
+    const select = {
+        id: true,
+        name: true,
+        description: true,
+        quantity: true,
+        upc: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        categories: true,
+        images: true,
+        supplier: true
+    };
+
     return prisma.product.create({
         data: {
             name,
@@ -93,7 +107,8 @@ const createProduct = (
             createdBy: {
                 connect: { id: createdBy }
             }
-        }
+        },
+        select
     });
 };
 
@@ -119,6 +134,7 @@ const deleteProducts = (prisma, ids) => {
  * @param {{id: number,quantity: number=, categories: {id: number}[]=, url: string=}} object - Object that represents what data to update
  * @returns {Promise<Product>} - Returns the update product
  */
+//TODO: add the missing fields
 const updateProduct = (prisma, { id, name, quantity, categories }) => {
     return prisma.product.update({
         where: { id },
@@ -126,6 +142,19 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
             name,
             quantity,
             categories: { connect: categories }
+        },
+        select: {
+            id: true,
+            name: true,
+            description: true,
+            quantity: true,
+            upc: true,
+            createdAt: true,
+            updatedAt: true,
+            createdBy: true,
+            categories: true,
+            images: true,
+            supplier: true
         }
     });
 };
@@ -140,9 +169,16 @@ const updateProduct = (prisma, { id, name, quantity, categories }) => {
 const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => {
     const select = {
         id: true,
-        images: {
-            select: { id: true, url: true }
-        }
+        name: true,
+        description: true,
+        quantity: true,
+        upc: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        categories: true,
+        images: true,
+        supplier: true
     };
 
     return prisma.product.update({
