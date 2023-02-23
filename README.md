@@ -51,6 +51,9 @@
     - 'filter' - Optional - searches users by the filter in the fields (firstName, lastName, nif, email)
 - - [x] /users/:id/ - GET - Get user by id
 - - [x] /users/:id - DELETE - Remove User
+- - [ ] /users/:id/product/list - GET - List all products created by the user
+- - [ ] /users/:id/category/list - GET - List all categories created by the user
+- - [ ] /users/:id/supplier/list - GET - List all suppliers created by the user
 
 ### Suppliers
 
@@ -74,6 +77,8 @@
 - - [x] <s>More filter options to product</s>
 - - [x] <s>Add product supplier table</s>
 - - [x] <s>Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)</s>
+- - [ ] Finish routes
+- - [ ] error handling for unique fields prisma P2002
 - - [ ] More filter options to category
 - - [ ] Add more fields to category (user who created)
 - - [ ] Add order options to get queries
