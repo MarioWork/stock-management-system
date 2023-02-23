@@ -77,10 +77,10 @@
 - - [x] <s>More filter options to product</s>
 - - [x] <s>Add product supplier table</s>
 - - [x] <s>Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)</s>
+- - [x] <s>Add more fields to category (user who created)</s>
 - - [ ] Finish routes
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
-- - [ ] Add more fields to category (user who created)
 - - [ ] Add order options to get queries
 - - [ ] Fix schemas required in routes instead of dynamic schemas
