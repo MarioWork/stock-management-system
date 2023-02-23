@@ -4,8 +4,11 @@ const {
     productSchema,
     productIdSchema,
     productNameSchema,
-    productQuantitySchema
+    productQuantitySchema,
+    productDescriptionSchema,
+    productUpcSchema
 } = require('../../../schemas/product-schema');
+const { supplierIdSchema } = require('../../../schemas/supplier-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -20,6 +23,9 @@ const schema = {
     body: S.object()
         .prop('name', productNameSchema)
         .prop('quantity', productQuantitySchema)
+        .prop('description', productDescriptionSchema)
+        .prop('upc', productUpcSchema)
+        .prop('supplier', supplierIdSchema)
         .prop('categories', S.array().items(S.number()))
 };
 
@@ -33,15 +39,17 @@ module.exports = async server => {
 
     server.patch('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
-        const { name, quantity, categories } = request.body;
+        const { name, quantity, categories, upc, description, supplier } = request.body;
 
-        if (!name && !quantity && !categories) {
-            await reply.badRequest('Needs at least one property (name, quantity or categories)');
+        if (!name && !quantity && !categories && !upc && !description && !supplier) {
+            await reply.badRequest(
+                'Needs at least one property (name, quantity, categories, upc or description)'
+            );
             return;
         }
 
         const [error, updatedProduct] = await to(
-            updateProduct(prisma, { id, name, quantity, categories })
+            updateProduct(prisma, { id, name, quantity, categories, upc, description, supplier })
         );
 
         if (error) {
