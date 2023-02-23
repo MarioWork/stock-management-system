@@ -3,11 +3,6 @@
  * @typedef { import("../../types/prisma-docs-type") } Category
  */
 
-const selectQuery = {
-    id: true,
-    name: true
-};
-
 /**
  * Creates a category with the given params
  * @param {PrismaClient} prisma - RM Dependency
@@ -16,6 +11,20 @@ const selectQuery = {
  * @throws {error}
  */
 const createCategory = (prisma, { name, createdBy }) => {
+    const select = {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        name: true,
+        createdBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true
+            }
+        }
+    };
+
     return prisma.category.create({
         data: {
             name,
@@ -25,7 +34,7 @@ const createCategory = (prisma, { name, createdBy }) => {
                 }
             }
         },
-        select: selectQuery
+        select
     });
 };
 
@@ -35,11 +44,18 @@ const createCategory = (prisma, { name, createdBy }) => {
  * @throws {error}
  */
 const getAllCategories = (prisma, pagination) => {
+    const select = {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        name: true
+    };
+
     return Promise.all([
         prisma.category.findMany({
             take: pagination.pageSize,
             skip: pagination.pastRecordsCount,
-            select: selectQuery
+            select
         }),
         prisma.category.count()
     ]);
@@ -53,11 +69,25 @@ const getAllCategories = (prisma, pagination) => {
  * @throws {error}
  */
 const getCategoryById = async (prisma, id) => {
+    const select = {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        name: true,
+        createdBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true
+            }
+        }
+    };
+
     return prisma.category.findUnique({
         where: {
             id: id
         },
-        select: selectQuery
+        select
     });
 };
 
@@ -69,13 +99,28 @@ const getCategoryById = async (prisma, id) => {
  * @throws {error}
  */
 const updateCategory = (prisma, { id, name }) => {
+    const select = {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        name: true,
+        createdBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true
+            }
+        }
+    };
+
     return prisma.category.update({
         where: {
             id
         },
         data: {
             name
-        }
+        },
+        select
     });
 };
 
