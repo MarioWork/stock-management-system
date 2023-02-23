@@ -17,7 +17,7 @@ const {
 } = require('../services/prisma/product-service');
 
 //TODO: docs
-const categoriesArrayToMap = categories => categories.map(catId => ({ id: catId }));
+const categoriesArrayToMap = categories => categories?.map(catId => ({ id: catId }));
 
 /**
  * Retrieves a product by Id
@@ -57,7 +57,7 @@ const createProduct = async (
         return await createProductPrisma(prisma, {
             name,
             quantity,
-            categories: !categories ? undefined : categoriesArrayToMap(categories),
+            categories: categoriesArrayToMap(categories),
             supplier,
             description,
             upc,
@@ -103,7 +103,7 @@ const updateProduct = async (
             description,
             upc,
             supplier,
-            categories: !categories ? undefined : categoriesArrayToMap(categories)
+            categories: categoriesArrayToMap(categories)
         });
     } catch (error) {
         if (error.code === 'P2016') throw new NotFound(`Product with ID: ${id} was not found`);
