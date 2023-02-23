@@ -54,8 +54,7 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
         images: {
             select: { id: true, url: true }
         },
-        categories: { select: { id: true, name: true } },
-        supplier: { select: { id: true } }
+        categories: { select: { id: true, name: true } }
     };
 
     return Promise.all([
@@ -77,14 +76,22 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
  * @throws {error}
  */
 //TODO: fix docs
-const createProduct = (prisma, { name, quantity, categories, supplier }) => {
+const createProduct = (
+    prisma,
+    { name, description, quantity, categories, supplier, upc, createdBy }
+) => {
     return prisma.product.create({
         data: {
             name,
+            description,
             quantity,
+            upc,
             categories: { connect: categories },
             supplier: {
                 connect: { id: supplier }
+            },
+            createdBy: {
+                connect: { id: createdBy }
             }
         }
     });
