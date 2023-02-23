@@ -16,7 +16,12 @@ const {
     productExists
 } = require('../services/prisma/product-service');
 
-//TODO: docs
+/**
+ * Converts Categories ID Array to Categories Object with ID
+ * ex: [1,2,3] -> [{id:1},{id:2},{id:3}]
+ * @param {number[]} categories
+ * @returns {{id:number}[]}
+ */
 const categoriesArrayToMap = categories => categories?.map(catId => ({ id: catId }));
 
 /**
