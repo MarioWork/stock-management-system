@@ -49,7 +49,15 @@ const getAllProducts = (prisma, { filter, pagination, categoryId }) =>
 /**
  * Creates a product with the properties given
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{name: string, description: string, quantity: number, categories: number[], supplier: string, upc: string, createdBy: string}} object - Object represents the product to create
+ * @param {{
+ *  name: string,
+ *  description: string,
+ *  quantity: number,
+ *  categories: number[],
+ *  supplier: string,
+ *  upc: string,
+ *  createdBy: string
+ * }} object - Object represents the product to create
  * @returns {Product}
  * @throws {error}
  */
@@ -91,10 +99,17 @@ const deleteProducts = (prisma, ids) => {
  * Updates the category based on the properties given
  * Does not need all properties but, needs at least one (name, quantity, categories)
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id: number,quantity: number=, categories: Category[]=}} object - Object that represents what to update
+ * @param {{
+ *  name: string,
+ *  description: string,
+ *  quantity: number,
+ *  categories: number[],
+ *  supplier: string,
+ *  upc: string,
+ *  createdBy: string
+ * }} object - Object represents the data to update
  * @returns {Product}
  */
-//TODO: fix docs
 const updateProduct = async (
     prisma,
     { id, name, quantity, categories, supplier, upc, description }
