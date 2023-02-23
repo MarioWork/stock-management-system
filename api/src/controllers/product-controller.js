@@ -16,6 +16,9 @@ const {
     productExists
 } = require('../services/prisma/product-service');
 
+//TODO: docs
+const categoriesArrayToMap = categories => categories.map(catId => ({ id: catId }));
+
 /**
  * Retrieves a product by Id
  * @param {PrismaClient} prisma - ORM Dependency
@@ -50,13 +53,11 @@ const createProduct = async (
     prisma,
     { name, description, quantity, categories, supplier, upc, createdBy }
 ) => {
-    const categoriesObjArray = categories?.map(catId => ({ id: catId }));
-
     try {
         return await createProductPrisma(prisma, {
             name,
             quantity,
-            categories: categoriesObjArray,
+            categories: !categories ? undefined : categoriesArrayToMap(categories),
             supplier,
             description,
             upc,
@@ -90,14 +91,19 @@ const deleteProducts = (prisma, ids) => {
  * @returns {Product}
  */
 //TODO: add supplier
-const updateProduct = async (prisma, { id, name, quantity, categories }) => {
-    const categoriesObjArray = categories?.map(catId => ({ id: catId }));
+const updateProduct = async (
+    prisma,
+    { id, name, quantity, categories, supplier, upc, description }
+) => {
     try {
         return await updateProductPrisma(prisma, {
             id,
             name,
             quantity,
-            categories: categoriesObjArray
+            description,
+            upc,
+            supplier,
+            categories: !categories ? undefined : categoriesArrayToMap(categories)
         });
     } catch (error) {
         if (error.code === 'P2016') throw new NotFound(`Product with ID: ${id} was not found`);
