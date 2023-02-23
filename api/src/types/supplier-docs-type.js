@@ -5,11 +5,10 @@
 /**
  * @typedef {{
  *  id: string,
- *  name: string,
- *  createdAt: Date,
- *  updatedAt: Date,
- * createdBy: User,
- *   createdAt: Date,
+ *  createdAt: Date
  *  updatedAt: Date
- * }} Category
+ *  createdBy: User,
+ *  name: string,
+ *  nif: string
+ * }} Product
  */
