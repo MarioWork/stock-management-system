@@ -90,7 +90,7 @@ const deleteProducts = (prisma, ids) => {
  * @param {{id: number,quantity: number=, categories: Category[]=}} object - Object that represents what to update
  * @returns {Product}
  */
-//TODO: add supplier
+//TODO: fix docs
 const updateProduct = async (
     prisma,
     { id, name, quantity, categories, supplier, upc, description }
