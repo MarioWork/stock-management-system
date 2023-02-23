@@ -41,6 +41,8 @@
 
 - - [x] /me/picture - POST - Add user profile picture
 
+#
+
 ### Users
 
 - - [x] /users/list - GET - List all users
@@ -57,6 +59,8 @@
 - - [ ] /supplier/:id - GET - Get supplier by id
 - - [ ] /supplier/:id - PATCH - Update supplier by id
 - - [ ] /supplier/:id - DELETE - DELETE supplier by id
+
+#
 
 ### Features
 
