@@ -79,6 +79,7 @@
 - - [x] <s>Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)</s>
 - - [ ] Finish routes
 - - [ ] error handling for unique fields prisma P2002
+- - [ ] Remove cascade deleting
 - - [ ] More filter options to category
 - - [ ] Add more fields to category (user who created)
 - - [ ] Add order options to get queries
