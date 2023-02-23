@@ -71,11 +71,17 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
 /**
  * Creates a product with the properties given
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{name: string, quantity: number=, categories: {id: number}[]=}} object - Object represents the product to create
- * @returns {Promise<Product>} - Promise object that returns product or error
+ * @param {{
+ *  name: string,
+ *  description: string,
+ *  quantity: number,
+ *  categories: number[],
+ *  supplier: string,
+ *  upc: string,
+ *  createdBy: string
+ * }} object - Object represents the product to create * @returns {Promise<Product>} - Promise object that returns product or error
  * @throws {error}
  */
-//TODO: fix docs
 const createProduct = (
     prisma,
     { name, description, quantity, categories, supplier, upc, createdBy }
