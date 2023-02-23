@@ -46,7 +46,10 @@ const getAllProducts = (prisma, { filter, pagination, categoryId }) =>
  * @throws {error}
  */
 //TODO: Fix docs
-const createProduct = async (prisma, { name, quantity, categories, supplier }) => {
+const createProduct = async (
+    prisma,
+    { name, description, quantity, categories, supplier, upc, createdBy }
+) => {
     const categoriesObjArray = categories?.map(catId => ({ id: catId }));
 
     try {
@@ -54,7 +57,10 @@ const createProduct = async (prisma, { name, quantity, categories, supplier }) =
             name,
             quantity,
             categories: categoriesObjArray,
-            supplier
+            supplier,
+            description,
+            upc,
+            createdBy
         });
     } catch (error) {
         if (error.code === 'P2025') {

@@ -1,6 +1,11 @@
 const S = require('fluent-json-schema');
 
-const { productSchema, productQuantitySchema } = require('../../schemas/product-schema');
+const {
+    productSchema,
+    productQuantitySchema,
+    productDescriptionSchema,
+    productUpcSchema
+} = require('../../schemas/product-schema');
 
 const { categoryIdSchema } = require('../../schemas/category-schema');
 const { supplierIdSchema } = require('../../schemas/supplier-schema');
@@ -14,10 +19,12 @@ const schema = {
     body: S.object()
         .additionalProperties(false)
         .prop('name')
+        .prop('description', productDescriptionSchema)
+        .prop('upc', productUpcSchema)
         .prop('quantity', productQuantitySchema)
         .prop('categories', S.array().items(categoryIdSchema))
         .prop('supplier', supplierIdSchema)
-        .required(['name', 'supplier']),
+        .required(['name', 'supplier', 'upc']),
     response: {
         201: productSchema
     }
@@ -32,14 +39,17 @@ module.exports = async server => {
     const { prisma, to, authService } = server;
 
     server.post('/', options({ prisma, authService }), async (request, reply) => {
-        const { name, quantity, categories, supplier } = request.body;
+        const { name, quantity, categories, supplier, description, upc } = request.body;
 
         const [error, product] = await to(
             createProduct(prisma, {
                 name,
                 quantity,
                 categories,
-                supplier
+                supplier,
+                description,
+                upc,
+                createdBy: request.user.id
             })
         );
 
