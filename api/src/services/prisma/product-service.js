@@ -134,28 +134,33 @@ const deleteProducts = (prisma, ids) => {
  * @param {{id: number,quantity: number=, categories: {id: number}[]=, url: string=}} object - Object that represents what data to update
  * @returns {Promise<Product>} - Returns the update product
  */
-//TODO: add the missing fields
-const updateProduct = (prisma, { id, name, quantity, categories }) => {
+//TODO: fix docs
+const updateProduct = (prisma, { id, name, quantity, categories, supplier, upc, description }) => {
+    const select = {
+        id: true,
+        name: true,
+        description: true,
+        quantity: true,
+        upc: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        categories: true,
+        images: true,
+        supplier: true
+    };
+
     return prisma.product.update({
         where: { id },
         data: {
             name,
             quantity,
-            categories: { connect: categories }
+            description,
+            upc,
+            categories: { connect: categories },
+            supplierId: supplier
         },
-        select: {
-            id: true,
-            name: true,
-            description: true,
-            quantity: true,
-            upc: true,
-            createdAt: true,
-            updatedAt: true,
-            createdBy: true,
-            categories: true,
-            images: true,
-            supplier: true
-        }
+        select
     });
 };
 
