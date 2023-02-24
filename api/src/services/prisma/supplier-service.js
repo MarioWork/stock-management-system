@@ -9,11 +9,11 @@ const updateSupplier = (prisma, { id, name, nif }) =>
     prisma.supplier.update({ where: { id }, data: { name, nif } });
 
 //TODO: add docs
-const deleteProducts = (prisma, ids) => prisma.supplier.deleteMany({ where: { id: { in: ids } } });
+const deleteSuppliers = (prisma, ids) => prisma.supplier.deleteMany({ where: { id: { in: ids } } });
 
 module.exports = {
     getAllSuppliers,
     getSupplierById,
     updateSupplier,
-    deleteProducts
+    deleteSuppliers
 };
