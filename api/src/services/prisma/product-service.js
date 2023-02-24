@@ -26,7 +26,18 @@ const getProductById = (prisma, id) => {
  * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
-const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
+//TODO: fix docs
+const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) => {
+    const categoryWhereQuery = categoryId
+        ? {
+              categories: {
+                  some: {
+                      id: categoryId
+                  }
+              }
+          }
+        : {};
+
     const where = {
         AND: [
             {
@@ -35,15 +46,10 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
                     mode: 'insensitive'
                 }
             },
-            categoryId
-                ? {
-                      categories: {
-                          some: {
-                              id: categoryId
-                          }
-                      }
-                  }
-                : {}
+            categoryWhereQuery,
+            {
+                supplierId
+            }
         ]
     };
 
@@ -54,7 +60,8 @@ const getAllProducts = (prisma, { filter, categoryId, pagination }) => {
         images: {
             select: { id: true, url: true }
         },
-        categories: { select: { id: true, name: true } }
+        categories: { select: { id: true, name: true } },
+        supplier: { select: { id: true } }
     };
 
     return Promise.all([
