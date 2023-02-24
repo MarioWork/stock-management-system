@@ -2,6 +2,7 @@ const S = require('fluent-json-schema');
 
 const { productSchema } = require('../../../schemas/product-schema');
 const { categoryIdSchema } = require('../../../schemas/category-schema');
+const { supplierIdSchema } = require('../../../schemas/supplier-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -16,7 +17,10 @@ const schema = {
             .prop('data', S.array().items(productSchema))
             .required(['data'])
     },
-    query: S.object().prop('filter', S.string()).prop('categoryId', categoryIdSchema)
+    query: S.object()
+        .prop('filter', S.string())
+        .prop('categoryId', categoryIdSchema)
+        .prop('supplierId', supplierIdSchema)
 };
 
 const options = ({ prisma, authService }) => ({
@@ -28,11 +32,11 @@ module.exports = async server => {
     const { prisma, to, authService } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
-        const { filter, categoryId } = request.query;
+        const { filter, categoryId, supplierId } = request.query;
         const pagination = request.parsePaginationQuery();
 
         const [error, result] = await to(
-            getAllProducts(prisma, { filter, pagination, categoryId })
+            getAllProducts(prisma, { filter, pagination, categoryId, supplierId })
         );
 
         const [products, total] = result;
