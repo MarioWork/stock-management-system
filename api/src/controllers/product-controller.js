@@ -91,9 +91,7 @@ const createProduct = async (
  * @returns {{count:number}} - Object with count property represents number of products deleted
  * @throws {error}
  */
-const deleteProducts = (prisma, ids) => {
-    return deleteProductsPrisma(prisma, ids);
-};
+const deleteProducts = (prisma, ids) => deleteProductsPrisma(prisma, ids);
 
 /**
  * Updates the category based on the properties given
