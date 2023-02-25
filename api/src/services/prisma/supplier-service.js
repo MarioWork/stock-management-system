@@ -30,10 +30,37 @@ const updateSupplier = (prisma, { id, name, nif }) =>
 //TODO: add docs
 const deleteSuppliers = (prisma, ids) => prisma.supplier.deleteMany({ where: { id: { in: ids } } });
 
+const getAllSupplierProducts = (prisma, { id, pagination }) => {
+    const select = {
+        id: true,
+        name: true,
+        quantity: true,
+        images: {
+            select: { url: true }
+        },
+        categories: { select: { id: true, name: true } }
+    };
+
+    return Promise.all([
+        prisma.supplier.findUnique({
+            where: { id },
+            select: {
+                products: {
+                    select,
+                    take: pagination.pageSize,
+                    skip: pagination.pastRecordsCount
+                }
+            }
+        }),
+        prisma.product.count({ where: { supplierId: id } })
+    ]);
+};
+
 module.exports = {
     createSupplier,
     getAllSuppliers,
     getSupplierById,
     updateSupplier,
-    deleteSuppliers
+    deleteSuppliers,
+    getAllSupplierProducts
 };
