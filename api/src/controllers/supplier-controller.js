@@ -3,7 +3,8 @@ const {
     getAllSuppliers: getAllSuppliersPrisma,
     getSupplierById: getSupplierByIdPrisma,
     updateSupplier: updateSupplierPrisma,
-    deleteSuppliers: deleteSuppliersPrisma
+    deleteSuppliers: deleteSuppliersPrisma,
+    getAllSupplierProducts: getAllSupplierProductsPrisma
 } = require('../services/prisma/supplier-service');
 
 //TODO: add docs
@@ -24,10 +25,18 @@ const updateSupplier = (prisma, { id, name, nif }) =>
 //TODO: add docs
 const deleteSuppliers = (prisma, ids) => deleteSuppliersPrisma(prisma, ids);
 
+//TODO: add docs
+const getAllSupplierProducts = async (prisma, { id, pagination }) => {
+    const [{ products }, total] = await getAllSupplierProductsPrisma(prisma, { id, pagination });
+
+    return [products, total];
+};
+
 module.exports = {
     createSupplier,
     getAllSuppliers,
     getSupplierById,
     updateSupplier,
-    deleteSuppliers
+    deleteSuppliers,
+    getAllSupplierProducts
 };
