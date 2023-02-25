@@ -73,7 +73,7 @@ const authorize =
  *  name: string,
  * roles: string[]
  * }} obj - user data object
- * @returns {Promise<User>} Obj that represents all user data
+ * @returns {User} Obj that represents all user data
  * @throws {error}
  */
 const createUser = async (
