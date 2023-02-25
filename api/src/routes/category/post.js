@@ -19,7 +19,7 @@ const schema = {
 
 const options = ({ authService, prisma }) => ({
     schema,
-    preValidation: authorize({ prisma, authService }, [UserRoles.ADMIN, UserRoles.EMPLOYEE])
+    preValidation: authorize({ prisma, authService }, [UserRoles.ADMIN])
 });
 
 /**
