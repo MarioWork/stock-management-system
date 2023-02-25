@@ -34,7 +34,7 @@ const productSchema = S.object()
     .prop('createdAt', productCreatedAtSchema)
     .prop('createdBy', productCreatedBySchema)
     .prop('updatedAt', productUpdatedAtSchema)
-    .prop('images', productImagesSchema)
+    .prop('images', S.array().items(S.oneOf([fileSchema, S.null()])))
     .prop('categories', productCategoriesSchema)
     .prop('supplier', supplierSchema)
     .required(['id']);
