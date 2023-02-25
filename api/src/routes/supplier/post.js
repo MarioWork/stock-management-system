@@ -24,7 +24,7 @@ const schema = {
 
 const options = ({ prisma, authService }) => ({
     schema,
-    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
+    preValidation: authorize({ authService, prisma }, [UserRoles.ADMIN])
 });
 
 module.exports = async server => {
