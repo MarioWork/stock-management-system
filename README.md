@@ -79,6 +79,8 @@
 - - [x] <s>Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)</s>
 - - [x] <s>Add more fields to category (user who created)</s>
 - - [ ] Finish routes
+- - [ ] Add to list routes pagination schema query
+- - [ ] Add more pagination metadata (firstPage, lastPage)
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
