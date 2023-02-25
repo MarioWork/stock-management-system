@@ -27,9 +27,9 @@ const deleteSuppliers = (prisma, ids) => deleteSuppliersPrisma(prisma, ids);
 
 //TODO: add docs
 const getAllSupplierProducts = async (prisma, { id, pagination }) => {
-    const [{ products }, total] = await getAllSupplierProductsPrisma(prisma, { id, pagination });
+    const [result, total] = await getAllSupplierProductsPrisma(prisma, { id, pagination });
 
-    return [products, total];
+    return [result?.products ?? [], total];
 };
 
 module.exports = {
