@@ -1,5 +1,6 @@
 //TODO: add docs
-const createSupplier = (prisma, { nif, name }) => prisma.supplier.create({ data: { nif, name } });
+const createSupplier = (prisma, { nif, name, createdBy }) =>
+    prisma.supplier.create({ data: { nif, name, createdBy: { connect: { id: createdBy } } } });
 
 //TODO: add docs
 const getAllSuppliers = (prisma, { filter, pagination }) => {

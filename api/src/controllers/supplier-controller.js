@@ -7,7 +7,8 @@ const {
 } = require('../services/prisma/supplier-service');
 
 //TODO: add docs
-const createSupplier = (prisma, { nif, name }) => createSupplierPrisma(prisma, { nif, name });
+const createSupplier = (prisma, { nif, name, createdBy }) =>
+    createSupplierPrisma(prisma, { nif, name, createdBy });
 
 //TODO: add docs
 const getAllSuppliers = (prisma, { filter, pagination }) =>
