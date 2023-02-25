@@ -31,7 +31,7 @@ model Product {
   quantity    Int        @default(0)
   images      File[]
   categories  Category[]
-  supplier    Supplier   @relation(fields: [supplierId], references: [id])
+  supplier    Supplier   @relation(fields: [supplierId], references: [id], onDelete: Cascade)
   supplierId  String
   userId      String
 }
