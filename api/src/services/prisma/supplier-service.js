@@ -1,4 +1,7 @@
 //TODO: add docs
+const createSupplier = (prisma, { nif, name }) => prisma.supplier.create({ data: { nif, name } });
+
+//TODO: add docs
 const getAllSuppliers = (prisma, { filter, pagination }) => {
     const where = {
         name: {
@@ -27,6 +30,7 @@ const updateSupplier = (prisma, { id, name, nif }) =>
 const deleteSuppliers = (prisma, ids) => prisma.supplier.deleteMany({ where: { id: { in: ids } } });
 
 module.exports = {
+    createSupplier,
     getAllSuppliers,
     getSupplierById,
     updateSupplier,
