@@ -13,6 +13,14 @@
  */
 const getProductById = (prisma, id) => {
     return prisma.product.findUnique({
+        select: {
+            id: true,
+            name: true,
+            quantity: true,
+            images: true,
+            categories: true,
+            supplier: true
+        },
         where: {
             id
         }
@@ -58,7 +66,7 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
         name: true,
         quantity: true,
         images: {
-            select: { id: true, url: true }
+            select: { url: true }
         },
         categories: { select: { id: true, name: true } },
         supplier: { select: { id: true } }
