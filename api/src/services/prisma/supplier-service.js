@@ -1,5 +1,20 @@
 //TODO: add docs
-const getAllSuppliers = prisma => prisma.supplier.findMany();
+const getAllSuppliers = (prisma, { filter, pagination }) => {
+    const where = {
+        name: {
+            contains: filter,
+            mode: 'insensitive'
+        }
+    };
+    return Promise.all([
+        prisma.supplier.findMany({
+            where,
+            take: pagination.pageSize,
+            skip: pagination.pastRecordsCount
+        }),
+        prisma.supplier.count({ where })
+    ]);
+};
 
 //TODO: add docs
 const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id } });

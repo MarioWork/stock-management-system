@@ -6,7 +6,8 @@ const {
 } = require('../services/prisma/supplier-service');
 
 //TODO: add docs
-const getAllSuppliers = prisma => getAllSuppliersPrisma(prisma);
+const getAllSuppliers = (prisma, { filter, pagination }) =>
+    getAllSuppliersPrisma(prisma, { filter, pagination });
 
 //TODO: add docs
 const getSupplierById = (prisma, id) => getSupplierByIdPrisma(prisma, id);
