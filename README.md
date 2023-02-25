@@ -62,7 +62,7 @@
 - - [x] /supplier/:id - GET - Get supplier by id
 - - [x] /supplier/:id - PATCH - Update supplier by id
 - - [x] /supplier/:id - DELETE - Delete supplier by id
-- - [ ] /supplier/:id/product/list - GET - List all products from supplier
+- - [x] /supplier/:id/product/list - GET - List all products from supplier
 
 #
 
