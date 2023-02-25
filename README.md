@@ -82,6 +82,7 @@
 - - [ ] Finish routes
 - - [ ] Add to list routes pagination schema query
 - - [ ] Add more pagination metadata (firstPage, lastPage)
+- - [ ] Add authorization schema like post employee to others
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
