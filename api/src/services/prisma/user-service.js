@@ -141,11 +141,40 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
  */
 const deleteUserById = (prisma, id) => prisma.user.delete({ where: { id } });
 
+//TODO: add docs
+const getAllUserProducts = (prisma, { id, pagination }) => {
+    return Promise.all([
+        prisma.user.findUnique({
+            where: { id },
+            select: {
+                products: {
+                    select: {
+                        id: true,
+                        name: true,
+                        quantity: true,
+                        images: true,
+                        categories: true,
+                        supplier: true
+                    },
+                    take: pagination.pageSize,
+                    skip: pagination.pastRecordsCount
+                }
+            }
+        }),
+        prisma.product.count({
+            where: {
+                userId: id
+            }
+        })
+    ]);
+};
+
 module.exports = {
     getUserById,
     createUser,
     addProfilePicture,
     hasProfilePicture,
     listAllUsers,
-    deleteUserById
+    deleteUserById,
+    getAllUserProducts
 };
