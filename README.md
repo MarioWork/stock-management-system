@@ -57,9 +57,9 @@
 
 ### Suppliers
 
-- - [ ] /supplier/list - GET - List all suppliers
+- - [x] /supplier/list - GET - List all suppliers
 - - [ ] /supplier/ - POST - Create Supplier
-- - [ ] /supplier/:id - GET - Get supplier by id
+- - [x] /supplier/:id - GET - Get supplier by id
 - - [ ] /supplier/:id - PATCH - Update supplier by id
 - - [ ] /supplier/:id - DELETE - Delete supplier by id
 - - [ ] /supplier/:id/product/list - GET - List all products from supplier
