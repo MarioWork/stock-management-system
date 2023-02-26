@@ -1,5 +1,6 @@
 /**
  * @typedef { import('../types/prisma-docs-type') } PrismaClient
+ * @typedef { import('../types/pagination-docs-type') } Pagination
  * @typedef { import('../types/user-docs-type') } User
  */
 
@@ -174,7 +175,12 @@ const deleteUserById = async ({ prisma, authService }, id) => {
     }
 };
 
-//TODO: add docs
+/**
+ * Retrieves all User Products by ID
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {id: string, pagination: pagination} obj - data
+ * @returns {[products: Product[]=, total: number]}
+ */
 const getAllUserProducts = async (prisma, { id, pagination }) => {
     const [result, total] = await getAllUserProductsPrisma(prisma, { id, pagination });
 
