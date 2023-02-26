@@ -1,6 +1,7 @@
 /**
- * @typedef { import('../types/product-docs-type') } PrismaClient
- * @typedef { import('../types/user-docs-type') } User
+ * @typedef { import('../../types/product-docs-type') } PrismaClient
+ * @typedef { import('../../types/user-docs-type') } User
+ * @typedef { import('../../types/pagination-docs-type') } Pagination
  */
 
 const selectQuery = {
@@ -141,7 +142,12 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
  */
 const deleteUserById = (prisma, id) => prisma.user.delete({ where: { id } });
 
-//TODO: add docs
+/**
+ * Retrieves all User Products by ID
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {id: string, pagination: pagination} obj - data
+ * @returns {Promise}
+ */
 const getAllUserProducts = (prisma, { id, pagination }) => {
     return Promise.all([
         prisma.user.findUnique({
