@@ -58,7 +58,7 @@ model User {
   profilePicture File?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
-  Category       Category[]
+  categories     Category[]
   suppliers      Supplier[]
   products       Product[]
 }
