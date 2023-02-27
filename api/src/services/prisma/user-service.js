@@ -175,6 +175,29 @@ const getAllUserProducts = (prisma, { id, pagination }) => {
     ]);
 };
 
+//TODO: add docs
+const getAllUserCategories = (prisma, { id, pagination }) => {
+    const categorySelect = {
+        id: true,
+        name: true,
+        createdAt: true
+    };
+
+    Promise.all([
+        prisma.user.categories({
+            where: { id },
+            select: {
+                categories: {
+                    select: categorySelect,
+                    take: pagination.pageSize,
+                    skip: pagination.pastRecordsCount
+                }
+            }
+        }),
+        prisma.category.count({ where: { userId: id } })
+    ]);
+};
+
 module.exports = {
     getUserById,
     createUser,
