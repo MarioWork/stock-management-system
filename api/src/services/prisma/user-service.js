@@ -205,5 +205,6 @@ module.exports = {
     hasProfilePicture,
     listAllUsers,
     deleteUserById,
-    getAllUserProducts
+    getAllUserProducts,
+    getAllUserCategories
 };

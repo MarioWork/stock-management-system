@@ -13,7 +13,8 @@ const {
     listAllUsers: listAllUsersPrisma,
     deleteUserById: deleteUserByIdPrisma,
     hasProfilePicture,
-    getAllUserProducts: getAllUserProductsPrisma
+    getAllUserProducts: getAllUserProductsPrisma,
+    getAllUserCategories: getAllUserCategoriesPrisma
 } = require('../services/prisma/user-service');
 
 const { deleteFile: deleteFilePrisma } = require('../services/prisma/file-service');
@@ -187,6 +188,13 @@ const getAllUserProducts = async (prisma, { id, pagination }) => {
     return [result?.products ?? [], total];
 };
 
+//TODO: add docs
+const getAllUserCategories = async (prisma, { id, pagination }) => {
+    const [result, total] = await getAllUserCategoriesPrisma(prisma, { id, pagination });
+
+    return [result?.products ?? [], total];
+};
+
 module.exports = {
     createUser,
     authorize,
@@ -194,5 +202,6 @@ module.exports = {
     listAllUsers,
     getUserById,
     deleteUserById,
-    getAllUserProducts
+    getAllUserProducts,
+    getAllUserCategories
 };
