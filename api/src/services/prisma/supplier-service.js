@@ -30,6 +30,12 @@ const updateSupplier = (prisma, { id, name, nif }) =>
 //TODO: add docs
 const deleteSuppliers = (prisma, ids) => prisma.supplier.deleteMany({ where: { id: { in: ids } } });
 
+/**
+ * Returns all products of a certain supplier paginated and the total amount of records
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, pagination: Pagination}} obj
+ * @returns {Promise}
+ */
 const getAllSupplierProducts = (prisma, { id, pagination }) => {
     const select = {
         id: true,
