@@ -1,3 +1,8 @@
+/**
+ * @typedef { import('../../types/prisma-docs-type') } PrismaClient
+ * @typedef { import('../../types/pagination-docs-type') } Pagination
+ */
+
 //TODO: add docs
 const createSupplier = (prisma, { nif, name, createdBy }) =>
     prisma.supplier.create({ data: { nif, name, createdBy: { connect: { id: createdBy } } } });
@@ -27,7 +32,13 @@ const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id
 const updateSupplier = (prisma, { id, name, nif }) =>
     prisma.supplier.update({ where: { id }, data: { name, nif } });
 
-//TODO: add docs
+/**
+ * Deletes the suppliers with ids given and returns the count of deleted records
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {number[]} ids - Array of ids to delete
+ * @returns {Promise}
+ * @throws {error}
+ */
 const deleteSuppliers = (prisma, ids) => prisma.supplier.deleteMany({ where: { id: { in: ids } } });
 
 /**
@@ -35,6 +46,7 @@ const deleteSuppliers = (prisma, ids) => prisma.supplier.deleteMany({ where: { i
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {{id: string, pagination: Pagination}} obj
  * @returns {Promise}
+ * @throws {error}
  */
 const getAllSupplierProducts = (prisma, { id, pagination }) => {
     const select = {

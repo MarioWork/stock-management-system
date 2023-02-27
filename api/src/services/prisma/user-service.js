@@ -1,5 +1,5 @@
 /**
- * @typedef { import('../../types/product-docs-type') } PrismaClient
+ * @typedef { import('../../types/prisma-docs-type') } PrismaClient
  * @typedef { import('../../types/user-docs-type') } User
  * @typedef { import('../../types/pagination-docs-type') } Pagination
  */
