@@ -13,7 +13,13 @@ const {
     getAllSupplierProducts: getAllSupplierProductsPrisma
 } = require('../services/prisma/supplier-service');
 
-//TODO: add docs
+/**
+ * Creates a supplier with the given data and returns the created supplier
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, name: string, createdBy: string}} - Data
+ * @returns {Promise}
+ * @throws {error}
+ */
 const createSupplier = (prisma, { nif, name, createdBy }) =>
     createSupplierPrisma(prisma, { nif, name, createdBy });
 
