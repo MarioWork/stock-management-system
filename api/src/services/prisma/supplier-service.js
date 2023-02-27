@@ -28,7 +28,13 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
 //TODO: add docs
 const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id } });
 
-//TODO: add docs
+/**
+ * Updates supplier with given data
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, name: string=, nif: string=}} obj - Data
+ * @returns {Promise}
+ * @throws {error}
+ */
 const updateSupplier = (prisma, { id, name, nif }) =>
     prisma.supplier.update({ where: { id }, data: { name, nif } });
 

@@ -24,7 +24,13 @@ const getAllSuppliers = (prisma, { filter, pagination }) =>
 //TODO: add docs
 const getSupplierById = (prisma, id) => getSupplierByIdPrisma(prisma, id);
 
-//TODO: add docs
+/**
+ * Updates supplier with given data
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, name: string=, nif: string=}} obj - Data
+ * @returns {Promise}
+ * @throws {error}
+ */
 const updateSupplier = (prisma, { id, name, nif }) =>
     updateSupplierPrisma(prisma, { id, name, nif });
 
