@@ -17,7 +17,13 @@ const {
 const createSupplier = (prisma, { nif, name, createdBy }) =>
     createSupplierPrisma(prisma, { nif, name, createdBy });
 
-//TODO: add docs
+/**
+ * Returns all suppliers paginated with the filter given
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{filter: string=, pagination: Pagination}} obj - Data
+ * @returns {Promise}
+ * @throws {error}
+ */
 const getAllSuppliers = (prisma, { filter, pagination }) =>
     getAllSuppliersPrisma(prisma, { filter, pagination });
 

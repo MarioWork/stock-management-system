@@ -7,7 +7,13 @@
 const createSupplier = (prisma, { nif, name, createdBy }) =>
     prisma.supplier.create({ data: { nif, name, createdBy: { connect: { id: createdBy } } } });
 
-//TODO: add docs
+/**
+ * Returns all suppliers paginated with the filter given
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{filter: string=, pagination: Pagination}} obj - Data
+ * @returns {Promise}
+ * @throws {error}
+ */
 const getAllSuppliers = (prisma, { filter, pagination }) => {
     const where = {
         name: {
@@ -29,7 +35,7 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
  * Returns a supplier by the given ID
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {string} id - Supplier ID
- * @returns {promise}
+ * @returns {Promise}
  * @throws {error}
  */
 const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id } });
