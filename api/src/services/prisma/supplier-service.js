@@ -25,7 +25,13 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
     ]);
 };
 
-//TODO: add docs
+/**
+ * Returns a supplier by the given ID
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - Supplier ID
+ * @returns {promise}
+ * @throws {error}
+ */
 const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id } });
 
 /**

@@ -21,7 +21,13 @@ const createSupplier = (prisma, { nif, name, createdBy }) =>
 const getAllSuppliers = (prisma, { filter, pagination }) =>
     getAllSuppliersPrisma(prisma, { filter, pagination });
 
-//TODO: add docs
+/**
+ * Returns a supplier by the given ID
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - Supplier ID
+ * @returns {promise}
+ * @throws {error}
+ */
 const getSupplierById = (prisma, id) => getSupplierByIdPrisma(prisma, id);
 
 /**
