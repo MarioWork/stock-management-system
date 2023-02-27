@@ -198,6 +198,31 @@ const getAllUserCategories = (prisma, { id, pagination }) => {
     ]);
 };
 
+//TODO: add docs
+const getAllUserSuppliers = (prisma, { id, pagination }) => {
+    const supplierSelect = {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        name: true,
+        nif: true
+    };
+
+    return Promise.all([
+        prisma.user.findUnique({
+            where: { id },
+            select: {
+                suppliers: {
+                    select: supplierSelect,
+                    take: pagination.pageSize,
+                    skip: pagination.pastRecordsCount
+                }
+            }
+        }),
+        prisma.supplier.count({ where: { userId: id } })
+    ]);
+};
+
 module.exports = {
     getUserById,
     createUser,
@@ -206,5 +231,6 @@ module.exports = {
     listAllUsers,
     deleteUserById,
     getAllUserProducts,
-    getAllUserCategories
+    getAllUserCategories,
+    getAllUserSuppliers
 };
