@@ -183,8 +183,8 @@ const getAllUserCategories = (prisma, { id, pagination }) => {
         createdAt: true
     };
 
-    Promise.all([
-        prisma.user.categories({
+    return Promise.all([
+        prisma.user.findUnique({
             where: { id },
             select: {
                 categories: {

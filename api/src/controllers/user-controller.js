@@ -211,5 +211,6 @@ module.exports = {
     getUserById,
     deleteUserById,
     getAllUserProducts,
-    getAllUserCategories
+    getAllUserCategories,
+    getAllUserSuppliers
 };
