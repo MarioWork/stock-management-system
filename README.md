@@ -52,8 +52,8 @@
 - - [x] /users/:id/ - GET - Get user by id
 - - [x] /users/:id - DELETE - Remove User
 - - [x] /users/:id/product/list - GET - List all products created by the user
-- - [ ] /users/:id/category/list - GET - List all categories created by the user
-- - [ ] /users/:id/supplier/list - GET - List all suppliers created by the user
+- - [x] /users/:id/category/list - GET - List all categories created by the user
+- - [x] /users/:id/supplier/list - GET - List all suppliers created by the user
 
 ### Suppliers
 
