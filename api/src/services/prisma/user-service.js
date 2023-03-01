@@ -198,7 +198,13 @@ const getAllUserCategories = (prisma, { id, pagination }) => {
     ]);
 };
 
-//TODO: add docs
+/**
+ * Returns the user created suppliers paginated and the total records count
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, pagination: Pagination}} obj - Data
+ * @returns {Promise[]}
+ * @throws {error}
+ */
 const getAllUserSuppliers = (prisma, { id, pagination }) => {
     const supplierSelect = {
         id: true,
