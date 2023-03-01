@@ -3,6 +3,7 @@
  * @typedef { import('../types/pagination-docs-type') } Pagination
  * @typedef { import('../types/user-docs-type') } User
  * @typedef { import('../types/supplier-docs-type') } Supplier
+ * @typedef { import('../types/category-docs-type') } Category
  */
 
 const { Forbidden, BadRequest, NotFound } = require('http-errors');
@@ -190,7 +191,12 @@ const getAllUserProducts = async (prisma, { id, pagination }) => {
     return [result?.products ?? [], total];
 };
 
-//TODO: add docs
+/**
+ * Returns the user created categories paginated and the total records count
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, pagination: Pagination}} obj - Data
+ * @returns {[categories: Category[]=, total: number]}
+ */
 const getAllUserCategories = async (prisma, { id, pagination }) => {
     const [result, total] = await getAllUserCategoriesPrisma(prisma, { id, pagination });
 
