@@ -2,6 +2,7 @@
  * @typedef { import('../types/prisma-docs-type') } PrismaClient
  * @typedef { import('../types/pagination-docs-type') } Pagination
  * @typedef { import('../types/user-docs-type') } User
+ * @typedef { import('../types/supplier-docs-type') } Supplier
  */
 
 const { Forbidden, BadRequest, NotFound } = require('http-errors');

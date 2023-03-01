@@ -175,7 +175,12 @@ const getAllUserProducts = (prisma, { id, pagination }) => {
     ]);
 };
 
-//TODO: add docs
+/**
+ * Returns the user created categories paginated and the total records count
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, pagination: Pagination}} obj - Data
+ * @returns {Promise}
+ */
 const getAllUserCategories = (prisma, { id, pagination }) => {
     const categorySelect = {
         id: true,
@@ -202,7 +207,7 @@ const getAllUserCategories = (prisma, { id, pagination }) => {
  * Returns the user created suppliers paginated and the total records count
  * @param {PrismaClient} prisma - ORM Dependency
  * @param {{id: string, pagination: Pagination}} obj - Data
- * @returns {Promise[]}
+ * @returns {Promise}
  * @throws {error}
  */
 const getAllUserSuppliers = (prisma, { id, pagination }) => {
