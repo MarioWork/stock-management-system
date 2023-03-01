@@ -196,7 +196,13 @@ const getAllUserCategories = async (prisma, { id, pagination }) => {
     return [result?.categories ?? [], total];
 };
 
-//TODO: add docs
+/**
+ * Returns the user created suppliers paginated and the total records count
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, pagination: Pagination}} obj - Data
+ * @returns {[suppliers: Supplier[]=, total: number]}
+ * @throws {error}
+ */
 const getAllUserSuppliers = async (prisma, { id, pagination }) => {
     const [result, total] = await getAllUserSuppliersPrisma(prisma, { id, pagination });
 
