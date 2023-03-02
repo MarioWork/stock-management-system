@@ -24,23 +24,30 @@ const plugin = (server, _, done) => {
     });
 
     server.decorateReply('withPagination', function ({ total, page, data }) {
-        const { pastRecordsCount } = this.request.parsePaginationQuery();
+        const { pastRecordsCount, pageSize } = this.request.parsePaginationQuery();
 
-        const size = data.length;
-        const empty = size === 0;
+        const currentPageSize = data.length;
+        const empty = currentPageSize === 0;
 
         const contentRange = `items ${
             empty ? '*/0' : `${pastRecordsCount}-${pastRecordsCount + data.length - 1}`
         }/${total}`;
 
-        return this.header('Content-Range', contentRange).code(206).send({
-            _metadata: {
-                page,
-                size,
-                total
-            },
-            data
-        });
+        const lastPage = Math.ceil(total / pageSize);
+
+        return this.header('Content-Range', contentRange)
+            .code(206)
+            .send({
+                _metadata: {
+                    currentPage: page,
+                    currentPageSize,
+                    firstPage: 1,
+                    lastPage,
+                    pageSize,
+                    totalRecords: total
+                },
+                data
+            });
     });
 
     done();
