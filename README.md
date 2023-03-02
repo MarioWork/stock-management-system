@@ -80,8 +80,8 @@
 - - [x] <s>Add more fields to product (supplier, code/barcode identifier, user who created, brand, description)</s>
 - - [x] <s>Add more fields to category (user who created)</s>
 - - [x] <s>Finish routes</s>
+- - [x] <s>Add more pagination metadata (firstPage, lastPage)</s>
 - - [ ] Add to list routes pagination schema query
-- - [ ] Add more pagination metadata (firstPage, lastPage)
 - - [ ] Add authorization schema like post employee to others
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
