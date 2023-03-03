@@ -1,6 +1,7 @@
 const S = require('fluent-json-schema');
 
 const { categorySchema } = require('../../../schemas/category-schema');
+const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -9,6 +10,7 @@ const { getAllCategories } = require('../../../controllers/category-controller')
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
+    query: S.object().prop('page', pageSchema).prop('size', sizeSchema),
     response: {
         206: S.object()
             .prop('_metadata', paginationMetadataSchema)
