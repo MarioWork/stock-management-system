@@ -3,6 +3,7 @@ const S = require('fluent-json-schema');
 const { listAllUsers, authorize } = require('../../../controllers/user-controller');
 
 const { userSchema } = require('../../../schemas/user-schema');
+const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -17,6 +18,8 @@ const schema = {
     query: S.object()
         .prop('role', S.string().enum(Object.values(UserRoles)))
         .prop('filter', S.string())
+        .prop('page', pageSchema)
+        .prop('size', sizeSchema)
 };
 
 const options = ({ prisma, authService }) => ({
