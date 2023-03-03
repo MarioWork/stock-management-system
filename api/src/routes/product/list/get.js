@@ -3,6 +3,7 @@ const S = require('fluent-json-schema');
 const { productSchema } = require('../../../schemas/product-schema');
 const { categoryIdSchema } = require('../../../schemas/category-schema');
 const { supplierIdSchema } = require('../../../schemas/supplier-schema');
+const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -21,6 +22,8 @@ const schema = {
         .prop('filter', S.string())
         .prop('categoryId', categoryIdSchema)
         .prop('supplierId', supplierIdSchema)
+        .prop('page', pageSchema)
+        .prop('size', sizeSchema)
 };
 
 const options = ({ prisma, authService }) => ({
