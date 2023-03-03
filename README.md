@@ -55,6 +55,8 @@
 - - [x] /users/:id/category/list - GET - List all categories created by the user
 - - [x] /users/:id/supplier/list - GET - List all suppliers created by the user
 
+#
+
 ### Suppliers
 
 - - [x] /supplier/list - GET - List all suppliers
@@ -81,7 +83,7 @@
 - - [x] <s>Add more fields to category (user who created)</s>
 - - [x] <s>Finish routes</s>
 - - [x] <s>Add more pagination metadata (firstPage, lastPage)</s>
-- - [ ] Add to list routes pagination schema query
+- - [x] <s>Add to list routes pagination schema query</s>
 - - [ ] Add authorization schema like post employee to others
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
