@@ -34,6 +34,7 @@
 ### Auth
 
 - - [x] /auth/signup/employee - POST - create a user with the "employee" role
+- - [ ] /auth/post-login - GET - retrieve the user role
 
 #
 
