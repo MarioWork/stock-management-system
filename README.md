@@ -34,7 +34,6 @@
 ### Auth
 
 - - [x] /auth/signup/employee - POST - create a user with the "employee" role
-- - [ ] /auth/post-login - GET - retrieve the user role
 
 #
 
@@ -46,15 +45,16 @@
 
 ### Users
 
-- - [x] /users/list - GET - List all users
+- - [x] /user/list - GET - List all users
   - Query Params:
     - 'role' - Optional - to filter users by role
     - 'filter' - Optional - searches users by the filter in the fields (firstName, lastName, nif, email)
-- - [x] /users/:id/ - GET - Get user by id
-- - [x] /users/:id - DELETE - Remove User
-- - [x] /users/:id/product/list - GET - List all products created by the user
-- - [x] /users/:id/category/list - GET - List all categories created by the user
-- - [x] /users/:id/supplier/list - GET - List all suppliers created by the user
+- - [x] /user/:id/ - GET - Get user by id
+- - [x] /user/:id - DELETE - Remove User
+- - [x] /user/:id/product/list - GET - List all products created by the user
+- - [x] /user/:id/category/list - GET - List all categories created by the user
+- - [x] /user/:id/supplier/list - GET - List all suppliers created by the user
+- - [ ] /user/:id/role/list - GET - List all user roles
 
 #
 
