@@ -21,9 +21,7 @@ const {
  * @returns {Promise<File>}
  * @throws {error}
  */
-const getFile = (prisma, id) => {
-    return getFilePrisma(prisma, id);
-};
+const getFile = (prisma, id) => getFilePrisma(prisma, id);
 
 /**
  * Deletes file from database and cloud storage by Id
