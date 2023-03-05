@@ -13,15 +13,31 @@
  * @throws {error}
  */
 const getProductById = (prisma, id) => {
-    return prisma.product.findUnique({
-        select: {
-            id: true,
-            name: true,
-            quantity: true,
-            images: true,
-            categories: true,
-            supplier: true
+    const select = {
+        id: true,
+        name: true,
+        description: true,
+        quantity: true,
+        upc: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                nif: true,
+                email: true,
+                roles: true
+            }
         },
+        categories: { select: { id: true, name: true } },
+        images: { select: { id: true, url: true } },
+        supplier: { select: { id: true, name: true, nif: true } }
+    };
+
+    return prisma.product.findUnique({
+        select,
         where: {
             id
         }
@@ -64,11 +80,11 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
     const select = {
         id: true,
         name: true,
+        description: true,
         quantity: true,
-        images: {
-            select: { url: true }
-        },
+        upc: true,
         categories: { select: { id: true, name: true } },
+        images: { select: { url: true } },
         supplier: { select: { id: true } }
     };
 
@@ -171,10 +187,19 @@ const updateProduct = (prisma, { id, name, quantity, categories, supplier, upc, 
         upc: true,
         createdAt: true,
         updatedAt: true,
-        createdBy: true,
-        categories: true,
-        images: true,
-        supplier: true
+        createdBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                nif: true,
+                email: true,
+                roles: true
+            }
+        },
+        categories: { select: { id: true, name: true } },
+        images: { select: { id: true, url: true } },
+        supplier: { select: { id: true, name: true, nif: true } }
     };
 
     return prisma.product.update({
