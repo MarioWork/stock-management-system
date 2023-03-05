@@ -101,7 +101,7 @@ const deleteProducts = (prisma, ids) => deleteProductsPrisma(prisma, ids);
  *  name: string,
  *  description: string,
  *  quantity: number,
- *  categories: number[],
+ *  categories: string[],
  *  supplier: string,
  *  upc: string,
  *  createdBy: string
