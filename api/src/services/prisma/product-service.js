@@ -207,10 +207,19 @@ const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => 
         upc: true,
         createdAt: true,
         updatedAt: true,
-        createdBy: true,
-        categories: true,
-        images: true,
-        supplier: true
+        createdBy: {
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                nif: true,
+                email: true,
+                roles: true
+            }
+        },
+        categories: { select: { id: true, name: true } },
+        images: { select: { id: true, url: true } },
+        supplier: { select: { id: true, name: true, nif: true } }
     };
 
     return prisma.product.update({
