@@ -37,14 +37,14 @@ model Product {
 }
 
 model File {
-  id        String   @id @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  url       String
-  type      String
-  product   Product? @relation(fields: [productId], references: [id])
-  productId String?
-  User      User?
+  id                 String   @id @unique
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  url                String
+  type               String
+  product            Product? @relation(fields: [productId], references: [id])
+  productId          String?
+  profilePictureUser User?
 }
 
 model User {
