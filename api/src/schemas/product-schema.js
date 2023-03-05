@@ -27,14 +27,14 @@ const productCategoriesSchema = S.array().items(categorySchema);
 
 const productSchema = S.object()
     .prop('id', productIdSchema)
+    .prop('upc', productUpcSchema)
     .prop('name', productNameSchema)
     .prop('description', productDescriptionSchema)
-    .prop('upc', productUpcSchema)
     .prop('quantity', productQuantitySchema)
     .prop('createdAt', productCreatedAtSchema)
-    .prop('createdBy', productCreatedBySchema)
     .prop('updatedAt', productUpdatedAtSchema)
-    .prop('images', S.array().items(S.oneOf([fileSchema, S.null()])))
+    .prop('createdBy', productCreatedBySchema)
+    .prop('images', S.array().items(fileSchema))
     .prop('categories', productCategoriesSchema)
     .prop('supplier', supplierSchema)
     .required(['id']);
