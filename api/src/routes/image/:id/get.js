@@ -3,11 +3,13 @@ const S = require('fluent-json-schema');
 const { UserRoles } = require('../../../enums/user-roles');
 
 const { fileIdSchema } = require('../../../schemas/file-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { downloadFile } = require('../../../controllers/file-controller');
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
+    headers,
     params: S.object().prop('id', fileIdSchema).required(['id'])
 };
 
