@@ -35,7 +35,7 @@ module.exports = async server => {
     server.post('/', options({ prisma, authService }), async (request, reply) => {
         const { name, nif } = request.body;
 
-        const [error, product] = await to(
+        const [error, supplier] = await to(
             createSupplier(prisma, {
                 name,
                 nif,
@@ -49,6 +49,6 @@ module.exports = async server => {
             return;
         }
 
-        await reply.code(201).send(product);
+        await reply.code(201).send(supplier);
     });
 };
