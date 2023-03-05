@@ -9,6 +9,7 @@ const {
     productUpcSchema
 } = require('../../../schemas/product-schema');
 const { supplierIdSchema } = require('../../../schemas/supplier-schema');
+const { categoryIdSchema } = require('../../../schemas/category-schema');
 const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
@@ -28,7 +29,7 @@ const schema = {
         .prop('description', productDescriptionSchema)
         .prop('upc', productUpcSchema)
         .prop('supplier', supplierIdSchema)
-        .prop('categories', S.array().items(S.number()))
+        .prop('categories', S.array().items(categoryIdSchema))
 };
 
 const options = ({ prisma, authService }) => ({
