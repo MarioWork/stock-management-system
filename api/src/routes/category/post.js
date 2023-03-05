@@ -1,6 +1,7 @@
 const S = require('fluent-json-schema');
 
 const { categorySchema, categoryNameSchema } = require('../../schemas/category-schema');
+const { headers } = require('../../schemas/headers-schema');
 
 const { UserRoles } = require('../../enums/user-roles');
 
@@ -8,6 +9,7 @@ const { authorize } = require('../../controllers/user-controller');
 const { createCategory } = require('../../controllers/category-controller');
 
 const schema = {
+    headers,
     body: S.object()
         .additionalProperties(false)
         .prop('name', categoryNameSchema)

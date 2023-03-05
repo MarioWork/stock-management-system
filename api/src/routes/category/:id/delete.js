@@ -4,10 +4,12 @@ const { deleteCategories } = require('../../../controllers/category-controller')
 const { authorize } = require('../../../controllers/user-controller');
 
 const { categoryIdSchema } = require('../../../schemas/category-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
+    headers,
     response: {
         200: S.object().prop('message', S.string()).required(['message'])
     },
