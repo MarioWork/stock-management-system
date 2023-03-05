@@ -138,7 +138,11 @@ const updateProduct = async (
  * @returns {Product} - Returns the updated product
  * @throws {error}
  */
-const addImageToProduct = async ({ prisma, storage, to }, { productId, file, fileType }) => {
+//TODO: fix docs
+const addImageToProduct = async (
+    { prisma, storage, to },
+    { productId, file, fileType, createdBy }
+) => {
     const [findProductError, product] = await to(productExists(prisma, productId));
 
     if (!product) throw new NotFound(`Product with ID: ${productId} was not found`);
@@ -147,7 +151,7 @@ const addImageToProduct = async ({ prisma, storage, to }, { productId, file, fil
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
 
     const [error, updatedProduct] = await to(
-        addImageToProductPrisma(prisma, { productId, fileId, fileType, fileUrl })
+        addImageToProductPrisma(prisma, { productId, fileId, fileType, fileUrl, createdBy })
     );
 
     if (error) {
