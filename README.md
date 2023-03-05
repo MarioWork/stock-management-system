@@ -87,6 +87,7 @@
 - - [x] <s>Finish routes</s>
 - - [x] <s>Add createdBy to file</s>
 - - [x] <s>Add authorization schema like post employee to others</s>
+- - [ ] Make all services select createdBy be the same query (id,name,nif,email,roles)
 - - [ ] Add createdBy to user
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
