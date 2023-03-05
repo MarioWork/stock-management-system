@@ -9,12 +9,14 @@ const {
     userNifSchema
 } = require('../../../../schemas/user-schema');
 
+const { headers } = require('../../../../schemas/headers-schema');
+
 const { UserRoles } = require('../../../../enums/user-roles');
 
 const { authorize, createUser } = require('../../../../controllers/user-controller');
 
 const schema = {
-    headers: S.object().prop('authorization', S.string()).required(['authorization']),
+    headers,
     body: S.object()
         .prop('email', userEmailSchema)
         .prop('password', userPasswordSchema)
