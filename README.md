@@ -91,3 +91,4 @@
 - - [ ] More filter options to category
 - - [ ] Add order options to get queries
 - - [ ] Fix schemas required in routes instead of dynamic schemas
+- - [ ] Add createdBy to file and user
