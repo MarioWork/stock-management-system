@@ -46,7 +46,10 @@ module.exports = async server => {
         const { id } = request.params;
 
         const [error, product] = await to(
-            addImageToProduct({ prisma, storage, to }, { productId: id, file, fileType })
+            addImageToProduct(
+                { prisma, storage, to },
+                { productId: id, file, fileType, createdBy: request.user.id }
+            )
         );
 
         if (error) {

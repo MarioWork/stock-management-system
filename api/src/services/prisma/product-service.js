@@ -223,7 +223,8 @@ const updateProduct = (prisma, { id, name, quantity, categories, supplier, upc, 
  * @returns {Promise<Product>} - Returns the update product with the new file
  * @throws {error}
  */
-const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => {
+//TODO: update docs createdBy
+const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl, createdBy }) => {
     const select = {
         id: true,
         name: true,
@@ -256,7 +257,8 @@ const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl }) => 
                     create: {
                         id: fileId,
                         url: fileUrl,
-                        type: fileType
+                        type: fileType,
+                        createdByUserId: createdBy
                     }
                 }
             }
