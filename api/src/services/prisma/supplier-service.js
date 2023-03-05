@@ -11,7 +11,17 @@
  * @throws {error}
  */
 const createSupplier = (prisma, { nif, name, createdBy }) =>
-    prisma.supplier.create({ data: { nif, name, createdBy: { connect: { id: createdBy } } } });
+    prisma.supplier.create({
+        select: {
+            id: true,
+            name: true,
+            nif: true,
+            createdBy: true,
+            createdAt: true,
+            updatedAt: true
+        },
+        data: { nif, name, createdBy: { connect: { id: createdBy } } }
+    });
 
 /**
  * Returns all suppliers paginated with the filter given
@@ -21,6 +31,12 @@ const createSupplier = (prisma, { nif, name, createdBy }) =>
  * @throws {error}
  */
 const getAllSuppliers = (prisma, { filter, pagination }) => {
+    const select = {
+        id: true,
+        name: true,
+        nif: true
+    };
+
     const where = {
         name: {
             contains: filter,
@@ -29,6 +45,7 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
     };
     return Promise.all([
         prisma.supplier.findMany({
+            select,
             where,
             take: pagination.pageSize,
             skip: pagination.pastRecordsCount
@@ -44,7 +61,18 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
  * @returns {Promise}
  * @throws {error}
  */
-const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id } });
+const getSupplierById = (prisma, id) =>
+    prisma.supplier.findUnique({
+        select: {
+            id: true,
+            name: true,
+            nif: true,
+            createdBy: true,
+            createdAt: true,
+            updatedAt: true
+        },
+        where: { id }
+    });
 
 /**
  * Updates supplier with given data
@@ -54,7 +82,18 @@ const getSupplierById = (prisma, id) => prisma.supplier.findUnique({ where: { id
  * @throws {error}
  */
 const updateSupplier = (prisma, { id, name, nif }) =>
-    prisma.supplier.update({ where: { id }, data: { name, nif } });
+    prisma.supplier.update({
+        select: {
+            id: true,
+            name: true,
+            nif: true,
+            createdBy: true,
+            createdAt: true,
+            updatedAt: true
+        },
+        where: { id },
+        data: { name, nif }
+    });
 
 /**
  * Deletes the suppliers with ids given and returns the count of deleted records

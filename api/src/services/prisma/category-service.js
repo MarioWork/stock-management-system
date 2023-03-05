@@ -74,13 +74,7 @@ const getCategoryById = async (prisma, id) => {
         createdAt: true,
         updatedAt: true,
         name: true,
-        createdBy: {
-            select: {
-                id: true,
-                firstName: true,
-                lastName: true
-            }
-        }
+        createdBy: true
     };
 
     return prisma.category.findUnique({
