@@ -1,6 +1,7 @@
 const S = require('fluent-json-schema');
 
 const { productSchema, productIdSchema } = require('../../../../schemas/product-schema');
+const { headers } = require('../../../../schemas/headers-schema');
 
 const { AllowedFileType } = require('../../../../enums/allowed-file-type');
 const { UserRoles } = require('../../../../enums/user-roles');
@@ -9,6 +10,7 @@ const { addImageToProduct } = require('../../../../controllers/product-controlle
 const { authorize } = require('../../../../controllers/user-controller');
 
 const schema = {
+    headers,
     params: S.object().prop('id', productIdSchema).required(['id']),
     response: {
         200: productSchema

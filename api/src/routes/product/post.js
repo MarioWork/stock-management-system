@@ -6,6 +6,7 @@ const {
     productDescriptionSchema,
     productUpcSchema
 } = require('../../schemas/product-schema');
+const { headers } = require('../../schemas/headers-schema');
 
 const { categoryIdSchema } = require('../../schemas/category-schema');
 const { supplierIdSchema } = require('../../schemas/supplier-schema');
@@ -16,6 +17,7 @@ const { authorize } = require('../../controllers/user-controller');
 const { createProduct } = require('../../controllers/product-controller');
 
 const schema = {
+    headers,
     body: S.object()
         .additionalProperties(false)
         .prop('name')

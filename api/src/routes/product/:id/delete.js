@@ -3,11 +3,13 @@ const S = require('fluent-json-schema');
 const { UserRoles } = require('../../../enums/user-roles');
 
 const { productIdSchema } = require('../../../schemas/product-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { authorize } = require('../../../controllers/user-controller');
 const { deleteProducts } = require('../../../controllers/product-controller');
 
 const schema = {
+    headers,
     response: {
         200: S.object().prop('message', S.string()).required(['message'])
     },

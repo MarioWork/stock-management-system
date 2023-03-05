@@ -9,6 +9,7 @@ const {
     productUpcSchema
 } = require('../../../schemas/product-schema');
 const { supplierIdSchema } = require('../../../schemas/supplier-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -16,6 +17,7 @@ const { updateProduct } = require('../../../controllers/product-controller');
 const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
+    headers,
     response: {
         200: productSchema
     },

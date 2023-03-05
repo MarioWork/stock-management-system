@@ -5,6 +5,7 @@ const { categoryIdSchema } = require('../../../schemas/category-schema');
 const { supplierIdSchema } = require('../../../schemas/supplier-schema');
 const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -12,6 +13,7 @@ const { authorize } = require('../../../controllers/user-controller');
 const { getAllProducts } = require('../../../controllers/product-controller');
 
 const schema = {
+    headers,
     response: {
         206: S.object()
             .prop('_metadata', paginationMetadataSchema)
