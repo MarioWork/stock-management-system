@@ -7,11 +7,13 @@ const {
     supplierNameSchema,
     supplierSchema
 } = require('../../schemas/supplier-schema');
+const { headers } = require('../../schemas/headers-schema');
 
 const { authorize } = require('../../controllers/user-controller');
 const { createSupplier } = require('../../controllers/supplier-controller');
 
 const schema = {
+    headers,
     body: S.object()
         .additionalProperties(false)
         .prop('name', supplierNameSchema)

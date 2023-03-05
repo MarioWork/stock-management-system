@@ -3,6 +3,7 @@ const S = require('fluent-json-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 const { supplierSchema } = require('../../../schemas/supplier-schema');
 const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
@@ -10,6 +11,7 @@ const { authorize } = require('../../../controllers/user-controller');
 const { getAllSuppliers } = require('../../../controllers/supplier-controller');
 
 const schema = {
+    headers,
     response: {
         206: S.object()
             .prop('_metadata', paginationMetadataSchema)

@@ -10,8 +10,10 @@ const {
     supplierNameSchema,
     supplierNifSchema
 } = require('../../../schemas/supplier-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const schema = {
+    headers,
     response: {
         200: supplierSchema
     },
