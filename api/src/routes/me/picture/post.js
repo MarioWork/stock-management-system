@@ -1,4 +1,5 @@
 const { userSchema } = require('../../../schemas/user-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 const { AllowedFileType } = require('../../../enums/allowed-file-type');
@@ -7,6 +8,7 @@ const { authorize } = require('../../../controllers/user-controller');
 const { addProfilePicture } = require('../../../controllers/user-controller');
 
 const schema = {
+    headers,
     response: {
         200: userSchema
     }
