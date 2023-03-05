@@ -17,7 +17,8 @@ const getFile = (prisma, id) => {
         select: {
             id: true,
             url: true,
-            type: true
+            type: true,
+            createdBy: true
         }
     });
 };
