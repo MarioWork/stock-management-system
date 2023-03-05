@@ -39,7 +39,7 @@ module.exports = async server => {
 
         const [error, result] = await to(listAllUsers(prisma, { role, filter, pagination }));
 
-        const [categories, total] = result;
+        const [users, total] = result;
 
         if (error) {
             server.log.error(error);
@@ -50,7 +50,7 @@ module.exports = async server => {
         await reply.withPagination({
             total,
             page: pagination.currentPage,
-            data: categories
+            data: users
         });
     });
 };
