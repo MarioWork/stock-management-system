@@ -85,10 +85,11 @@
 - - [x] <s>Add more pagination metadata (firstPage, lastPage)</s>
 - - [x] <s>Add to list routes pagination schema query</s>
 - - [x] <s>Finish routes</s>
-- - [ ] Add authorization schema like post employee to others
+- - [x] <s>Add createdBy to file</s>
+- - [x] <s>Add authorization schema like post employee to others</s>
+- - [ ] Add createdBy to user
 - - [ ] error handling for unique fields prisma P2002
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
 - - [ ] Add order options to get queries
 - - [ ] Fix schemas required in routes instead of dynamic schemas
-- - [ ] Add createdBy to file and user
