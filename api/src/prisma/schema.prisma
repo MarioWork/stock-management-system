@@ -44,23 +44,23 @@ model File {
   type      String
   product   Product? @relation(fields: [productId], references: [id])
   productId String?
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @unique
+  User      User?
 }
 
 model User {
-  id             String     @id @unique
-  email          String     @unique
-  nif            String     @unique
-  firstName      String
-  lastName       String
-  roles          String[]
-  profilePicture File?
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  categories     Category[]
-  suppliers      Supplier[]
-  products       Product[]
+  id               String     @id @unique
+  email            String     @unique
+  nif              String     @unique
+  firstName        String
+  lastName         String
+  roles            String[]
+  profilePicture   File?      @relation(fields: [profilePictureId], references: [id])
+  profilePictureId String?    @unique
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  categories       Category[]
+  suppliers        Supplier[]
+  products         Product[]
 }
 
 model Supplier {
