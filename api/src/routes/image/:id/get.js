@@ -1,26 +1,20 @@
 const S = require('fluent-json-schema');
 
-const { UserRoles } = require('../../../enums/user-roles');
-
 const { fileIdSchema } = require('../../../schemas/file-schema');
-const { headers } = require('../../../schemas/headers-schema');
 
 const { downloadFile } = require('../../../controllers/file-controller');
-const { authorize } = require('../../../controllers/user-controller');
 
 const schema = {
-    headers,
     params: S.object().prop('id', fileIdSchema).required(['id'])
 };
 
-const options = ({ prisma, authService }) => ({
-    schema,
-    preValidation: authorize({ authService, prisma }, [UserRoles.EMPLOYEE, UserRoles.ADMIN])
-});
+const options = {
+    schema
+};
 
 module.exports = async server => {
-    const { to, storage, prisma, authService } = server;
-    server.get('/', options({ prisma, authService }), async (request, reply) => {
+    const { to, storage, prisma } = server;
+    server.get('/', options, async (request, reply) => {
         const { id } = request.params;
 
         const [error, fileBuffer] = await to(downloadFile({ storage, prisma }, id));
