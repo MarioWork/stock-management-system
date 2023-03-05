@@ -5,10 +5,12 @@ const { getAllUserSuppliers, authorize } = require('../../../../../controllers/u
 const { supplierSchema } = require('../../../../../schemas/supplier-schema');
 const paginationMetadataSchema = require('../../../../../schemas/pagination-metadata-schema');
 const { userIdSchema } = require('../../../../../schemas/user-schema');
+const { headers } = require('../../../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../../../enums/user-roles');
 
 const schema = {
+    headers,
     params: S.object().prop('id', userIdSchema).required(['id']),
     response: {
         206: S.object()

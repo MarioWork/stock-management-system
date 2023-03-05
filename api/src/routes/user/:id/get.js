@@ -1,12 +1,14 @@
 const S = require('fluent-json-schema');
 
 const { userSchema, userIdSchema } = require('../../../schemas/user-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
 const { authorize, getUserById } = require('../../../controllers/user-controller');
 
 const schema = {
+    headers,
     response: { 200: userSchema },
     params: S.object().prop('id', userIdSchema).required(['id'])
 };

@@ -5,10 +5,12 @@ const { listAllUsers, authorize } = require('../../../controllers/user-controlle
 const { userSchema } = require('../../../schemas/user-schema');
 const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
+const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
+    headers,
     response: {
         206: S.object()
             .prop('_metadata', paginationMetadataSchema)
