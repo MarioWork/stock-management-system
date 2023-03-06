@@ -234,7 +234,13 @@ const getAllUserSuppliers = (prisma, { id, pagination }) => {
     ]);
 };
 
-//TODO: add docs
+/**
+ * Returns Promise when resolved has the user id and roles
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - User ID
+ * @returns {Promise}
+ * @throws {error}
+ */
 const getUserRoles = (prisma, id) =>
     prisma.user.findUnique({ where: { id }, select: { id: true, roles: true } });
 
