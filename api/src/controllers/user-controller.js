@@ -217,7 +217,13 @@ const getAllUserSuppliers = async (prisma, { id, pagination }) => {
     return [result?.suppliers ?? [], total];
 };
 
-//TODO: add docs
+/**
+ * Returns Promise when resolved has the user id and roles
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {string} id - User ID
+ * @returns {Promise}
+ * @throws {error}
+ */
 const getUserRoles = (prisma, id) => getUserRolesPrisma(prisma, id);
 
 module.exports = {
