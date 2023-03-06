@@ -134,11 +134,10 @@ const updateProduct = async (
 /**
  * Adds a image url to the list of images of the product
  * @param {{prisma: PrismaClient, storage: *, to: *}} object - Dependencies
- * @param {{id: number, url: string}} object - Object with product id and image url
+ * @param {{productId: string, file: FileStream, fileType: string, createdBy: string}} object - Object with product id and image url
  * @returns {Product} - Returns the updated product
  * @throws {error}
  */
-//TODO: fix docs
 const addImageToProduct = async (
     { prisma, storage, to },
     { productId, file, fileType, createdBy }
