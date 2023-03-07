@@ -83,9 +83,10 @@ const authorize =
  * @returns {User} Obj that represents all user data
  * @throws {error}
  */
+//TODO: fix docs (createdBy)
 const createUser = async (
     { prisma, authService },
-    { firstName, lastName, password, nif, email, roles }
+    { firstName, lastName, password, nif, email, roles, createdBy }
 ) => {
     try {
         const { uid } = await createUserFirebase(authService, { email, password });
@@ -96,7 +97,8 @@ const createUser = async (
             lastName,
             nif,
             email,
-            roles
+            roles,
+            createdBy
         });
 
         return user;

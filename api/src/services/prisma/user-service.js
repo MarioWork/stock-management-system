@@ -52,7 +52,8 @@ const getUserById = (prisma, id) => {
  * @returns {Promise<{User}>} Promise when resolved returns user
  * @throws {error}
  */
-const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
+//TODO: fix docs (createdBy)
+const createUser = (prisma, { id, firstName, lastName, nif, email, roles, createdBy }) => {
     return prisma.user.create({
         data: {
             id,
@@ -62,7 +63,8 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles }) => {
             email,
             roles: {
                 set: roles
-            }
+            },
+            createdBy: { connect: { id: createdBy } }
         },
         select: selectQuery
     });

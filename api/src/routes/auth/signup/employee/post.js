@@ -49,7 +49,8 @@ module.exports = async server => {
                     nif,
                     email,
                     password,
-                    roles: [UserRoles.EMPLOYEE]
+                    roles: [UserRoles.EMPLOYEE],
+                    createdBy: request.user.id
                 }
             )
         );
