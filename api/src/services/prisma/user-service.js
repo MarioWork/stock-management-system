@@ -15,7 +15,18 @@ const selectQuery = {
         }
     },
     email: true,
-    roles: true
+    roles: true,
+    createdBy: {
+        select: {
+            id: true,
+            nif: true,
+            profilePicture: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            roles: true
+        }
+    }
 };
 
 /**
