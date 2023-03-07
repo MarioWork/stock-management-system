@@ -18,7 +18,16 @@ const getFile = (prisma, id) => {
             id: true,
             url: true,
             type: true,
-            createdByUser: true
+            createdByUser: {
+                select: {
+                    id: true,
+                    nif: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    roles: true
+                }
+            }
         }
     });
 };
