@@ -19,8 +19,11 @@ const createCategory = (prisma, { name, createdBy }) => {
         createdBy: {
             select: {
                 id: true,
+                nif: true,
                 firstName: true,
-                lastName: true
+                lastName: true,
+                email: true,
+                roles: true
             }
         }
     };
@@ -74,7 +77,18 @@ const getCategoryById = async (prisma, id) => {
         createdAt: true,
         updatedAt: true,
         name: true,
-        createdBy: true
+        createdBy: {
+            select: {
+                select: {
+                    id: true,
+                    nif: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    roles: true
+                }
+            }
+        }
     };
 
     return prisma.category.findUnique({
@@ -98,7 +112,16 @@ const updateCategory = (prisma, { id, name }) => {
         createdAt: true,
         updatedAt: true,
         name: true,
-        createdBy: true
+        createdBy: {
+            select: {
+                id: true,
+                nif: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                roles: true
+            }
+        }
     };
 
     return prisma.category.update({
