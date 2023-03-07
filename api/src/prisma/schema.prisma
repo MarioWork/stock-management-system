@@ -46,7 +46,7 @@ model File {
   type               String
   product            Product? @relation(fields: [productId], references: [id])
   productId          String?
-  profilePictureUser User?    @relation("profilePicture")
+  profilePictureUser User[]   @relation("profilePicture")
 }
 
 model User {
@@ -57,7 +57,7 @@ model User {
   lastName         String
   roles            String[]
   profilePicture   File?      @relation("profilePicture", fields: [profilePictureId], references: [id])
-  profilePictureId String?    @unique
+  profilePictureId String?
   createdFiles     File[]     @relation("createdBy")
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
