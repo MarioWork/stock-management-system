@@ -125,8 +125,17 @@ const createProduct = (
         upc: true,
         createdAt: true,
         updatedAt: true,
-        createdBy: true,
-        categories: true,
+        createdBy: {
+            select: {
+                id: true,
+                nif: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                roles: true
+            }
+        },
+        categories: { select: { id: true, name: true } },
         images: true,
         supplier: true
     };
@@ -190,9 +199,9 @@ const updateProduct = (prisma, { id, name, quantity, categories, supplier, upc, 
         createdBy: {
             select: {
                 id: true,
+                nif: true,
                 firstName: true,
                 lastName: true,
-                nif: true,
                 email: true,
                 roles: true
             }
@@ -235,9 +244,9 @@ const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl, creat
         createdBy: {
             select: {
                 id: true,
+                nif: true,
                 firstName: true,
                 lastName: true,
-                nif: true,
                 email: true,
                 roles: true
             }
