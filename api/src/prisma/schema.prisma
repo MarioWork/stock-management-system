@@ -64,6 +64,9 @@ model User {
   categories       Category[]
   suppliers        Supplier[]
   products         Product[]
+  createdBy        User?      @relation("createdBy", fields: [createdByUserId], references: [id])
+  createdByUserId  String?
+  usersCreated     User[]     @relation("createdBy")
 }
 
 model Supplier {
