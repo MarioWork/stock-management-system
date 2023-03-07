@@ -2,7 +2,7 @@
 
 ### Product
 
-- - [x] /product/list - GET - returns all products
+- - [x] /product/list - GET - returns all products (Paginated)
   - Query Params:
     - 'filter' - Optional - searches products by the filter in the fields (name)
     - 'categoryId' - Optional - to filter products by category
@@ -16,7 +16,7 @@
 
 ### Category
 
-- - [x] /category/list - GET - returns all categories
+- - [x] /category/list - GET - returns all categories (Paginated)
 - - [x] /category/:id - GET - returns a single category
 - - [x] /category/:id - PATCH - update a category
 - - [x] /category/:id - DELETE - removes a category
@@ -45,27 +45,27 @@
 
 ### Users
 
-- - [x] /user/list - GET - List all users
+- - [x] /user/list - GET - List all users (Paginated)
   - Query Params:
     - 'role' - Optional - to filter users by role
     - 'filter' - Optional - searches users by the filter in the fields (firstName, lastName, nif, email)
 - - [x] /user/:id/ - GET - Get user by id
 - - [x] /user/:id - DELETE - Remove User
-- - [x] /user/:id/product/list - GET - List all products created by the user
-- - [x] /user/:id/category/list - GET - List all categories created by the user
-- - [x] /user/:id/supplier/list - GET - List all suppliers created by the user
+- - [x] /user/:id/product/list - GET - List all products created by the user (Paginated)
+- - [x] /user/:id/category/list - GET - List all categories created by the user (Paginated)
+- - [x] /user/:id/supplier/list - GET - List all suppliers created by the user (Paginated)
 - - [x] /user/:id/role/list - GET - List all user roles
 
 #
 
 ### Suppliers
 
-- - [x] /supplier/list - GET - List all suppliers
+- - [x] /supplier/list - GET - List all suppliers (Paginated)
 - - [x] /supplier/ - POST - Create Supplier
 - - [x] /supplier/:id - GET - Get supplier by id
 - - [x] /supplier/:id - PATCH - Update supplier by id
 - - [x] /supplier/:id - DELETE - Delete supplier by id
-- - [x] /supplier/:id/product/list - GET - List all products from supplier
+- - [x] /supplier/:id/product/list - GET - List all products from supplier (Paginated)
 
 #
 
