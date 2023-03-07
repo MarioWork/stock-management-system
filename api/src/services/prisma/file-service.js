@@ -22,6 +22,7 @@ const getFile = (prisma, id) => {
                 select: {
                     id: true,
                     nif: true,
+                    profilePicture: true,
                     firstName: true,
                     lastName: true,
                     email: true,

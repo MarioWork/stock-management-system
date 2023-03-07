@@ -24,9 +24,10 @@ const getProductById = (prisma, id) => {
         createdBy: {
             select: {
                 id: true,
+                nif: true,
+                profilePicture: true,
                 firstName: true,
                 lastName: true,
-                nif: true,
                 email: true,
                 roles: true
             }
@@ -84,6 +85,17 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
         quantity: true,
         upc: true,
         categories: { select: { id: true, name: true } },
+        createdBy: {
+            select: {
+                id: true,
+                nif: true,
+                profilePicture: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                roles: true
+            }
+        },
         images: { select: { url: true } },
         supplier: { select: { id: true } }
     };
@@ -129,6 +141,7 @@ const createProduct = (
             select: {
                 id: true,
                 nif: true,
+                profilePicture: true,
                 firstName: true,
                 lastName: true,
                 email: true,
@@ -200,6 +213,7 @@ const updateProduct = (prisma, { id, name, quantity, categories, supplier, upc, 
             select: {
                 id: true,
                 nif: true,
+                profilePicture: true,
                 firstName: true,
                 lastName: true,
                 email: true,
@@ -245,6 +259,7 @@ const addImageToProduct = (prisma, { productId, fileId, fileType, fileUrl, creat
             select: {
                 id: true,
                 nif: true,
+                profilePicture: true,
                 firstName: true,
                 lastName: true,
                 email: true,

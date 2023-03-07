@@ -16,7 +16,17 @@ const createSupplier = (prisma, { nif, name, createdBy }) =>
             id: true,
             name: true,
             nif: true,
-            createdBy: true,
+            createdBy: {
+                select: {
+                    id: true,
+                    nif: true,
+                    profilePicture: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    roles: true
+                }
+            },
             createdAt: true,
             updatedAt: true
         },
@@ -34,7 +44,18 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
     const select = {
         id: true,
         name: true,
-        nif: true
+        nif: true,
+        createdBy: {
+            select: {
+                id: true,
+                nif: true,
+                profilePicture: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                roles: true
+            }
+        }
     };
 
     const where = {
@@ -67,7 +88,17 @@ const getSupplierById = (prisma, id) =>
             id: true,
             name: true,
             nif: true,
-            createdBy: true,
+            createdBy: {
+                select: {
+                    id: true,
+                    nif: true,
+                    profilePicture: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    roles: true
+                }
+            },
             createdAt: true,
             updatedAt: true
         },
@@ -87,7 +118,17 @@ const updateSupplier = (prisma, { id, name, nif }) =>
             id: true,
             name: true,
             nif: true,
-            createdBy: true,
+            createdBy: {
+                select: {
+                    id: true,
+                    nif: true,
+                    profilePicture: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    roles: true
+                }
+            },
             createdAt: true,
             updatedAt: true
         },

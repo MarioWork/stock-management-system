@@ -20,6 +20,7 @@ const createCategory = (prisma, { name, createdBy }) => {
             select: {
                 id: true,
                 nif: true,
+                profilePicture: true,
                 firstName: true,
                 lastName: true,
                 email: true,
@@ -49,9 +50,20 @@ const createCategory = (prisma, { name, createdBy }) => {
 const getAllCategories = (prisma, pagination) => {
     const select = {
         id: true,
+        name: true,
         createdAt: true,
         updatedAt: true,
-        name: true
+        createdBy: {
+            select: {
+                id: true,
+                nif: true,
+                profilePicture: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                roles: true
+            }
+        }
     };
 
     return Promise.all([
@@ -79,14 +91,13 @@ const getCategoryById = async (prisma, id) => {
         name: true,
         createdBy: {
             select: {
-                select: {
-                    id: true,
-                    nif: true,
-                    firstName: true,
-                    lastName: true,
-                    email: true,
-                    roles: true
-                }
+                id: true,
+                nif: true,
+                profilePicture: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                roles: true
             }
         }
     };
@@ -116,6 +127,7 @@ const updateCategory = (prisma, { id, name }) => {
             select: {
                 id: true,
                 nif: true,
+                profilePicture: true,
                 firstName: true,
                 lastName: true,
                 email: true,
