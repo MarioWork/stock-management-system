@@ -34,6 +34,7 @@ const userSchema = S.object()
     .prop('createdAt', userCreatedAtSchema)
     .prop('updatedAt', userUpdatedAtSchema)
     .prop('roles', userRolesSchema)
+    .prop('createdBy', this.userSchema)
     .required(['id']);
 
 module.exports = {
