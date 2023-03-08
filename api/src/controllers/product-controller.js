@@ -132,6 +132,10 @@ const updateProduct = async (
             const field = error.meta.cause.match(/'(.*?)'/i)[0];
             throw new NotFound(`${field} does not exist`);
         }
+        if (error.code === 'P2002') {
+            const field = error.meta.target[0];
+            throw new BadRequest(`Product with this '${field}' value already exist`);
+        }
         throw error;
     }
 };
