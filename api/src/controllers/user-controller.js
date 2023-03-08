@@ -78,12 +78,12 @@ const authorize =
  *  email: string,
  *  password: string,
  *  name: string,
- * roles: string[]
+ *  roles: string[],
+ *  createdBy: string,
  * }} obj - user data object
  * @returns {User} Obj that represents all user data
  * @throws {error}
  */
-//TODO: fix docs (createdBy)
 const createUser = async (
     { prisma, authService },
     { firstName, lastName, password, nif, email, roles, createdBy }
