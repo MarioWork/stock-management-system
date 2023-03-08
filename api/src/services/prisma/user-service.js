@@ -48,11 +48,10 @@ const getUserById = (prisma, id) => {
 /**
  * Creates a user record on database with its id and role
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {string} id - User ID
+ * @param {{id:string, firstName: string, lastName: string, nif: string, email: string, roles: string[], createdBy: string}} obj - User Data
  * @returns {Promise<{User}>} Promise when resolved returns user
  * @throws {error}
  */
-//TODO: fix docs (createdBy)
 const createUser = (prisma, { id, firstName, lastName, nif, email, roles, createdBy }) => {
     return prisma.user.create({
         data: {
