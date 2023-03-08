@@ -88,9 +88,10 @@ const createUser = async (
     { prisma, authService },
     { firstName, lastName, password, nif, email, roles, createdBy }
 ) => {
+    let userId;
     try {
         const { uid } = await createUserFirebase(authService, { email, password });
-
+        userId = uid;
         const user = await createUserPrisma(prisma, {
             id: uid,
             firstName,
@@ -103,7 +104,10 @@ const createUser = async (
 
         return user;
     } catch (error) {
-        if (error.code === 'P2002') throw new BadRequest(`${error.meta.target[0]} already exists`);
+        if (error.code === 'P2002') {
+            deleteUserByIdFirebase(authService, userId);
+            throw new BadRequest(`${error.meta.target[0]} already exists`);
+        }
         if (error.code === 'auth/invalid-email' || error.code === 'auth/email-already-exists')
             throw new BadRequest(error.message);
 
