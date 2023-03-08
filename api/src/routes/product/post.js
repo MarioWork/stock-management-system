@@ -60,6 +60,10 @@ module.exports = async server => {
                 await reply.notFound(error.message);
                 return;
             }
+            if (error.statusCode === 400) {
+                await reply.badRequest(error.message);
+                return;
+            }
             server.log.error(error);
             await reply.internalServerError();
             return;

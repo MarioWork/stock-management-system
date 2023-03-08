@@ -5,7 +5,7 @@
  * @typedef { import('../types/pagination-docs-type') } Pagination
  */
 
-const { NotFound } = require('http-errors');
+const { NotFound, BadRequest } = require('http-errors');
 const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
 const {
     createProduct: createProductPrisma,
@@ -79,6 +79,10 @@ const createProduct = async (
         if (error.code === 'P2025') {
             const field = error.meta.cause.match(/'(.*?)'/i)[0];
             throw new NotFound(`${field} does not exist`);
+        }
+        if (error.code === 'P2002') {
+            const field = error.meta.target[0];
+            throw new BadRequest(`Product with this '${field}' value already exist`);
         }
         throw error;
     }
