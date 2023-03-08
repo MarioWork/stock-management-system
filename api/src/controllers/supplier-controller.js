@@ -3,6 +3,7 @@
  * @typedef { import('../types/pagination-docs-type') } Pagination
  * @typedef { import('../types/product-docs-type') } Product
  */
+const { BadRequest } = require('http-errors');
 
 const {
     createSupplier: createSupplierPrisma,
@@ -20,8 +21,17 @@ const {
  * @returns {Promise}
  * @throws {error}
  */
-const createSupplier = (prisma, { nif, name, createdBy }) =>
-    createSupplierPrisma(prisma, { nif, name, createdBy });
+const createSupplier = async (prisma, { nif, name, createdBy }) => {
+    try {
+        return await createSupplierPrisma(prisma, { nif, name, createdBy });
+    } catch (error) {
+        if (error.code === 'P2002') {
+            const field = error.meta.target[0];
+            throw new BadRequest(`Supplier with this '${field}' value already exist`);
+        }
+        throw error;
+    }
+};
 
 /**
  * Returns all suppliers paginated with the filter given
