@@ -43,7 +43,7 @@
 
 #
 
-### Users
+### User
 
 - - [x] /user/list - GET - List all users (Paginated)
   - Query Params:
@@ -51,6 +51,7 @@
     - 'filter' - Optional - searches users by the filter in the fields (firstName, lastName, nif, email)
 - - [x] /user/:id/ - GET - Get user by id
 - - [x] /user/:id - DELETE - Remove User
+- - [ ] /user/:id - PATCH - Update user by id
 - - [x] /user/:id/product/list - GET - List all products created by the user (Paginated)
 - - [x] /user/:id/category/list - GET - List all categories created by the user (Paginated)
 - - [x] /user/:id/supplier/list - GET - List all suppliers created by the user (Paginated)
@@ -58,7 +59,7 @@
 
 #
 
-### Suppliers
+### Supplier
 
 - - [x] /supplier/list - GET - List all suppliers (Paginated)
 - - [x] /supplier/ - POST - Create Supplier
