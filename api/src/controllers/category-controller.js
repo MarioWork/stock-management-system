@@ -18,18 +18,15 @@ const {
  * @returns {Promise<Category>} - Promise object that returns the created category or error
  * @throws {error}
  */
-const createCategory = (prisma, { name, createdBy }) => {
-    return createCategoryPrisma(prisma, { name, createdBy });
-};
+const createCategory = (prisma, { name, createdBy }) =>
+    createCategoryPrisma(prisma, { name, createdBy });
 
 /** Retrieves all categories
  * @param {PrismaClient} prisma - ORM Dependency
  * @returns {Promise<{}[]>} - Promise object that returns array with categories and categories count
  * @throws {error}
  */
-const getAllCategories = (prisma, pagination) => {
-    return getAllCategoriesPrisma(prisma, pagination);
-};
+const getAllCategories = (prisma, pagination) => getAllCategoriesPrisma(prisma, pagination);
 
 /**
  * Retrieves a category by the Id given
@@ -57,9 +54,7 @@ const updateCategory = (prisma, { id, name }) => updateCategoryPrisma(prisma, { 
  * @param {number[]} ids - Ids of the categories to be deleted
  * @returns {Promise<{count: number}>} - Number of categories deleted
  */
-const deleteCategories = (prisma, ids) => {
-    return deleteCategoriesPrisma(prisma, ids);
-};
+const deleteCategories = (prisma, ids) => deleteCategoriesPrisma(prisma, ids);
 
 module.exports = {
     createCategory,

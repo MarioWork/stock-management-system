@@ -32,10 +32,7 @@ module.exports = async server => {
         const { id } = request.params;
         const [error, category] = await to(getCategoryById(prisma, id));
 
-        if (!category) {
-            await reply.notFound(`Category with ID: ${id} was not found`);
-            return;
-        }
+        if (!category) return reply.notFound();
 
         return error ? toHttpError(error) : category;
     });
