@@ -2,16 +2,21 @@ const fp = require('fastify-plugin');
 
 const { PluginNames } = require('../enums/plugins');
 
+const { BadRequest, InternalServerError } = require('http-errors');
+
 const plugin = (server, _, done) => {
     server.log.info(`Registering ${PluginNames.HTTP_ERROR} plugin...`);
 
-    const { httpErrors } = server;
+    const errorMapper = error => {
+        const code = error?.code ?? error?.statusCode;
+        const message = error.message;
 
-    server.decorate('toHttpError', (error, context) => {
-        if (error?.statusCode === 400) {
-            return httpErrors.badRequest(error.message);
-        }
-    });
+        const map = new Map();
+        map.set(400, new BadRequest(message));
+        return map.get(code) ?? new InternalServerError();
+    };
+
+    server.decorate('toHttpError', error => errorMapper(error));
 
     done();
 };
