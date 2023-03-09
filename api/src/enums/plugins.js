@@ -6,6 +6,7 @@ module.exports = {
         CLOUD_STORAGE: 'Cloud Storage',
         AUTHENTICATION: 'Authentication',
         PAGINATION: 'Pagination',
-        SHUTDOWN: 'Shutdown'
+        SHUTDOWN: 'Shutdown',
+        HTTP_ERROR: 'Http Error'
     }
 };
