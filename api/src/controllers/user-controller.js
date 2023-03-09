@@ -106,10 +106,7 @@ const createUser = async (
     } catch (error) {
         if (error.code === 'P2002') {
             deleteUserByIdFirebase(authService, userId);
-            throw new BadRequest(`${error.meta.target[0]} already exists`);
         }
-        if (error.code === 'auth/invalid-email' || error.code === 'auth/email-already-exists')
-            throw new BadRequest(error.message);
 
         throw error;
     }

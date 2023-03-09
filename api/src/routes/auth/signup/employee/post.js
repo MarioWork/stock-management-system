@@ -35,7 +35,7 @@ const options = ({ authService, prisma }) => ({
 });
 
 module.exports = async server => {
-    const { authService, prisma, to } = server;
+    const { authService, prisma, to, toHttpError } = server;
 
     server.post('/', options({ authService, prisma }), async (request, reply) => {
         const { firstName, lastName, nif, email, password } = request.body;
@@ -55,16 +55,6 @@ module.exports = async server => {
             )
         );
 
-        if (error) {
-            if (error.statusCode === 400) {
-                await reply.badRequest(error.message);
-                return;
-            }
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(201).send(user);
+        return error ? toHttpError(error) : reply.code(201).send(user);
     });
 };
