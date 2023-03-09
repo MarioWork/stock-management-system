@@ -49,9 +49,7 @@ const getCategoryById = async (prisma, id) => {
  * @returns {Promise<Category>} - Updated Category
  * @throws {error}
  */
-const updateCategory = (prisma, { id, name }) => {
-    return updateCategoryPrisma(prisma, { id, name });
-};
+const updateCategory = (prisma, { id, name }) => updateCategoryPrisma(prisma, { id, name });
 
 /**
  * Delete categories by its ids

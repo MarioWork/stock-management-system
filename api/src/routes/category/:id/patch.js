@@ -27,7 +27,7 @@ const options = ({ prisma, authService }) => ({
  * @param {*} server -  Fastify server instance
  */
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.patch('/', options({ prisma, authService }), async (request, reply) => {
         const id = request.params.id;
@@ -40,12 +40,6 @@ module.exports = async server => {
             return;
         }
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send(updatedCategory);
+        return error ? toHttpError(error) : updatedCategory;
     });
 };
