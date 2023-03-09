@@ -6,7 +6,7 @@
  * @typedef { import('../types/category-docs-type') } Category
  */
 
-const { Forbidden, BadRequest, NotFound } = require('http-errors');
+const { Forbidden, NotFound } = require('http-errors');
 
 const {
     getUserById: getUserByIdPrisma,
@@ -29,6 +29,7 @@ const {
 } = require('../services/firebase/user-service');
 
 const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
+const { errorMapper } = require('../utils/error-mapper');
 
 const decodeToken = async (authService, token) => await authService.verifyIdToken(token);
 
@@ -63,8 +64,7 @@ const authorize =
 
             request.user = user;
         } catch (error) {
-            if (error.statusCode === 403) throw new Forbidden(error.message);
-            if (error.code === 'auth/id-token-expired') throw new Forbidden('Expired token');
+            throw errorMapper(error);
         }
     };
 
