@@ -5,7 +5,7 @@ const { userSchema } = require('../schemas/user-schema');
 
 const fileIdSchema = S.string().format('uuid');
 
-const fileUrlSchema = S.string().format('url');
+const fileUrlSchema = S.string();
 
 const fileTypeSchema = S.string().enum(Object.values(AllowedFileType));
 

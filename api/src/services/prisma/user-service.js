@@ -76,20 +76,11 @@ const createUser = (prisma, { id, firstName, lastName, nif, email, roles, create
  * @returns {Promise<User>} - Represents updated user
  * @throws {error}
  */
-const addProfilePicture = (prisma, { id, fileId, fileUrl, fileType }) => {
+const addProfilePicture = async (prisma, { id, fileId }) => {
     return prisma.user.update({
         where: { id },
         data: {
-            profilePicture: {
-                connectOrCreate: {
-                    where: { id: fileId },
-                    create: {
-                        id: fileId,
-                        url: fileUrl,
-                        type: fileType
-                    }
-                }
-            }
+            profilePictureId: fileId
         },
         select: selectQuery
     });

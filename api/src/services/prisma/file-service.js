@@ -2,6 +2,10 @@
  * @typedef { import("../../types/prisma-docs-type") } PrismaClient
  */
 
+//TODO: add docs
+const createFile = (prisma, { id, url, type, userId }) =>
+    prisma.file.create({ data: { id, url, type, createdByUserId: userId } });
+
 /**
  * Retrieves a file info by Id
  * @param {PrismaClient} prisma - ORM Dependency
@@ -46,4 +50,4 @@ const deleteFile = (prisma, id) => {
     });
 };
 
-module.exports = { deleteFile, getFile };
+module.exports = { deleteFile, getFile, createFile };

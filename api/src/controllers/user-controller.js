@@ -21,7 +21,10 @@ const {
     getUserRoles: getUserRolesPrisma
 } = require('../services/prisma/user-service');
 
-const { deleteFile: deleteFilePrisma } = require('../services/prisma/file-service');
+const {
+    deleteFile: deleteFilePrisma,
+    createFile: createFilePrisma
+} = require('../services/prisma/file-service');
 
 const {
     createUser: createUserFirebase,
@@ -132,11 +135,15 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
 
     try {
+        await createFilePrisma(prisma, {
+            id: fileId,
+            url: fileUrl,
+            type: fileType,
+            userId
+        });
         return await addProfilePicturePrisma(prisma, {
             id: userId,
-            fileId,
-            fileUrl,
-            fileType
+            fileId
         });
     } catch (error) {
         await deleteFile(storage, { id: fileId, type: fileType });
