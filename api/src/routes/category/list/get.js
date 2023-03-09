@@ -32,23 +32,19 @@ const options = ({ prisma, authService }) => ({
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const pagination = request.parsePaginationQuery();
 
         const [error, result] = await to(getAllCategories(prisma, pagination));
         const [categories, total] = result;
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.withPagination({
-            total,
-            page: pagination.currentPage,
-            data: categories
-        });
+        return error
+            ? toHttpError(error)
+            : reply.withPagination({
+                  total,
+                  page: pagination.currentPage,
+                  data: categories
+              });
     });
 };
