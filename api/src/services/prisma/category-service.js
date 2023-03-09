@@ -104,7 +104,7 @@ const getCategoryById = async (prisma, id) => {
 
     return prisma.category.findUnique({
         where: {
-            id: id
+            id
         },
         select
     });
