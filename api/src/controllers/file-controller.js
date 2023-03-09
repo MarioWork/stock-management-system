@@ -52,7 +52,9 @@ const deleteFile = async ({ storage, prisma }, id) => {
  */
 const downloadFile = async ({ storage, prisma }, id) => {
     const { type } = (await getFile(prisma, id)) || {};
+
     if (!type) throw new NotFound();
+
     return downloadFileCloud(storage, { id, type });
 };
 
