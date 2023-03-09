@@ -28,7 +28,7 @@ const options = ({ prisma, authService }) => ({
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.delete('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
@@ -40,12 +40,6 @@ module.exports = async server => {
             return;
         }
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send({ message: 'Deleted successfully!' });
+        return error ? toHttpError(error) : { message: 'Deleted successfully!' };
     });
 };
