@@ -4,6 +4,8 @@ const { PluginNames } = require('../enums/plugins');
 
 const { BadRequest, NotFound, Forbidden, InternalServerError } = require('http-errors');
 
+const getFieldsFromError = error => error.meta.cause.match(/'(.*?)'/i);
+
 const errorMapper = error => {
     const code = error?.code ?? error?.statusCode;
     const message = error.message;
@@ -19,6 +21,11 @@ const errorMapper = error => {
     map.set('auth/user-not-found', new NotFound('User not found'));
     map.set('auth/invalid-email', new BadRequest('Invalid Email'));
     map.set('auth/email-already-exists', new NotFound('Email already exists'));
+
+    //Prisma
+    map.set('P2025', new NotFound(`${getFieldsFromError(error)} does not exist`));
+    map.set('P2002', new BadRequest(`${getFieldsFromError(error)}' value already exist`));
+    map.set('P2016', new NotFound());
 
     return map.get(code) ?? new InternalServerError();
 };
