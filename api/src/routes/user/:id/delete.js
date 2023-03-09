@@ -9,8 +9,7 @@ const { authorize, deleteUserById } = require('../../../controllers/user-control
 
 const schema = {
     headers,
-    params: S.object().prop('id', userIdSchema).required(['id']),
-    response: { 200: S.object().prop('message', S.string()).required(['message']) }
+    params: S.object().prop('id', userIdSchema).required(['id'])
 };
 
 const options = ({ authService, prisma }) => ({
@@ -36,6 +35,6 @@ module.exports = async server => {
             return;
         }
 
-        await reply.send({ message: 'Delete successfully!' });
+        return {};
     });
 };

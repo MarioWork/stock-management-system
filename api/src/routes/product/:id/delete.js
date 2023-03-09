@@ -10,9 +10,6 @@ const { deleteProducts } = require('../../../controllers/product-controller');
 
 const schema = {
     headers,
-    response: {
-        200: S.object().prop('message', S.string()).required(['message'])
-    },
     params: S.object().prop('id', productIdSchema).required(['id'])
 };
 
@@ -40,6 +37,6 @@ module.exports = async server => {
             return;
         }
 
-        await reply.send({ message: 'Delete successfully!' });
+        return {};
     });
 };

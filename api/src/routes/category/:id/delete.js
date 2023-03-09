@@ -10,9 +10,6 @@ const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
     headers,
-    response: {
-        200: S.object().prop('message', S.string()).required(['message'])
-    },
     params: S.object().prop('id', categoryIdSchema).required(['id'])
 };
 
@@ -40,6 +37,6 @@ module.exports = async server => {
             return;
         }
 
-        return error ? toHttpError(error) : { message: 'Deleted successfully!' };
+        return error ? toHttpError(error) : {};
     });
 };
