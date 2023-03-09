@@ -19,7 +19,7 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, storage, to, authService } = server;
+    const { prisma, storage, to, authService, toHttpError } = server;
 
     server.post('/', options({ prisma, authService }), async (request, reply) => {
         const data = await request.file();
@@ -44,12 +44,6 @@ module.exports = async server => {
             addProfilePicture({ prisma, storage }, { userId: request.user?.id, file, fileType })
         );
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send(user);
+        return error ? toHttpError(error) : user;
     });
 };
