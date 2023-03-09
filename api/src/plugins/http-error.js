@@ -4,7 +4,10 @@ const { PluginNames } = require('../enums/plugins');
 
 const { BadRequest, NotFound, Forbidden, InternalServerError } = require('http-errors');
 
-const getFieldsFromError = error => error.meta.cause.match(/'(.*?)'/i);
+const getFieldsFromError = error => {
+    const target = error.meta?.cause ?? error.meta?.target[0];
+    return target?.match(/'(.*?)'/i);
+};
 
 const errorMapper = error => {
     const code = error?.code ?? error?.statusCode;
