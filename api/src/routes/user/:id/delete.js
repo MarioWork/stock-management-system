@@ -34,7 +34,5 @@ module.exports = async server => {
             await reply.internalServerError();
             return;
         }
-
-        return {};
     });
 };

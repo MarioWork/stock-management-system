@@ -26,6 +26,6 @@ module.exports = async server => {
 
         const [error] = await to(deleteFile({ prisma, storage }, id));
 
-        return error ? toHttpError(error) : {};
+        if (error) return toHttpError(error);
     });
 };

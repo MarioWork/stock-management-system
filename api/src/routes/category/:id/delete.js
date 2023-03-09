@@ -32,11 +32,8 @@ module.exports = async server => {
 
         const [error, { count }] = await to(deleteCategories(prisma, id));
 
-        if (count === 0) {
-            await reply.notFound(`Category with ID: ${id} was not found`);
-            return;
-        }
+        if (count === 0) return reply.notFound();
 
-        return error ? toHttpError(error) : {};
+        if (error) return toHttpError(error);
     });
 };
