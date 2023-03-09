@@ -31,7 +31,7 @@ const options = ({ authService, prisma }) => ({
  * @param {*} server -  Fastify server instance decorated with prisma
  */
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
     server.post('/', options({ prisma, authService }), async (request, reply) => {
         const { name } = request.body;
 
@@ -39,12 +39,6 @@ module.exports = async server => {
             createCategory(prisma, { name, createdBy: request.user.id })
         );
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(201).send(newCategory);
+        return error ? toHttpError(error) : reply.code(201).send(newCategory);
     });
 };
