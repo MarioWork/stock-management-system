@@ -50,16 +50,8 @@ const getSupplierById = (prisma, id) => getSupplierByIdPrisma(prisma, id);
  * @returns {Promise}
  * @throws {error}
  */
-const updateSupplier = async (prisma, { id, name, nif }) => {
-    try {
-        return await updateSupplierPrisma(prisma, { id, name, nif });
-    } catch (error) {
-        if (error.code === 'P2002') {
-            const field = error.meta.target[0];
-            throw new BadRequest(`Supplier with this '${field}' value already exist`);
-        }
-    }
-};
+const updateSupplier = (prisma, { id, name, nif }) =>
+    updateSupplierPrisma(prisma, { id, name, nif });
 
 /**
  * Deletes the suppliers with ids given and returns the count of deleted records

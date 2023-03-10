@@ -27,33 +27,16 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.patch('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
         const { name, nif } = request.body;
 
-        if (!name && !nif) {
-            await reply.badRequest('Needs at least one property (name or nif)');
-            return;
-        }
+        if (!name && !nif) return reply.badRequest('Needs at least one property (name or nif)');
 
         const [error, updatedSupplier] = await to(updateSupplier(prisma, { id, name, nif }));
 
-        if (error) {
-            if (error.statusCode === 404) {
-                await reply.notFound(error.message);
-                return;
-            }
-            if (error.statusCode === 400) {
-                await reply.badRequest(error.message);
-                return;
-            }
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send(updatedSupplier);
+        return error ? toHttpError(error) : updatedSupplier;
     });
 };
