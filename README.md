@@ -93,7 +93,7 @@
 - - [x] <s>Fix user creation if error deleteUser</s>
 - - [x] <s>error handling for unique fields prisma P2002</s>
 - - [x] <s>find better solution for error handling</s>
-- - [ ] localize error strings
+- - [x] <s>localize error strings</s>
 - - [ ] when deleting a product or user needs to delete their image from cloud storage
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
