@@ -8,6 +8,9 @@
 
 const { Forbidden } = require('http-errors');
 
+const { ErrorMessages } = require('../localization/error-messages');
+const { ErrorCodesKeys } = require('../enums/error-codes');
+
 const {
     getUserById: getUserByIdPrisma,
     createUser: createUserPrisma,
@@ -48,22 +51,23 @@ const authorize =
     async request => {
         const token = request.headers.authorization?.split(' ')[1];
 
-        if (!token) throw new Forbidden('Missing authorization token');
+        if (!token) throw new Forbidden(ErrorMessages.get(ErrorCodesKeys.MISSING_TOKEN));
 
         try {
             const { uid } = await decodeToken(authService, token);
 
-            if (!uid) throw new Forbidden('Invalid authorization token');
+            if (!uid) throw new Forbidden(ErrorMessages.get(ErrorCodesKeys.INVALID_TOKEN));
 
             const user = await getUserByIdPrisma(prisma, uid);
 
-            if (!user) throw new Forbidden('User not found');
+            if (!user) throw new Forbidden(ErrorMessages.get(ErrorCodesKeys.USER_NOT_FOUND));
 
-            if (!user?.roles) throw new Forbidden('No roles to validate');
+            if (!user?.roles) throw new Forbidden(ErrorMessages.get(ErrorCodesKeys.MISSING_ROLES));
 
             const isAuthorized = user.roles.every(role => authorizedRoles.includes(role));
 
-            if (!isAuthorized) throw new Forbidden('Not Authorized');
+            if (!isAuthorized)
+                throw new Forbidden(ErrorMessages.get(ErrorCodesKeys.NOT_AUTHORIZED));
 
             request.user = user;
         } catch (error) {
