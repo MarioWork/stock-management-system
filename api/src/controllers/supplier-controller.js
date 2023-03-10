@@ -3,7 +3,6 @@
  * @typedef { import('../types/pagination-docs-type') } Pagination
  * @typedef { import('../types/product-docs-type') } Product
  */
-const { BadRequest } = require('http-errors');
 
 const {
     createSupplier: createSupplierPrisma,

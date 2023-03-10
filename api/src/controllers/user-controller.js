@@ -6,7 +6,7 @@
  * @typedef { import('../types/category-docs-type') } Category
  */
 
-const { Forbidden, NotFound } = require('http-errors');
+const { Forbidden } = require('http-errors');
 
 const {
     getUserById: getUserByIdPrisma,
