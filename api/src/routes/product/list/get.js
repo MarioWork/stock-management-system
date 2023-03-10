@@ -34,7 +34,7 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { filter, categoryId, supplierId } = request.query;
@@ -46,16 +46,12 @@ module.exports = async server => {
 
         const [products, total] = result;
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.withPagination({
-            total,
-            page: pagination.currentPage,
-            data: products
-        });
+        return error
+            ? toHttpError(error)
+            : reply.withPagination({
+                  total,
+                  page: pagination.currentPage,
+                  data: products
+              });
     });
 };
