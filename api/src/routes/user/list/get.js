@@ -30,7 +30,7 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, authService, to } = server;
+    const { prisma, authService, to, toHttpError } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const role = Object.keys(request.query).length === 0 ? null : request.query.role;
@@ -41,16 +41,12 @@ module.exports = async server => {
 
         const [users, total] = result;
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.withPagination({
-            total,
-            page: pagination.currentPage,
-            data: users
-        });
+        return error
+            ? toHttpError(error)
+            : reply.withPagination({
+                  total,
+                  page: pagination.currentPage,
+                  data: users
+              });
     });
 };
