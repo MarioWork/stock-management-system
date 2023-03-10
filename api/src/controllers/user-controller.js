@@ -176,7 +176,7 @@ const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
  * @returns {Promise}
  * @throws {error}
  */
-const deleteUserById = async ({ prisma, authService }, id) =>
+const deleteUserById = ({ prisma, authService }, id) =>
     Promise.all([deleteUserByIdPrisma(prisma, id), deleteUserByIdFirebase(authService, id)]);
 
 /**

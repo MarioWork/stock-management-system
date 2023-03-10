@@ -35,9 +35,7 @@ const getAllCategories = (prisma, pagination) => getAllCategoriesPrisma(prisma, 
  * @returns {Promise<Category>} - Promise object that returns category or error
  * @throws {error}
  */
-const getCategoryById = async (prisma, id) => {
-    return getCategoryByIdPrisma(prisma, id);
-};
+const getCategoryById = (prisma, id) => getCategoryByIdPrisma(prisma, id);
 
 /**
  * Update Category by id
