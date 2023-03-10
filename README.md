@@ -92,8 +92,9 @@
 - - [x] <s>Add createdBy to user</s>
 - - [x] <s>Fix user creation if error deleteUser</s>
 - - [x] <s>error handling for unique fields prisma P2002</s>
+- - [ ] find better solution for error handling
+- - [ ] localize error strings
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
 - - [ ] Add order options to get queries
 - - [ ] Fix schemas required in routes instead of dynamic schemas
-- - [ ] find better solution for error handling
