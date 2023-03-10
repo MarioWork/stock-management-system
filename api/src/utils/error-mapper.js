@@ -1,5 +1,8 @@
 const { BadRequest, NotFound, Forbidden, InternalServerError } = require('http-errors');
 
+const { ErrorCodes, ErrorCodesKeys } = require('../enums/error-codes');
+const { ErrorMessages } = require('../localization/error-messages');
+
 const getFieldsFromError = error => error?.meta?.cause ?? error?.meta?.target;
 
 const errorMapper = error => {
@@ -12,16 +15,44 @@ const errorMapper = error => {
     map.set(403, new Forbidden(message));
     map.set(404, new NotFound(message));
 
-    //Firebase
-    map.set('auth/id-token-expired', new Forbidden('Expired Token'));
-    map.set('auth/user-not-found', new NotFound('User not found'));
-    map.set('auth/invalid-email', new BadRequest('Invalid Email'));
-    map.set('auth/email-already-exists', new NotFound('Email already exists'));
+    map.set(
+        ErrorCodes.get(ErrorCodesKeys.EXPIRED_TOKEN),
+        new Forbidden(ErrorMessages.get(ErrorCodesKeys.EXPIRED_TOKEN))
+    );
 
-    //Prisma
-    map.set('P2025', new NotFound(`'${getFieldsFromError(error)}' does not exist`));
-    map.set('P2002', new BadRequest(`'${getFieldsFromError(error)}' value already exist`));
-    map.set('P2016', new NotFound());
+    map.set(
+        ErrorCodes.get(ErrorCodesKeys.USER_NOT_FOUND),
+        new NotFound(ErrorMessages.get(ErrorCodesKeys.USER_NOT_FOUND))
+    );
+
+    map.set(
+        ErrorCodesKeys.INVALID_EMAIL,
+        new BadRequest(ErrorMessages.get(ErrorCodesKeys.INVALID_EMAIL))
+    );
+
+    map.set(
+        ErrorCodes.get(ErrorCodesKeys.EMAIL_EXISTS),
+        new BadRequest(ErrorMessages.get(ErrorCodesKeys.EMAIL_EXISTS))
+    );
+
+    map.set(
+        ErrorCodes.get(ErrorCodesKeys.FIELD_NOT_EXIST),
+        new NotFound(ErrorMessages.get(ErrorCodesKeys.FIELD_NOT_EXIST)(getFieldsFromError(error)))
+    );
+
+    map.set(
+        ErrorCodes.get(ErrorCodesKeys.FIELD_VALUE_EXISTS),
+        new BadRequest(
+            ErrorMessages.get(ErrorCodesKeys.FIELD_VALUE_EXISTS)(getFieldsFromError(error))
+        )
+    );
+
+    map.set(
+        ErrorCodes.get(ErrorCodesKeys.INVALID_TOKEN),
+        new Forbidden(ErrorMessages.get(ErrorCodesKeys.INVALID_TOKEN))
+    );
+
+    map.set(ErrorCodes.get(ErrorCodesKeys.NOT_FOUND), new NotFound());
 
     return map.get(code) ?? new InternalServerError();
 };
