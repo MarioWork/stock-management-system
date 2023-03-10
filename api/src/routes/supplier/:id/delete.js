@@ -19,22 +19,15 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.delete('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
 
         const [error, { count }] = await to(deleteSuppliers(prisma, [id]));
 
-        if (count === 0) {
-            await reply.notFound(`Supplier with ID: ${id} was not found`);
-            return;
-        }
+        if (count === 0) return reply.notFound();
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
+        if (error) return toHttpError(error);
     });
 };
