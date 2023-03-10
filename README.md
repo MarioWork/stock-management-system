@@ -94,6 +94,7 @@
 - - [x] <s>error handling for unique fields prisma P2002</s>
 - - [ ] find better solution for error handling
 - - [ ] localize error strings
+- - [ ] when deleting a product or user needs to delete their image from cloud storage
 - - [ ] Remove cascade deleting
 - - [ ] More filter options to category
 - - [ ] Add order options to get queries
