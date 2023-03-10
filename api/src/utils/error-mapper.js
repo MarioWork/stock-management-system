@@ -1,9 +1,6 @@
 const { BadRequest, NotFound, Forbidden, InternalServerError } = require('http-errors');
 
-const getFieldsFromError = error => {
-    const target = error.meta?.cause ?? error.meta?.target[0];
-    return target?.match(/'(.*?)'/i);
-};
+const getFieldsFromError = error => error?.meta?.cause ?? error?.meta?.target[0];
 
 const errorMapper = error => {
     const code = error?.code ?? error?.statusCode;
@@ -22,8 +19,8 @@ const errorMapper = error => {
     map.set('auth/email-already-exists', new NotFound('Email already exists'));
 
     //Prisma
-    map.set('P2025', new NotFound(`${getFieldsFromError(error)} does not exist`));
-    map.set('P2002', new BadRequest(`${getFieldsFromError(error)}' value already exist`));
+    map.set('P2025', new NotFound(`'${getFieldsFromError(error)}' does not exist`));
+    map.set('P2002', new BadRequest(`'${getFieldsFromError(error)}' value already exist`));
     map.set('P2016', new NotFound());
 
     return map.get(code) ?? new InternalServerError();
