@@ -110,33 +110,17 @@ const deleteProducts = (prisma, ids) => deleteProductsPrisma(prisma, ids);
  * }} object - Object represents the data to update
  * @returns {Product}
  */
-const updateProduct = async (
-    prisma,
-    { id, name, quantity, categories, supplier, upc, description }
-) => {
-    try {
-        return await updateProductPrisma(prisma, {
-            id,
-            name,
-            quantity,
-            description,
-            upc,
-            supplier,
-            categories: categoriesArrayToMap(categories)
-        });
-    } catch (error) {
-        if (error.code === 'P2016') throw new NotFound(`Product with ID: ${id} was not found`);
-        if (error.code === 'P2025') {
-            const field = error.meta.cause.match(/'(.*?)'/i)[0];
-            throw new NotFound(`${field} does not exist`);
-        }
-        if (error.code === 'P2002') {
-            const field = error.meta.target[0];
-            throw new BadRequest(`Product with this '${field}' value already exist`);
-        }
-        throw error;
-    }
-};
+const updateProduct = (prisma, { id, name, quantity, categories, supplier, upc, description }) =>
+    updateProductPrisma(prisma, {
+        id,
+        name,
+        quantity,
+        description,
+        upc,
+        supplier,
+        categories: categoriesArrayToMap(categories)
+    });
+
 /**
  * Adds a image url to the list of images of the product
  * @param {{prisma: PrismaClient, storage: *, to: *}} object - Dependencies

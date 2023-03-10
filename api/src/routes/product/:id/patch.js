@@ -38,37 +38,21 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.patch('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
         const { name, quantity, categories, upc, description, supplier } = request.body;
 
-        if (!name && !quantity && !categories && !upc && !description && !supplier) {
-            await reply.badRequest(
+        if (!name && !quantity && !categories && !upc && !description && !supplier)
+            return reply.badRequest(
                 'Needs at least one property (name, quantity, categories, upc or description)'
             );
-            return;
-        }
 
         const [error, updatedProduct] = await to(
             updateProduct(prisma, { id, name, quantity, categories, upc, description, supplier })
         );
 
-        if (error) {
-            if (error.statusCode === 404) {
-                await reply.notFound(error.message);
-                return;
-            }
-            if (error.statusCode === 400) {
-                await reply.badRequest(error.message);
-                return;
-            }
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send(updatedProduct);
+        return error ? toHttpError(error) : updatedProduct;
     });
 };
