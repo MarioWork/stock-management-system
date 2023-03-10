@@ -1,6 +1,6 @@
 const { BadRequest, NotFound, Forbidden, InternalServerError } = require('http-errors');
 
-const getFieldsFromError = error => error?.meta?.cause ?? error?.meta?.target[0];
+const getFieldsFromError = error => error?.meta?.cause ?? error?.meta?.target;
 
 const errorMapper = error => {
     const code = error?.code ?? error?.statusCode;
