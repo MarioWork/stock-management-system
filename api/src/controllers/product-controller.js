@@ -5,7 +5,7 @@
  * @typedef { import('../types/pagination-docs-type') } Pagination
  */
 
-const { NotFound, BadRequest } = require('http-errors');
+const { NotFound } = require('http-errors');
 const { saveFile, deleteFile } = require('../services/cloud-storage/cloud-file-service');
 const {
     createProduct: createProductPrisma,
@@ -59,32 +59,19 @@ const getAllProducts = (prisma, { filter, pagination, categoryId, supplierId }) 
  * @returns {Product}
  * @throws {error}
  */
-const createProduct = async (
+const createProduct = (
     prisma,
     { name, description, quantity, categories, supplier, upc, createdBy }
-) => {
-    try {
-        return await createProductPrisma(prisma, {
-            name,
-            quantity,
-            categories: categoriesArrayToMap(categories),
-            supplier,
-            description,
-            upc,
-            createdBy
-        });
-    } catch (error) {
-        if (error.code === 'P2025') {
-            const field = error.meta.cause.match(/'(.*?)'/i)[0];
-            throw new NotFound(`${field} does not exist`);
-        }
-        if (error.code === 'P2002') {
-            const field = error.meta.target[0];
-            throw new BadRequest(`Product with this '${field}' value already exist`);
-        }
-        throw error;
-    }
-};
+) =>
+    createProductPrisma(prisma, {
+        name,
+        quantity,
+        categories: categoriesArrayToMap(categories),
+        supplier,
+        description,
+        upc,
+        createdBy
+    });
 
 /**
  * Deletes products by the ids given
