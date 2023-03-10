@@ -23,7 +23,7 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, storage, to, authService } = server;
+    const { prisma, storage, to, authService, toHttpError } = server;
 
     server.post('/', options({ authService, prisma }), async (request, reply) => {
         const data = await request.file();
@@ -52,17 +52,6 @@ module.exports = async server => {
             )
         );
 
-        if (error) {
-            if (error?.statusCode === 404) {
-                await reply.notFound(error.message);
-                return;
-            }
-
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send(product);
+        return error ? toHttpError(error) : product;
     });
 };

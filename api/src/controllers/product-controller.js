@@ -152,7 +152,8 @@ const addImageToProduct = async (
 ) => {
     const [findProductError, product] = await to(productExists(prisma, productId));
 
-    if (!product) throw new NotFound(`Product with ID: ${productId} was not found`);
+    if (!product) throw new NotFound(`Product not found`);
+
     if (findProductError) throw findProductError;
 
     const { fileUrl, fileId } = await saveFile(storage, { file: file, type: fileType });
