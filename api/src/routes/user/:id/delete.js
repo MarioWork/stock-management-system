@@ -18,21 +18,13 @@ const options = ({ authService, prisma }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
-    server.delete('/', options({ prisma, authService }), async (request, reply) => {
+    server.delete('/', options({ prisma, authService }), async request => {
         const { id } = request.params;
 
         const [error] = await to(deleteUserById({ prisma, authService }, id));
 
-        if (error) {
-            if (error.statusCode === 404) {
-                await reply.notFound(error.message);
-                return;
-            }
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
+        if (error) return toHttpError(error);
     });
 };

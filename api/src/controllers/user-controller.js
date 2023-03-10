@@ -176,19 +176,8 @@ const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
  * @returns {Promise}
  * @throws {error}
  */
-const deleteUserById = async ({ prisma, authService }, id) => {
-    try {
-        return await Promise.all([
-            deleteUserByIdPrisma(prisma, id),
-            deleteUserByIdFirebase(authService, id)
-        ]);
-    } catch (error) {
-        if (error.code === 'auth/user-not-found' || error.code === 'P2025')
-            throw new NotFound(`User with ID: ${id} was not found`);
-
-        throw error;
-    }
-};
+const deleteUserById = async ({ prisma, authService }, id) =>
+    Promise.all([deleteUserByIdPrisma(prisma, id), deleteUserByIdFirebase(authService, id)]);
 
 /**
  * Retrieves all User Products by ID
