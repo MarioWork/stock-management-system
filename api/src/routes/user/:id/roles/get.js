@@ -24,23 +24,15 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, authService, to } = server;
+    const { prisma, authService, to, toHttpError } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
 
         const [error, user] = await to(getUserRoles(prisma, id));
-        if (!user) {
-            await reply.notFound(`User with ID: ${id} was not found`);
-            return;
-        }
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
+        if (!user) return reply.notFound();
 
-        await reply.send(user);
+        return error ? toHttpError(error) : user;
     });
 };
