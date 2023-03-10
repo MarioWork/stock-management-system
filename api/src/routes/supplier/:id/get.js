@@ -20,24 +20,15 @@ const options = ({ prisma, authService }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService } = server;
+    const { prisma, to, authService, toHttpError } = server;
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { id } = request.params;
 
         const [error, product] = await to(getSupplierById(prisma, id));
 
-        if (!product) {
-            await reply.notFound(`Supplier with ID: ${id} was not found`);
-            return;
-        }
+        if (!product) return reply.notFound();
 
-        if (error) {
-            server.log.error(error);
-            await reply.internalServerError();
-            return;
-        }
-
-        await reply.code(200).send(product);
+        return error ? toHttpError(error) : product;
     });
 };
