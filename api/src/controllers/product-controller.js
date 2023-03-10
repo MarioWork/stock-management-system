@@ -32,9 +32,7 @@ const categoriesArrayToMap = categories => categories?.map(catId => ({ id: catId
  * @returns {Promise<Product>} - Promise object that returns product or error
  * @throws {error}
  */
-const getProductById = (prisma, id) => {
-    return getProductByIdPrisma(prisma, id);
-};
+const getProductById = (prisma, id) => getProductByIdPrisma(prisma, id);
 
 /**
  * Retrieves all products
