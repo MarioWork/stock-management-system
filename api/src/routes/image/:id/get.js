@@ -19,9 +19,7 @@ module.exports = async server => {
 
         const [error, fileBuffer] = await to(downloadFile({ storage, prisma }, id));
 
-        if (error) {
-            return toHttpError(error);
-        }
+        if (error) return toHttpError(error);
 
         reply.type('image');
         return fileBuffer[0];
