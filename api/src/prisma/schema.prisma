@@ -15,8 +15,8 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   name      String
-  createdBy User      @relation(fields: [userId], references: [id])
-  userId    String
+  createdBy User?     @relation(fields: [userId], references: [id])
+  userId    String?
   products  Product[]
 }
 
@@ -24,8 +24,8 @@ model Product {
   id          String     @id @unique @default(uuid())
   upc         String     @unique
   createdAt   DateTime   @default(now())
-  createdBy   User       @relation(fields: [userId], references: [id])
-  userId      String
+  createdBy   User?      @relation(fields: [userId], references: [id])
+  userId      String?
   updatedAt   DateTime   @updatedAt
   name        String
   description String
@@ -39,8 +39,8 @@ model Product {
 model File {
   id                  String   @id @unique
   createdAt           DateTime @default(now())
-  createdByUser       User     @relation("createdBy", fields: [createdByUserId], references: [id])
-  createdByUserId     String
+  createdByUser       User?    @relation("createdBy", fields: [createdByUserId], references: [id])
+  createdByUserId     String?
   updatedAt           DateTime @updatedAt
   url                 String
   type                String
@@ -56,7 +56,7 @@ model User {
   firstName        String
   lastName         String
   roles            String[]
-  profilePicture   File?      @relation("profilePicture", fields: [profilePictureId], references: [id])
+  profilePicture   File?      @relation("profilePicture", fields: [profilePictureId], references: [id], onDelete: SetNull)
   profilePictureId String?
   createdFiles     File[]     @relation("createdBy")
   createdAt        DateTime   @default(now())
@@ -73,8 +73,8 @@ model Supplier {
   id        String    @id @unique @default(uuid())
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  createdBy User      @relation(fields: [userId], references: [id])
-  userId    String
+  createdBy User?     @relation(fields: [userId], references: [id])
+  userId    String?
   name      String
   nif       String    @unique
   products  Product[]
