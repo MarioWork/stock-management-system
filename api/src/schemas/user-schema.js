@@ -28,13 +28,13 @@ const userSchema = S.object()
     .prop('id', userIdSchema)
     .prop('firstName', userFirstNameSchema)
     .prop('lastName', userLastNameSchema)
+    .prop('createdBy')
     .prop('nif', userNifSchema)
     .prop('profilePicture', S.oneOf([userProfilePictureSchema, S.null()]))
     .prop('email', userEmailSchema)
     .prop('createdAt', userCreatedAtSchema)
     .prop('updatedAt', userUpdatedAtSchema)
     .prop('roles', userRolesSchema)
-    .prop('createdBy', this.userSchema)
     .required(['id']);
 
 module.exports = {

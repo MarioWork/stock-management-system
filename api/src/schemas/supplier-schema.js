@@ -12,7 +12,7 @@ const supplierCreatedAtSchema = S.string().format('date-time');
 
 const supplierUpdatedAtSchema = S.string().format('date-time');
 
-const supplierCreatedBySchema = userSchema;
+const supplierCreatedBySchema = S.oneOf([userSchema, S.null()]);
 
 const supplierSchema = S.object()
     .prop('id', supplierIdSchema)

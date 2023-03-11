@@ -10,13 +10,13 @@ const categoryCreatedAtSchema = S.string().format('date-time');
 
 const categoryUpdatedAtSchema = S.string().format('date-time');
 
-const categoryCreatedBySchema = userSchema;
+const categoryCreatedBySchema = S.oneOf([userSchema, S.null()]);
 
 const categorySchema = S.object()
     .prop('id', categoryIdSchema)
+    .prop('createdBy', categoryCreatedBySchema)
     .prop('name', categoryNameSchema)
     .prop('createdAt', categoryCreatedAtSchema)
-    .prop('createdBy', categoryCreatedBySchema)
     .prop('updatedAt', categoryUpdatedAtSchema)
     .required(['id']);
 

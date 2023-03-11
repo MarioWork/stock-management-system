@@ -13,7 +13,7 @@ const productUpcSchema = S.string().minLength(12).maxLength(13);
 
 const productDescriptionSchema = S.string().maxLength(300);
 
-const productCreatedBySchema = userSchema;
+const productCreatedBySchema = S.oneOf([userSchema, S.null()]);
 
 const productQuantitySchema = S.number();
 
@@ -34,7 +34,7 @@ const productSchema = S.object()
     .prop('createdAt', productCreatedAtSchema)
     .prop('updatedAt', productUpdatedAtSchema)
     .prop('createdBy', productCreatedBySchema)
-    .prop('images', S.array().items(fileSchema))
+    .prop('images', productImagesSchema)
     .prop('categories', productCategoriesSchema)
     .prop('supplier', supplierSchema)
     .required(['id']);
