@@ -180,8 +180,22 @@ const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
  * @returns {Promise}
  * @throws {error}
  */
-const deleteUserById = ({ prisma, authService }, id) =>
-    Promise.all([deleteUserByIdPrisma(prisma, id), deleteUserByIdFirebase(authService, id)]);
+//TODO: FIX docs
+const deleteUserById = async ({ prisma, authService, storage }, id) => {
+    const [userData] = await Promise.all([
+        deleteUserByIdPrisma(prisma, id),
+        deleteUserByIdFirebase(authService, id)
+    ]);
+
+    if (userData?.profilePicture?.id)
+        await Promise.all([
+            deleteFile(storage, {
+                id: userData.profilePicture.id,
+                type: userData.profilePicture.type
+            }),
+            deleteFilePrisma(prisma, userData.profilePicture.id)
+        ]);
+};
 
 /**
  * Retrieves all User Products by ID
