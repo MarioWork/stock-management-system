@@ -143,7 +143,11 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
  * @returns {Promise}
  * @throws {error}
  */
-const deleteUserById = (prisma, id) => prisma.user.delete({ where: { id } });
+const deleteUserById = (prisma, id) =>
+    prisma.user.delete({
+        where: { id },
+        select: { id: true, profilePicture: { select: { id: true, type: true } } }
+    });
 
 /**
  * Retrieves all User Products by ID
