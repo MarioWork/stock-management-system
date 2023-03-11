@@ -1,4 +1,4 @@
-# Products API ( Still is development ... )
+# Products API ( Still in development ... )
 
 ### Product
 
