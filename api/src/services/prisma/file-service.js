@@ -2,7 +2,11 @@
  * @typedef { import("../../types/prisma-docs-type") } PrismaClient
  */
 
-//TODO: add docs
+/**
+ * Creates a record of a file in the database
+ * @param {PrismaClient} prisma - ORM Dependency
+ * @param {{id: string, url: string, type: string, userId: string}} data
+ */
 const createFile = (prisma, { id, url, type, userId }) =>
     prisma.file.create({ data: { id, url, type, createdByUserId: userId } });
 
