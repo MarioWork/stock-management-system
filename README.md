@@ -95,7 +95,6 @@
 - - [x] <s>find better solution for error handling</s>
 - - [x] <s>localize error strings</s>
 - - [ ] when deleting a product or user needs to delete their image from cloud storage
-- - [ ] Remove cascade deleting
-- - [ ] More filter options to category
 - - [ ] Add order options to get queries
+- - [ ] Remove cascade deleting
 - - [ ] Fix schemas required in routes instead of dynamic schemas
