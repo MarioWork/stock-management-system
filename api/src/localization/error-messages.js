@@ -10,7 +10,9 @@ ErrorMessages.set(ErrorCodesKeys.INVALID_EMAIL, 'Invalid email address');
 
 ErrorMessages.set(ErrorCodesKeys.EMAIL_EXISTS, 'Email address already exists');
 
-ErrorMessages.set(ErrorCodesKeys.FIELD_NOT_EXIST, field => `'${field}' does not exist`);
+ErrorMessages.set(ErrorCodesKeys.FIELD_NOT_EXIST, field =>
+    field ? `${field} does not exist` : null
+);
 
 ErrorMessages.set(ErrorCodesKeys.FIELD_VALUE_EXISTS, field => `'${field}' value already exists`);
 
