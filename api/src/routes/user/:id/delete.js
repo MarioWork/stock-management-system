@@ -18,12 +18,12 @@ const options = ({ authService, prisma }) => ({
 });
 
 module.exports = async server => {
-    const { prisma, to, authService, toHttpError } = server;
+    const { prisma, to, authService, toHttpError, storage } = server;
 
     server.delete('/', options({ prisma, authService }), async request => {
         const { id } = request.params;
 
-        const [error] = await to(deleteUserById({ prisma, authService }, id));
+        const [error] = await to(deleteUserById({ prisma, authService, storage }, id));
 
         if (error) return toHttpError(error);
     });
