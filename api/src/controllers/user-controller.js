@@ -175,12 +175,11 @@ const getUserById = (prisma, id) => getUserByIdPrisma(prisma, id);
 
 /**
  * Deletes a user by id from firebase authentication and database
- * @param {{prisma: PrismaClient, authService: *}} Dependencies
+ * @param {{prisma: PrismaClient, authService: *, storage: *}} Dependencies
  * @param {string} id
  * @returns {Promise}
  * @throws {error}
  */
-//TODO: FIX docs
 const deleteUserById = async ({ prisma, authService, storage }, id) => {
     const [userData] = await Promise.all([
         deleteUserByIdPrisma(prisma, id),
