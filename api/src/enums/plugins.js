@@ -7,6 +7,7 @@ module.exports = {
         AUTHENTICATION: 'Authentication',
         PAGINATION: 'Pagination',
         SHUTDOWN: 'Shutdown',
-        HTTP_ERROR: 'Http Error'
+        HTTP_ERROR: 'Http Error',
+        SORTING: 'Sorting'
     }
 };
