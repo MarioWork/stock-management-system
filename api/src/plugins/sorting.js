@@ -2,12 +2,12 @@ const fp = require('fastify-plugin');
 const { PluginNames } = require('../enums/plugins');
 
 const plugin = (server, _, done) => {
-    server.decorateRequest('parseSortingQuery', function () {
-        const { sort, order } = this;
+    server.decorateRequest('parseSortingQuery', function (allowedFields) {
+        const { sort, order } = this.query;
 
         return {
-            sort,
-            order
+            sort: allowedFields?.includes(sort.toLowerCase()) ? sort : undefined,
+            order: order !== 'desc' || order !== 'asc' ? order : undefined
         };
     });
 
