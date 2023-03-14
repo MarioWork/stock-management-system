@@ -36,7 +36,9 @@ module.exports = async server => {
         const role = Object.keys(request.query).length === 0 ? null : request.query.role;
         const filter = request.query.filter;
         const pagination = request.parsePaginationQuery();
+        const sorting = request.parseSortingQuery(['name']);
 
+        console.log(sorting);
         const [error, result] = await to(listAllUsers(prisma, { role, filter, pagination }));
 
         const [users, total] = result;
