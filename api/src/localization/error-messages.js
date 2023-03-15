@@ -21,4 +21,9 @@ ErrorMessages.set(ErrorCodesKeys.INVALID_TOKEN, 'Invalid authorization token');
 ErrorMessages.set(ErrorCodesKeys.MISSING_ROLES, 'No roles to validate');
 ErrorMessages.set(ErrorCodesKeys.NOT_AUTHORIZED, 'Role not authorized');
 
+ErrorMessages.set(
+    ErrorCodesKeys.INVALID_SORTING_FIELD,
+    fields => `Sorting field not allowed. Allowed: ${fields}`
+);
+
 module.exports = { ErrorMessages };
