@@ -26,7 +26,9 @@ const selectQuery = {
             email: true,
             roles: true
         }
-    }
+    },
+    updatedAt: true,
+    createdAt: true
 };
 
 /**
@@ -167,7 +169,9 @@ const getAllUserProducts = (prisma, { id, pagination }) => {
                         quantity: true,
                         images: true,
                         categories: true,
-                        supplier: true
+                        supplier: true,
+                        updatedAt: true,
+                        createdAt: true
                     },
                     take: pagination.pageSize,
                     skip: pagination.pastRecordsCount
@@ -192,7 +196,8 @@ const getAllUserCategories = (prisma, { id, pagination }) => {
     const categorySelect = {
         id: true,
         name: true,
-        createdAt: true
+        createdAt: true,
+        updateAt: true
     };
 
     return Promise.all([
