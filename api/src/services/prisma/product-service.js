@@ -96,6 +96,8 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
                 roles: true
             }
         },
+        updateAt: true,
+        createdAt: true,
         images: { select: { url: true } },
         supplier: { select: { id: true } }
     };
