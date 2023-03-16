@@ -52,7 +52,8 @@ const getProductById = (prisma, id) => {
  * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
-const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) => {
+//TODO: fix docs
+const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId, sorting }) => {
     const categoryWhereQuery = categoryId
         ? {
               categories: {
@@ -78,6 +79,8 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
         ]
     };
 
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
+
     const select = {
         id: true,
         name: true,
@@ -96,7 +99,7 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
                 roles: true
             }
         },
-        updateAt: true,
+        updatedAt: true,
         createdAt: true,
         images: { select: { url: true } },
         supplier: { select: { id: true } }
@@ -107,7 +110,8 @@ const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId }) 
             where,
             take: pagination.pageSize,
             skip: pagination.pastRecordsCount,
-            select
+            select,
+            orderBy
         }),
         prisma.product.count({ where })
     ]);

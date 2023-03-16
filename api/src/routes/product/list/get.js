@@ -8,6 +8,7 @@ const paginationMetadataSchema = require('../../../schemas/pagination-metadata-s
 const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
+const { Entities } = require('../../../enums/entities');
 
 const { authorize } = require('../../../controllers/user-controller');
 const { getAllProducts } = require('../../../controllers/product-controller');
@@ -39,9 +40,10 @@ module.exports = async server => {
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { filter, categoryId, supplierId } = request.query;
         const pagination = request.parsePaginationQuery();
+        const sorting = request.parseSortingQuery(Entities.PRODUCT);
 
         const [error, result] = await to(
-            getAllProducts(prisma, { filter, pagination, categoryId, supplierId })
+            getAllProducts(prisma, { filter, pagination, categoryId, supplierId, sorting })
         );
 
         const [products, total] = result;
