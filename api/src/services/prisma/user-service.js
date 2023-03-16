@@ -114,7 +114,8 @@ const hasProfilePicture = (prisma, id) => {
  * @param {{role: String, filter: String}} obj
  * @returns {Promise<{}[]>} - Returns a Promise when resolved returns array with users and users total count
  */
-const listAllUsers = (prisma, { role, filter, pagination }) => {
+//TODO: fix docs
+const listAllUsers = (prisma, { role, filter, pagination, sorting }) => {
     const mutatedFilter = filter ?? '';
     const textQueries = {
         OR: [
@@ -125,6 +126,7 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
         ]
     };
 
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
     const whereQuery = !role ? textQueries : { ...textQueries, AND: { roles: { has: role } } };
 
     return Promise.all([
@@ -132,7 +134,8 @@ const listAllUsers = (prisma, { role, filter, pagination }) => {
             where: whereQuery,
             skip: pagination.pastRecordsCount,
             take: pagination.pageSize,
-            select: selectQuery
+            select: selectQuery,
+            orderBy
         }),
         prisma.user.count({ where: whereQuery })
     ]);

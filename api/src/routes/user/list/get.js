@@ -38,8 +38,10 @@ module.exports = async server => {
         const filter = request.query.filter;
         const pagination = request.parsePaginationQuery();
         const sorting = request.parseSortingQuery(Entities.USER);
-        console.log(sorting);
-        const [error, result] = await to(listAllUsers(prisma, { role, filter, pagination }));
+
+        const [error, result] = await to(
+            listAllUsers(prisma, { role, filter, pagination, sorting })
+        );
 
         const [users, total] = result;
 

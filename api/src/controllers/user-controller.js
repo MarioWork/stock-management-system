@@ -161,8 +161,9 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
  * @param {{role: String, filter: String}} obj
  * @returns {Promise<{}[]>} - Returns a Promise when resolved returns array with users and users total count
  */
-const listAllUsers = (prisma, { role, filter, pagination }) =>
-    listAllUsersPrisma(prisma, { role, filter, pagination });
+//TODO: fix docs
+const listAllUsers = (prisma, { role, filter, pagination, sorting }) =>
+    listAllUsersPrisma(prisma, { role, filter, pagination, sorting });
 
 /**
  * Get a user record from database with its id and role
