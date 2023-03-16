@@ -7,7 +7,7 @@ const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-sc
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 const { headers } = require('../../../schemas/headers-schema');
 
-const { AllowedUserSortingFields } = require('../../../enums/allowed-sorting-fields');
+const { Entities } = require('../../../enums/entities');
 const { UserRoles } = require('../../../enums/user-roles');
 
 const schema = {
@@ -37,8 +37,8 @@ module.exports = async server => {
         const role = Object.keys(request.query).length === 0 ? null : request.query.role;
         const filter = request.query.filter;
         const pagination = request.parsePaginationQuery();
-        const sorting = request.parseSortingQuery(AllowedUserSortingFields);
-
+        const sorting = request.parseSortingQuery(Entities.USER);
+        console.log(sorting);
         const [error, result] = await to(listAllUsers(prisma, { role, filter, pagination }));
 
         const [users, total] = result;
