@@ -203,8 +203,9 @@ const deleteUserById = async ({ prisma, authService, storage }, id) => {
  * @param {id: string, pagination: pagination} obj - data
  * @returns {[products: Product[]=, total: number]}
  */
-const getAllUserProducts = async (prisma, { id, pagination }) => {
-    const [result, total] = await getAllUserProductsPrisma(prisma, { id, pagination });
+//TODO: fix fix docs
+const getAllUserProducts = async (prisma, { id, pagination, sorting }) => {
+    const [result, total] = await getAllUserProductsPrisma(prisma, { id, pagination, sorting });
 
     return [result?.products ?? [], total];
 };

@@ -8,6 +8,7 @@ const { userIdSchema } = require('../../../../../schemas/user-schema');
 const { headers } = require('../../../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../../../enums/user-roles');
+const { Entities } = require('../../../../../enums/entities');
 
 const schema = {
     headers,
@@ -30,9 +31,10 @@ module.exports = async server => {
 
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const pagination = request.parsePaginationQuery();
+        const sorting = request.parseSortingQuery(Entities.PRODUCT);
         const { id } = request.params;
 
-        const [error, result] = await to(getAllUserProducts(prisma, { id, pagination }));
+        const [error, result] = await to(getAllUserProducts(prisma, { id, pagination, sorting }));
 
         const [products, total] = result;
 

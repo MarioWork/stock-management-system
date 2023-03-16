@@ -160,24 +160,30 @@ const deleteUserById = (prisma, id) =>
  * @param {id: string, pagination: pagination} obj - data
  * @returns {Promise}
  */
-const getAllUserProducts = (prisma, { id, pagination }) => {
+//TODO: fix docs
+const getAllUserProducts = (prisma, { id, pagination, sorting }) => {
+    const productSelectQuery = {
+        id: true,
+        name: true,
+        quantity: true,
+        images: true,
+        categories: true,
+        supplier: true,
+        updatedAt: true,
+        createdAt: true
+    };
+
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
+
     return Promise.all([
         prisma.user.findUnique({
             where: { id },
             select: {
                 products: {
-                    select: {
-                        id: true,
-                        name: true,
-                        quantity: true,
-                        images: true,
-                        categories: true,
-                        supplier: true,
-                        updatedAt: true,
-                        createdAt: true
-                    },
+                    select: productSelectQuery,
                     take: pagination.pageSize,
-                    skip: pagination.pastRecordsCount
+                    skip: pagination.pastRecordsCount,
+                    orderBy
                 }
             }
         }),
