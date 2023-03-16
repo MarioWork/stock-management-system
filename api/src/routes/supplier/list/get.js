@@ -6,6 +6,7 @@ const { pageSchema, sizeSchema } = require('../../../schemas/pagination-query-sc
 const { headers } = require('../../../schemas/headers-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
+const { Entities } = require('../../../enums/entities');
 
 const { authorize } = require('../../../controllers/user-controller');
 const { getAllSuppliers } = require('../../../controllers/supplier-controller');
@@ -32,8 +33,9 @@ module.exports = async server => {
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const { filter } = request.query;
         const pagination = request.parsePaginationQuery();
+        const sorting = request.parseSortingQuery(Entities.SUPPLIER);
 
-        const [error, result] = await to(getAllSuppliers(prisma, { filter, pagination }));
+        const [error, result] = await to(getAllSuppliers(prisma, { filter, pagination, sorting }));
 
         const [products, total] = result;
 

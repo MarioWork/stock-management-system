@@ -30,8 +30,9 @@ const createSupplier = (prisma, { nif, name, createdBy }) =>
  * @returns {Promise}
  * @throws {error}
  */
-const getAllSuppliers = (prisma, { filter, pagination }) =>
-    getAllSuppliersPrisma(prisma, { filter, pagination });
+//TODO: fix docs
+const getAllSuppliers = (prisma, { filter, pagination, sorting }) =>
+    getAllSuppliersPrisma(prisma, { filter, pagination, sorting });
 
 /**
  * Returns a supplier by the given ID

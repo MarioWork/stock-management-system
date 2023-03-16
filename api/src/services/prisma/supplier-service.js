@@ -40,7 +40,8 @@ const createSupplier = (prisma, { nif, name, createdBy }) =>
  * @returns {Promise}
  * @throws {error}
  */
-const getAllSuppliers = (prisma, { filter, pagination }) => {
+//TODO: fix docs
+const getAllSuppliers = (prisma, { filter, pagination, sorting }) => {
     const select = {
         id: true,
         name: true,
@@ -57,6 +58,7 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
             }
         }
     };
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
 
     const where = {
         name: {
@@ -69,7 +71,8 @@ const getAllSuppliers = (prisma, { filter, pagination }) => {
             select,
             where,
             take: pagination.pageSize,
-            skip: pagination.pastRecordsCount
+            skip: pagination.pastRecordsCount,
+            orderBy
         }),
         prisma.supplier.count({ where })
     ]);
