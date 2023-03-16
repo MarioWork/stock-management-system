@@ -6,6 +6,7 @@ const { headers } = require('../../../schemas/headers-schema');
 const paginationMetadataSchema = require('../../../schemas/pagination-metadata-schema');
 
 const { UserRoles } = require('../../../enums/user-roles');
+const { Entities } = require('../../../enums/entities');
 
 const { getAllCategories } = require('../../../controllers/category-controller');
 const { authorize } = require('../../../controllers/user-controller');
@@ -35,8 +36,9 @@ module.exports = async server => {
     const { prisma, to, authService, toHttpError } = server;
     server.get('/', options({ prisma, authService }), async (request, reply) => {
         const pagination = request.parsePaginationQuery();
+        const sorting = request.parseSortingQuery(Entities.CATEGORY);
 
-        const [error, result] = await to(getAllCategories(prisma, pagination));
+        const [error, result] = await to(getAllCategories(prisma, { pagination, sorting }));
         const [categories, total] = result;
 
         return error

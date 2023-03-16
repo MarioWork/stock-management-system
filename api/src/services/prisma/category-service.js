@@ -47,7 +47,8 @@ const createCategory = (prisma, { name, createdBy }) => {
  * @returns {Promise<{}[]>} - Promise object that returns array with categories and categories count
  * @throws {error}
  */
-const getAllCategories = (prisma, pagination) => {
+//TODO: fix docs
+const getAllCategories = (prisma, { pagination, sorting }) => {
     const select = {
         id: true,
         name: true,
@@ -66,11 +67,14 @@ const getAllCategories = (prisma, pagination) => {
         }
     };
 
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
+
     return Promise.all([
         prisma.category.findMany({
             take: pagination.pageSize,
             skip: pagination.pastRecordsCount,
-            select
+            select,
+            orderBy
         }),
         prisma.category.count()
     ]);

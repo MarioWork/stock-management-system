@@ -26,7 +26,9 @@ const createCategory = (prisma, { name, createdBy }) =>
  * @returns {Promise<{}[]>} - Promise object that returns array with categories and categories count
  * @throws {error}
  */
-const getAllCategories = (prisma, pagination) => getAllCategoriesPrisma(prisma, pagination);
+//TODO: fix docs
+const getAllCategories = (prisma, { pagination, sorting }) =>
+    getAllCategoriesPrisma(prisma, { pagination, sorting });
 
 /**
  * Retrieves a category by the Id given
