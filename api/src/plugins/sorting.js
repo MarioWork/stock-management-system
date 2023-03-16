@@ -47,7 +47,7 @@ const plugin = (server, _, done) => {
 
         return {
             sort: sort ? sort : undefined,
-            order: Object.values(OrderType).includes(order.toLowerCase())
+            order: Object.values(OrderType).includes(order?.toLowerCase())
                 ? order.toLowerCase()
                 : OrderType.DESC
         };
