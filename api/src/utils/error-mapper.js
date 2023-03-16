@@ -3,7 +3,8 @@ const { BadRequest, NotFound, Forbidden, InternalServerError } = require('http-e
 const { ErrorCodes, ErrorCodesKeys } = require('../enums/error-codes');
 const { ErrorMessages } = require('../localization/error-messages');
 
-const getFieldsFromError = error => error?.meta?.cause?.match(/'(.*?)'/i)[0] ?? error?.meta?.target;
+const getFieldsFromError = error =>
+    error?.meta?.cause?.match(/'(.*?)'/i)?.[0] ?? error?.meta?.target;
 
 const errorMapper = error => {
     const code = error?.code ?? error?.statusCode;
