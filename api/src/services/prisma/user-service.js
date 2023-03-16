@@ -235,7 +235,8 @@ const getAllUserCategories = (prisma, { id, pagination, sorting }) => {
  * @returns {Promise}
  * @throws {error}
  */
-const getAllUserSuppliers = (prisma, { id, pagination }) => {
+//TODO: fix docs
+const getAllUserSuppliers = (prisma, { id, pagination, sorting }) => {
     const supplierSelect = {
         id: true,
         createdAt: true,
@@ -244,6 +245,8 @@ const getAllUserSuppliers = (prisma, { id, pagination }) => {
         nif: true
     };
 
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
+
     return Promise.all([
         prisma.user.findUnique({
             where: { id },
@@ -251,7 +254,8 @@ const getAllUserSuppliers = (prisma, { id, pagination }) => {
                 suppliers: {
                     select: supplierSelect,
                     take: pagination.pageSize,
-                    skip: pagination.pastRecordsCount
+                    skip: pagination.pastRecordsCount,
+                    orderBy
                 }
             }
         }),

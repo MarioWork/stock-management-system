@@ -230,8 +230,9 @@ const getAllUserCategories = async (prisma, { id, pagination, sorting }) => {
  * @returns {[suppliers: Supplier[]=, total: number]}
  * @throws {error}
  */
-const getAllUserSuppliers = async (prisma, { id, pagination }) => {
-    const [result, total] = await getAllUserSuppliersPrisma(prisma, { id, pagination });
+//TODO: fix docs
+const getAllUserSuppliers = async (prisma, { id, pagination, sorting }) => {
+    const [result, total] = await getAllUserSuppliersPrisma(prisma, { id, pagination, sorting });
 
     return [result?.suppliers ?? [], total];
 };
