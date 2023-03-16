@@ -215,8 +215,9 @@ const getAllUserProducts = async (prisma, { id, pagination }) => {
  * @param {{id: string, pagination: Pagination}} obj - Data
  * @returns {[categories: Category[]=, total: number]}
  */
-const getAllUserCategories = async (prisma, { id, pagination }) => {
-    const [result, total] = await getAllUserCategoriesPrisma(prisma, { id, pagination });
+//TODO: fix docs
+const getAllUserCategories = async (prisma, { id, pagination, sorting }) => {
+    const [result, total] = await getAllUserCategoriesPrisma(prisma, { id, pagination, sorting });
 
     return [result?.categories ?? [], total];
 };

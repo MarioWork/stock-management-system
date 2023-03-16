@@ -195,13 +195,16 @@ const getAllUserProducts = (prisma, { id, pagination }) => {
  * @param {{id: string, pagination: Pagination}} obj - Data
  * @returns {Promise}
  */
-const getAllUserCategories = (prisma, { id, pagination }) => {
+//TODO: fix docs
+const getAllUserCategories = (prisma, { id, pagination, sorting }) => {
     const categorySelect = {
         id: true,
         name: true,
         createdAt: true,
-        updateAt: true
+        updatedAt: true
     };
+
+    const orderBy = !sorting.sort ? {} : { [sorting.sort]: sorting.order };
 
     return Promise.all([
         prisma.user.findUnique({
@@ -210,7 +213,8 @@ const getAllUserCategories = (prisma, { id, pagination }) => {
                 categories: {
                     select: categorySelect,
                     take: pagination.pageSize,
-                    skip: pagination.pastRecordsCount
+                    skip: pagination.pastRecordsCount,
+                    orderBy
                 }
             }
         }),
