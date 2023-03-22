@@ -3,6 +3,7 @@
  * @typedef { import('../../types/category-docs-type') } Category
  * @typedef { import('../../types/product-docs-type') } Product
  * @typedef { import('../../types/pagination-docs-type') } Pagination
+ * @typedef { import('../../types/sorting-docs-type') } Sorting
  */
 
 /**
@@ -48,11 +49,10 @@ const getProductById = (prisma, id) => {
 /**
  * Retrieves all products
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{filter: string=, categoryId: string=, pagination: Pagination, supplierId: string=}} obj - Data
+ * @param {{filter: string=, categoryId: string=, pagination: Pagination, supplierId: string=, sorting: Sorting}} obj - Data
  * @returns {Promise} - Promise object that returns product array and count of records
  * @throws {error}
  */
-//TODO: fix docs
 const getAllProducts = (prisma, { filter, categoryId, pagination, supplierId, sorting }) => {
     const categoryWhereQuery = categoryId
         ? {
