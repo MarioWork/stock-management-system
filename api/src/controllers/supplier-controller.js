@@ -1,6 +1,7 @@
 /**
  * @typedef { import('../types/prisma-docs-type') } PrismaClient
  * @typedef { import('../types/pagination-docs-type') } Pagination
+ * @typedef { import('../types/sorting-docs-type') } Sorting
  * @typedef { import('../types/product-docs-type') } Product
  */
 
@@ -26,11 +27,10 @@ const createSupplier = (prisma, { nif, name, createdBy }) =>
 /**
  * Returns all suppliers paginated with the filter given
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{filter: string=, pagination: Pagination}} obj - Data
+ * @param {{filter: string=, pagination: Pagination, sorting: Sorting}} obj - Data
  * @returns {Promise}
  * @throws {error}
  */
-//TODO: fix docs
 const getAllSuppliers = (prisma, { filter, pagination, sorting }) =>
     getAllSuppliersPrisma(prisma, { filter, pagination, sorting });
 
