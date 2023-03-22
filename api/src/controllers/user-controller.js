@@ -21,7 +21,8 @@ const {
     getAllUserProducts: getAllUserProductsPrisma,
     getAllUserCategories: getAllUserCategoriesPrisma,
     getAllUserSuppliers: getAllUserSuppliersPrisma,
-    getUserRoles: getUserRolesPrisma
+    getUserRoles: getUserRolesPrisma,
+    updateUser: updateUserPrisma
 } = require('../services/prisma/user-service');
 
 const {
@@ -246,6 +247,10 @@ const getAllUserSuppliers = async (prisma, { id, pagination, sorting }) => {
  */
 const getUserRoles = (prisma, id) => getUserRolesPrisma(prisma, id);
 
+//TODO: add docs
+const updateUser = (prisma, { id, firstName, lastName, nif }) =>
+    updateUserPrisma(prisma, { id, firstName, lastName, nif });
+
 module.exports = {
     createUser,
     authorize,
@@ -256,5 +261,6 @@ module.exports = {
     getAllUserProducts,
     getAllUserCategories,
     getAllUserSuppliers,
-    getUserRoles
+    getUserRoles,
+    updateUser
 };
