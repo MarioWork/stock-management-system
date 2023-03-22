@@ -273,6 +273,18 @@ const getAllUserSuppliers = (prisma, { id, pagination, sorting }) => {
 const getUserRoles = (prisma, id) =>
     prisma.user.findUnique({ where: { id }, select: { id: true, roles: true } });
 
+//TODO: add docs
+const updateUser = (prisma, { id, firstName, lastName, nif }) =>
+    prisma.user.update({
+        where: { id },
+        data: {
+            firstName: firstName,
+            lastName: lastName,
+            nif: nif
+        },
+        select: selectQuery
+    });
+
 module.exports = {
     getUserById,
     createUser,
@@ -283,5 +295,6 @@ module.exports = {
     getAllUserProducts,
     getAllUserCategories,
     getAllUserSuppliers,
-    getUserRoles
+    getUserRoles,
+    updateUser
 };
