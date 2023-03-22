@@ -1,6 +1,8 @@
 /**
  * @typedef { import("../types/prisma-docs-type") } PrismaClient
  * @typedef { import("../types/prisma-docs-type") } Category
+ * @typedef { import("../types/pagination-docs-type") } Pagination
+ * @typedef { import("../types/sorting-docs-type") } Sorting
  */
 
 const {
@@ -23,10 +25,10 @@ const createCategory = (prisma, { name, createdBy }) =>
 
 /** Retrieves all categories
  * @param {PrismaClient} prisma - ORM Dependency
+ ** @param {{pagination: Pagination, sorting: Sorting}} - Data
  * @returns {Promise<{}[]>} - Promise object that returns array with categories and categories count
  * @throws {error}
  */
-//TODO: fix docs
 const getAllCategories = (prisma, { pagination, sorting }) =>
     getAllCategoriesPrisma(prisma, { pagination, sorting });
 
