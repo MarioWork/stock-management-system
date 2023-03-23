@@ -2,6 +2,7 @@
  * @typedef { import('../../types/prisma-docs-type') } PrismaClient
  * @typedef { import('../../types/user-docs-type') } User
  * @typedef { import('../../types/pagination-docs-type') } Pagination
+ * @typedef { import('../../types/sorting-docs-type') } Sorting
  */
 
 const selectQuery = {
@@ -111,10 +112,9 @@ const hasProfilePicture = (prisma, id) => {
 /**
  * Retrieves all users with the filter options
  * @param {PrismaClient} prisma
- * @param {{role: String, filter: String}} obj
+ * @param {{role: String, filter: String, pagination: Pagination, sorting: Sorting}} obj
  * @returns {Promise<{}[]>} - Returns a Promise when resolved returns array with users and users total count
  */
-//TODO: fix docs
 const listAllUsers = (prisma, { role, filter, pagination, sorting }) => {
     const mutatedFilter = filter ?? '';
     const textQueries = {
@@ -157,10 +157,9 @@ const deleteUserById = (prisma, id) =>
 /**
  * Retrieves all User Products by ID
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {id: string, pagination: pagination} obj - data
+ * @param {id: string, pagination: pagination, sorting: Sorting} obj - data
  * @returns {Promise}
  */
-//TODO: fix docs
 const getAllUserProducts = (prisma, { id, pagination, sorting }) => {
     const productSelectQuery = {
         id: true,
@@ -198,10 +197,9 @@ const getAllUserProducts = (prisma, { id, pagination, sorting }) => {
 /**
  * Returns the user created categories paginated and the total records count
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id: string, pagination: Pagination}} obj - Data
+ * @param {{id: string, pagination: Pagination, sorting: Sorting}} obj - Data
  * @returns {Promise}
  */
-//TODO: fix docs
 const getAllUserCategories = (prisma, { id, pagination, sorting }) => {
     const categorySelect = {
         id: true,
@@ -231,11 +229,10 @@ const getAllUserCategories = (prisma, { id, pagination, sorting }) => {
 /**
  * Returns the user created suppliers paginated and the total records count
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id: string, pagination: Pagination}} obj - Data
+ * @param {{id: string, pagination: Pagination, sorting: Sorting}} obj - Data
  * @returns {Promise}
  * @throws {error}
  */
-//TODO: fix docs
 const getAllUserSuppliers = (prisma, { id, pagination, sorting }) => {
     const supplierSelect = {
         id: true,
