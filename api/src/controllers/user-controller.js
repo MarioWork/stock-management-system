@@ -244,7 +244,12 @@ const getAllUserSuppliers = async (prisma, { id, pagination, sorting }) => {
  */
 const getUserRoles = (prisma, id) => getUserRolesPrisma(prisma, id);
 
-//TODO: add docs
+/**
+ * Updates the user data and returns a promise when resolved returns the user updated
+ * @param {PrismaClient} prisma - ORM dependency
+ * @param {{id: String, firstName: String=, lastName: String=, nif: String=}} obj - Data
+ * @returns {Promise}
+ */
 const updateUser = (prisma, { id, firstName, lastName, nif }) =>
     updateUserPrisma(prisma, { id, firstName, lastName, nif });
 
