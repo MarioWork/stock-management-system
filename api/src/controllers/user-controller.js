@@ -1,6 +1,7 @@
 /**
  * @typedef { import('../types/prisma-docs-type') } PrismaClient
  * @typedef { import('../types/pagination-docs-type') } Pagination
+ * @typedef { import('../types/sorting-docs-type') } Sorting
  * @typedef { import('../types/user-docs-type') } User
  * @typedef { import('../types/supplier-docs-type') } Supplier
  * @typedef { import('../types/category-docs-type') } Category
@@ -159,10 +160,9 @@ const addProfilePicture = async ({ prisma, storage }, { userId, file, fileType }
 /**
  * Retrieves all users with the filter options
  * @param {PrismaClient} prisma
- * @param {{role: String, filter: String}} obj
+ * @param {{role: String, filter: String, pagination: Pagination, sorting: Sorting}} obj
  * @returns {Promise<{}[]>} - Returns a Promise when resolved returns array with users and users total count
  */
-//TODO: fix docs
 const listAllUsers = (prisma, { role, filter, pagination, sorting }) =>
     listAllUsersPrisma(prisma, { role, filter, pagination, sorting });
 
@@ -201,10 +201,9 @@ const deleteUserById = async ({ prisma, authService, storage }, id) => {
 /**
  * Retrieves all User Products by ID
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {id: string, pagination: pagination} obj - data
+ * @param {id: string, pagination: pagination, sorting: Sorting} obj - data
  * @returns {[products: Product[]=, total: number]}
  */
-//TODO: fix fix docs
 const getAllUserProducts = async (prisma, { id, pagination, sorting }) => {
     const [result, total] = await getAllUserProductsPrisma(prisma, { id, pagination, sorting });
 
@@ -214,10 +213,9 @@ const getAllUserProducts = async (prisma, { id, pagination, sorting }) => {
 /**
  * Returns the user created categories paginated and the total records count
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id: string, pagination: Pagination}} obj - Data
+ * @param {{id: string, pagination: Pagination, sorting: Sorting}} obj - Data
  * @returns {[categories: Category[]=, total: number]}
  */
-//TODO: fix docs
 const getAllUserCategories = async (prisma, { id, pagination, sorting }) => {
     const [result, total] = await getAllUserCategoriesPrisma(prisma, { id, pagination, sorting });
 
@@ -227,11 +225,10 @@ const getAllUserCategories = async (prisma, { id, pagination, sorting }) => {
 /**
  * Returns the user created suppliers paginated and the total records count
  * @param {PrismaClient} prisma - ORM Dependency
- * @param {{id: string, pagination: Pagination}} obj - Data
+ * @param {{id: string, pagination: Pagination, sorting: Sorting}} obj - Data
  * @returns {[suppliers: Supplier[]=, total: number]}
  * @throws {error}
  */
-//TODO: fix docs
 const getAllUserSuppliers = async (prisma, { id, pagination, sorting }) => {
     const [result, total] = await getAllUserSuppliersPrisma(prisma, { id, pagination, sorting });
 
