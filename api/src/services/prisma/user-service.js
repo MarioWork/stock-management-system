@@ -270,7 +270,12 @@ const getAllUserSuppliers = (prisma, { id, pagination, sorting }) => {
 const getUserRoles = (prisma, id) =>
     prisma.user.findUnique({ where: { id }, select: { id: true, roles: true } });
 
-//TODO: add docs
+/**
+ * Updates the user data and returns a promise when resolved returns the user updated
+ * @param {PrismaClient} prisma - ORM dependency
+ * @param {{id: String, firstName: String=, lastName: String=, nif: String=}} obj - Data
+ * @returns {Promise}
+ */
 const updateUser = (prisma, { id, firstName, lastName, nif }) =>
     prisma.user.update({
         where: { id },
