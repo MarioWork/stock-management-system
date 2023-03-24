@@ -11,6 +11,8 @@ const {
 } = require('../../../schemas/user-schema');
 const { headers } = require('../../../schemas/headers-schema');
 
+const { UserRoles } = require('../../../enums/user-roles');
+
 const schema = {
     headers,
     response: {
@@ -24,8 +26,8 @@ const schema = {
 };
 
 const options = ({ authService, prisma }) => ({
-    preValidation: authorize({ authService, prisma }),
-    schema
+    schema,
+    preValidation: authorize({ authService, prisma }, UserRoles.ADMIN)
 });
 
 module.exports = async server => {
@@ -33,7 +35,7 @@ module.exports = async server => {
 
     server.patch('/', options({ authService, prisma }), async (request, reply) => {
         const { id } = request.params;
-        const { firstName, lastName, nif } = request.query;
+        const { firstName, lastName, nif } = request.body;
 
         if (!firstName && !lastName && !nif)
             return reply.badRequest('Needs at least one property (firstName, lastName, nif)');
