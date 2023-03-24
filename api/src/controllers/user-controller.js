@@ -51,6 +51,8 @@ const decodeToken = async (authService, token) => await authService.verifyIdToke
 const authorize =
     ({ authService, prisma }, authorizedRoles) =>
     async request => {
+        if (!authorizedRoles) throw errorMapper(new Error('Missing authorized roles'));
+
         const token = request.headers.authorization?.split(' ')[1];
 
         if (!token) throw new Forbidden(ErrorMessages.get(ErrorCodesKeys.MISSING_TOKEN));
