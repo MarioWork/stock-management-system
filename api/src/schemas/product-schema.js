@@ -31,12 +31,12 @@ const productSchema = S.object()
     .prop('name', productNameSchema)
     .prop('description', productDescriptionSchema)
     .prop('quantity', productQuantitySchema)
-    .prop('createdAt', productCreatedAtSchema)
-    .prop('updatedAt', productUpdatedAtSchema)
-    .prop('createdBy', productCreatedBySchema)
     .prop('images', productImagesSchema)
     .prop('categories', productCategoriesSchema)
     .prop('supplier', supplierSchema)
+    .prop('createdAt', productCreatedAtSchema)
+    .prop('updatedAt', productUpdatedAtSchema)
+    .prop('createdBy', productCreatedBySchema)
     .required(['id']);
 
 module.exports = {
