@@ -81,8 +81,10 @@ const createProduct = (
  * @returns {{count:number}} - Object with count property represents number of products deleted
  * @throws {error}
  */
-const deleteProducts = (prisma, ids) => deleteProductsPrisma(prisma, ids);
-
+//TODO: delete files associated with product and from cloud storage
+const deleteProducts = (prisma, ids) => {
+    deleteProductsPrisma(prisma, ids);
+};
 /**
  * Updates the category based on the properties given
  * Does not need all properties but, needs at least one (name, quantity, categories)
